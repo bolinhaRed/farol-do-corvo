@@ -1,0 +1,1585 @@
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The Raven Lighthouse</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#120b04">
+<link rel="icon" href="img/icone-192.png">
+<link rel="apple-touch-icon" href="img/icone-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=IM+Fell+DW+Pica&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
+<style>
+/* Layout: página de livro em papel sépia sobre um fundo escuro com vinheta; à direita a Folha de Aventuras e o mapa (gaveta em ecrãs estreitos). Tinta da china. */
+:root{
+  --noite:#140d06; --papel:#e2cb98; --papel2:#d6bc84; --papel3:#c2a46a; --tinta:#160f07; --tinta2:#4f3c22; --sepia:#8a6a3c;
+  --sangue:#8b2716; --verde:#3c5a2b;
+  --f-num:"IM Fell DW Pica", Georgia, serif; --f-tit:"IM Fell English SC", Georgia, serif; --f-it:"IM Fell English", Georgia, serif;
+  --f-txt:"Literata", Georgia, "Times New Roman", serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{background:var(--noite);color:var(--tinta);font-family:var(--f-txt);font-size:17.5px;line-height:1.64;-webkit-tap-highlight-color:transparent;
+  background-image:radial-gradient(ellipse at 50% 35%,#5a4120 0%,#2e200f 45%,#120b04 100%);background-attachment:fixed}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.18;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px dashed currentColor;outline-offset:3px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:#120b04}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:linear-gradient(#120b04,#1c1309);color:var(--papel);border-bottom:1px solid #4a3418;
+  padding-block:6px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:10px}
+.bar .nome{font-family:var(--f-tit);font-size:1.2rem;white-space:nowrap;color:#e8cf96}
+.strip{display:flex;gap:10px;margin-left:auto;font-family:var(--f-num);font-size:1.08rem;align-items:center}
+.strip span{white-space:nowrap}.strip b{font-family:var(--f-tit);font-weight:400;font-size:.76rem;color:#b39463;margin-right:3px}
+.bar .dir{display:flex;gap:6px;margin-left:auto;align-items:center}
+.strip+.dir{margin-left:6px}
+.tb{background:transparent;border:1px solid #6a4c26;border-radius:3px;padding:6px 10px;min-height:40px;font-family:var(--f-tit);font-size:.95rem;color:#e8cf96}
+.tb:hover{background:#3a2914}
+.vol{display:flex;align-items:center;gap:6px;min-width:44px;justify-content:center}
+.vol svg{width:22px;height:22px}
+
+.layout{display:grid;grid-template-columns:1fr;max-width:1240px;margin:0 auto;
+  padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));padding-block:20px 60px;gap:26px}
+@media (min-width:640px){.layout{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+main{min-width:0;max-width:760px;width:100%;margin:0 auto}
+.folha-livro{background:var(--papel);border-radius:3px;position:relative;padding:22px clamp(18px,4vw,44px) 34px;
+  box-shadow:0 18px 50px rgba(0,0,0,.55),inset 0 0 90px rgba(90,58,20,.55),inset 0 0 18px rgba(60,38,12,.5);
+  background-image:radial-gradient(ellipse at 50% 40%,rgba(255,246,220,.35),rgba(140,100,50,.12) 70%,rgba(80,52,20,.35) 100%)}
+@media (min-width:960px){.layout{grid-template-columns:minmax(0,1fr) 340px}main{margin:0}.so-movel,.strip{display:none!important}
+  aside#folha{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);align-self:start;max-height:calc(100vh - 88px);overflow:auto;scrollbar-width:thin}}
+@media (max-width:959px){
+  aside#folha{position:fixed;inset:0 0 0 auto;width:min(380px,94vw);z-index:40;transform:translateX(105%);transition:transform .25s ease;overflow:auto;
+    padding:calc(env(safe-area-inset-top,0px) + 14px) max(12px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 24px) 12px;background:#1a1108}
+  aside#folha.aberta{transform:none}
+  .veu{position:fixed;inset:0;background:rgba(10,6,2,.6);z-index:35}}
+@media (max-width:460px){.strip .mr{display:none}.bar .nome{font-size:1rem}.strip{gap:7px}}
+.bar .nome{min-width:0;overflow:hidden;text-overflow:ellipsis}.strip,.bar .dir{flex-shrink:0}
+@media (max-width:520px){.bar .nome:has(+ .strip){display:none}.bar .strip{margin-left:0}.tb{padding:6px 8px}}
+
+.cap{text-align:center;font-family:var(--f-it);font-style:italic;color:var(--tinta2);font-size:1rem;margin:0 0 2px;letter-spacing:.04em}
+.numero{font-family:var(--f-num);font-size:clamp(3rem,9vw,4.6rem);line-height:1;margin:0 0 12px;text-align:center}
+.numero::before,.numero::after{content:"";display:inline-block;width:52px;height:1px;background:var(--tinta);vertical-align:middle;margin:0 16px;opacity:.7}
+#ilus{position:relative;margin:0 calc(-1 * clamp(18px,4vw,44px)) 18px;cursor:pointer}
+#ilus canvas{display:block;width:100%;height:auto;aspect-ratio:1200/680}
+#ilus .salta{position:absolute;right:12px;bottom:8px;font-family:var(--f-it);font-style:italic;font-size:.8rem;color:#e8cf96;opacity:.8}
+.texto p{margin:0 0 1em;max-width:64ch}
+.texto p:first-child::first-letter{font-family:var(--f-tit);font-size:3em;float:left;line-height:.78;margin:.08em .1em 0 0}
+.texto .inscr{font-family:var(--f-tit);text-align:center;letter-spacing:.08em;line-height:1.5;white-space:pre-line;padding:10px 0;border-block:1px solid var(--tinta2)}
+.escolhas{display:flex;flex-direction:column;margin-top:22px;border-top:1px solid var(--tinta)}
+.esc{display:flex;align-items:baseline;gap:10px;text-align:left;width:100%;background:transparent;border:0;border-bottom:1px solid rgba(22,15,7,.55);padding:13px 6px;min-height:56px;color:var(--tinta)}
+.esc:hover{background:rgba(22,15,7,.08)}
+.esc .t{flex:0 1 auto}.esc .pont{flex:1 1 20px;border-bottom:2px dotted var(--tinta2);min-width:20px;transform:translateY(-4px)}
+.esc .vai{font-family:var(--f-num);font-size:1.6rem;white-space:nowrap;line-height:1}
+.esc .vai small{font-family:var(--f-it);font-style:italic;font-size:.8rem;color:var(--tinta2);margin-right:4px}
+.esc[disabled]{opacity:.42;cursor:not-allowed}.esc[disabled]:hover{background:transparent}
+.esc .req{display:block;font-size:.8rem;color:var(--tinta2);font-style:italic}
+.caixa{border:1.5px solid var(--tinta);outline:1px solid var(--tinta);outline-offset:3px;padding:14px 16px;margin:24px 4px 4px;background:rgba(255,248,225,.2)}
+.caixa h3{font-family:var(--f-tit);font-weight:400;margin:0 0 6px;font-size:1.32rem}
+.acoes{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.b{background:transparent;border:1.5px solid var(--tinta);border-radius:3px;padding:10px 16px;min-height:48px;font-family:var(--f-tit);font-size:1.04rem;color:var(--tinta)}
+.b:hover{background:rgba(22,15,7,.08)}.b.prim{background:var(--tinta);color:var(--papel)}.b.prim:hover{background:#33251a}
+.b[disabled]{opacity:.38;cursor:not-allowed}
+.nota{font-size:.88rem;color:var(--tinta2)}.ok{color:var(--verde);font-weight:600}.mau{color:var(--sangue);font-weight:600}
+.dados{display:inline-flex;gap:7px;align-items:center}
+.dado{width:38px;height:38px;border-radius:7px;background:#f2e6c8;border:1.5px solid var(--tinta);display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:5px;box-shadow:2px 2px 0 rgba(22,15,7,.4)}
+.dado.inim{background:var(--papel3)}.dado i{width:7px;height:7px;border-radius:50%;background:var(--tinta);place-self:center;visibility:hidden}.dado i.on{visibility:visible}
+.rola .dado{animation:sacode .5s ease}@keyframes sacode{0%{transform:rotate(-30deg) translateY(-8px) scale(.8)}55%{transform:rotate(15deg)}100%{transform:none}}
+.luta{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lutador{border:1px solid var(--tinta);padding:10px 12px;min-width:0}
+.lutador .n{font-family:var(--f-tit);font-size:1.1rem;line-height:1.2}.lutador .s{font-family:var(--f-num);font-size:1rem;color:var(--tinta2);margin:2px 0 8px}
+.barra{height:8px;border:1px solid var(--tinta)}.barra span{display:block;height:100%;background:var(--tinta);transition:width .3s}.lutador.inim .barra span{background:var(--sangue)}
+.lutador .fa{margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-family:var(--f-num);font-size:1.15rem}
+.relato{margin:12px 0 0;font-size:.97rem}.morto{text-decoration:line-through;opacity:.55}
+
+aside#folha{min-width:0}
+.ficha{background:var(--papel);color:var(--tinta);border-radius:3px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.5),inset 0 0 50px rgba(90,58,20,.45);margin-bottom:16px}
+.folha-tit{font-family:var(--f-tit);font-size:1.3rem;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--tinta);padding-bottom:6px}
+.fechar{background:none;border:none;font-size:1.7rem;line-height:1;padding:2px 8px;color:var(--tinta)}@media (min-width:960px){.fechar{display:none}}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cx{border:1.5px solid var(--tinta);text-align:center;padding:6px 4px 8px;min-width:0}
+.cx .lab{font-family:var(--f-tit);font-size:.78rem}.cx .val{font-family:var(--f-num);font-size:2rem;line-height:1.05}.cx .ini{font-family:var(--f-it);font-style:italic;font-size:.75rem;color:var(--tinta2)}
+.sec{border-top:1px solid rgba(22,15,7,.6);padding-top:10px;margin-top:12px}
+.sec h4{margin:0 0 6px;font-family:var(--f-tit);font-weight:400;font-size:1.02rem}
+.mare{display:grid;gap:3px;margin-bottom:6px}.mare i{height:14px;border:1px solid var(--tinta)}.mare i.on{background:var(--tinta)}.mare i.on.alto{background:var(--sangue);border-color:var(--sangue)}
+.linha2{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:5px 0}
+.mini{background:transparent;border:1.2px solid var(--tinta);border-radius:3px;padding:4px 10px;font-size:.86rem;min-height:36px;font-family:var(--f-tit);color:var(--tinta)}
+.mini:hover{background:var(--tinta);color:var(--papel)}.mini[disabled]{opacity:.35;cursor:not-allowed}.mini[disabled]:hover{background:transparent;color:var(--tinta)}
+.itens{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}.itens li{font-size:.93rem}
+.itens li small{display:block;color:var(--tinta2);font-size:.78rem;line-height:1.35;font-style:italic}
+.chama{display:inline-flex;gap:3px;vertical-align:middle}.chama i{width:8px;height:14px;border-radius:50% 50% 40% 40%;background:var(--sangue)}.chama i.gasta{background:transparent;border:1px solid var(--tinta2)}
+.dedos{display:flex;gap:6px;align-items:center}.dedos i{width:13px;height:22px;border-radius:7px 7px 3px 3px;border:1.5px solid var(--tinta);background:var(--tinta);display:inline-block}.dedos i.gasto{background:transparent;opacity:.4}
+.rasto{display:flex;flex-wrap:wrap;gap:2px 8px;font-family:var(--f-num);font-size:1.05rem;color:var(--tinta2)}.rasto span:last-child{color:var(--tinta);text-decoration:underline}
+.opc label{display:flex;align-items:center;gap:8px;justify-content:space-between;min-height:38px;font-size:.93rem}
+.opc input[type=checkbox]{width:20px;height:20px;accent-color:#160f07}
+.mapa .tit{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.mapa .tit h4{margin:0;font-family:var(--f-tit);font-weight:400;font-size:1.15rem}
+.mapa svg{width:100%;height:auto;display:block}
+.loc-novo{animation:mancha 1.4s ease-out;transform-box:fill-box;transform-origin:center}@keyframes mancha{from{opacity:0;transform:scale(.3)}60%{opacity:1}to{opacity:1;transform:scale(1)}}
+.aqui{animation:pulsa 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pulsa{50%{transform:scale(1.45);opacity:.55}}
+.mapa-grande{position:fixed;inset:0;z-index:50;background:rgba(10,6,2,.7);display:flex;align-items:center;justify-content:center;
+  padding:calc(env(safe-area-inset-top,0px) + 16px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 16px) max(16px,env(safe-area-inset-left,0px))}
+.mapa-grande .folhamapa{background:var(--papel);color:var(--tinta);border-radius:3px;padding:14px;max-width:min(560px,100%);max-height:100%;width:100%;overflow:auto;box-shadow:0 10px 40px rgba(0,0,0,.6),inset 0 0 60px rgba(90,58,20,.5)}
+
+.capa{text-align:center;padding:4px 0}
+.capa h1{font-family:var(--f-tit);font-weight:400;font-size:clamp(2.4rem,8vw,3.8rem);margin:6px 0 2px;line-height:1.05;text-wrap:balance}
+.capa .sub{font-family:var(--f-it);font-style:italic;color:var(--tinta2);margin:0 auto 22px;max-width:46ch;font-size:1.1rem}
+.capa .acoes{justify-content:center}
+.regras{text-align:left;margin-top:26px;border-top:1px solid var(--tinta);padding-top:6px}
+.regras summary{cursor:pointer;font-family:var(--f-tit);font-size:1.2rem;min-height:44px;display:flex;align-items:center}
+.regras p,.regras li{font-size:.95rem;max-width:64ch}
+.criar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.criar .cx .val{font-size:2.6rem}.criar .dados{transform:scale(.78);margin-top:-4px}
+.grelha3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.opcao{background:transparent;border:1.5px solid var(--tinta);border-radius:3px;padding:10px;text-align:left;min-height:92px;color:var(--tinta)}
+.opcao b{display:block;font-family:var(--f-tit);font-weight:400;font-size:1.08rem}.opcao small{color:var(--tinta2);font-size:.82rem;line-height:1.3;display:block}
+.opcao.sel{background:var(--tinta);color:var(--papel)}.opcao.sel small{color:var(--papel3)}
+.titulo2{font-family:var(--f-tit);font-weight:400;font-size:1.3rem;margin:18px 0 8px}
+@media (max-width:560px){.grelha3{grid-template-columns:1fr}.opcao{min-height:0}}
+.fim{text-align:center;padding:18px;margin-top:20px;border:2px solid var(--tinta);outline:1px solid var(--tinta);outline-offset:3px}
+.fim h2{font-family:var(--f-tit);font-weight:400;font-size:1.9rem;margin:0 0 6px}.fim.morte h2{color:var(--sangue)}.fim .acoes{justify-content:center}
+.fade{animation:entra .7s ease .15s both}@keyframes entra{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.aviso-som{font-family:var(--f-it);font-style:italic;font-size:.9rem;color:var(--tinta2);text-align:center;margin-top:10px}
+@media (prefers-reduced-motion:reduce){.fade,.rola .dado,.loc-novo,.aqui{animation:none}aside#folha{transition:none}}
+</style>
+
+<header class="bar" id="bar"></header>
+<div class="layout">
+  <main><div class="folha-livro" id="pagina"><div id="topo"></div><div id="ilus"><canvas id="tela" width="1200" height="680" aria-label="Illustration"></canvas></div><div id="corpo"></div></div></main>
+  <aside id="folha" hidden></aside>
+</div>
+<div class="veu" id="veu" hidden></div>
+<div id="mapaGrande" class="mapa-grande" hidden></div>
+
+<script>
+/* Motor de ilustração: silhuetas a tinta da china sobre sépia, com profundidade, névoa, vinheta e grão.
+   Funciona no navegador e em Node (@napi-rs/canvas). */
+(function (raiz) {
+const W = 1200, H = 680, TINTA = '#0d0803', NE = '#22170b', LONGE = '#4a3517';
+let MK = null;
+
+function rng(seed) { let a = seed >>> 0; return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function camada() { const c = MK(W, H); return { c, x: c.getContext('2d') }; }
+function ruido(r, w, h, cel, alfa) {
+  const gw = Math.max(2, Math.ceil(w / cel)), gh = Math.max(2, Math.ceil(h / cel));
+  const p = MK(gw, gh), px = p.getContext('2d'); const id = px.createImageData(gw, gh);
+  for (let i = 0; i < gw * gh; i++) id.data[i * 4 + 3] = Math.floor(r() * 255 * alfa);
+  px.putImageData(id, 0, 0); const o = MK(w, h), ox = o.getContext('2d'); ox.imageSmoothingEnabled = true; ox.imageSmoothingQuality = 'high'; ox.drawImage(p, 0, 0, w, h); return o;
+}
+function desfoca(c, f) {
+  if (f <= 1) return c; const sw = Math.max(1, Math.round(W / f)), sh = Math.max(1, Math.round(H / f));
+  const s = MK(sw, sh), sx = s.getContext('2d'); sx.imageSmoothingQuality = 'high'; sx.drawImage(c, 0, 0, sw, sh);
+  const o = MK(W, H), ox = o.getContext('2d'); ox.imageSmoothingQuality = 'high'; ox.drawImage(s, 0, 0, W, H); return o;
+}
+function aguada(L, r, forca, cel) {
+  L.x.save(); L.x.globalCompositeOperation = 'destination-out';
+  L.x.globalAlpha = forca; L.x.drawImage(ruido(r, W, H, cel || 46, 1), 0, 0);
+  L.x.globalAlpha = forca * .6; L.x.drawImage(ruido(r, W, H, 11, 1), 0, 0); L.x.restore();
+}
+function compoe(dst, L, o) { o = o || {}; let c = L.c; if (o.blur) c = desfoca(c, o.blur); dst.save(); dst.globalAlpha = o.alfa == null ? 1 : o.alfa; if (o.modo) dst.globalCompositeOperation = o.modo; dst.drawImage(c, 0, 0); dst.restore(); }
+
+/* ---------- atmosfera ---------- */
+function fundo(x, r, o) {
+  o = Object.assign({ lx: 600, ly: 260, lr: 420, topo: '#c9a76b', base: '#8f6c3a', luz: 1, nuvens: .5 }, o);
+  const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, o.topo); g.addColorStop(1, o.base); x.fillStyle = g; x.fillRect(0, 0, W, H);
+  const rg = x.createRadialGradient(o.lx, o.ly, 0, o.lx, o.ly, o.lr * 1.7);
+  rg.addColorStop(0, `rgba(255,247,218,${.97 * o.luz})`); rg.addColorStop(.22, `rgba(248,228,175,${.75 * o.luz})`); rg.addColorStop(.6, `rgba(225,190,120,${.3 * o.luz})`); rg.addColorStop(1, 'rgba(220,180,110,0)');
+  x.fillStyle = rg; x.fillRect(0, 0, W, H);
+  [[110, .55], [42, .35], [15, .18]].forEach(([cel, a]) => { const n = ruido(r, W, H, cel, 1); const t = MK(W, H), tx = t.getContext('2d'); tx.drawImage(n, 0, 0); tx.globalCompositeOperation = 'source-in'; tx.fillStyle = '#4e3414'; tx.fillRect(0, 0, W, H); x.save(); x.globalAlpha = a * o.nuvens; x.drawImage(t, 0, 0); x.restore(); });
+}
+function astro(x, cx, cy, rr, a) {
+  const g = x.createRadialGradient(cx, cy, rr * .3, cx, cy, rr * 3.6); g.addColorStop(0, `rgba(255,251,232,${a})`); g.addColorStop(.28, `rgba(255,240,200,${a * .5})`); g.addColorStop(1, 'rgba(255,230,180,0)');
+  x.fillStyle = g; x.beginPath(); x.arc(cx, cy, rr * 3.6, 0, 7); x.fill();
+  x.fillStyle = `rgba(255,252,240,${a * .92})`; x.beginPath(); x.arc(cx, cy, rr, 0, 7); x.fill();
+}
+function nuvens(x, r, y0, y1, n, alfa, cor) {
+  // fumo de nuvens: ruído em várias escalas, recortado por uma faixa e esticado na horizontal
+  const L = camada(); const l = L.x;
+  const a = ruido(r, W, H, 150, 1), b = ruido(r, W, H, 60, 1), c2 = ruido(r, W, H, 22, 1);
+  l.globalAlpha = 1; l.drawImage(a, 0, 0); l.globalAlpha = .8; l.drawImage(b, 0, 0); l.globalAlpha = .5; l.drawImage(c2, 0, 0); l.globalAlpha = 1;
+  // contraste: apaga o que é fraco
+  l.globalCompositeOperation = 'destination-out'; l.globalAlpha = .55; l.fillStyle = '#000'; l.fillRect(0, 0, W, H); l.globalAlpha = 1;
+  const g = l.createLinearGradient(0, y0 - 60, 0, y1 + 60); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(.3, 'rgba(0,0,0,0)'); g.addColorStop(.7, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,1)');
+  l.fillStyle = g; l.fillRect(0, 0, W, H); l.fillStyle = '#000'; l.fillRect(0, 0, W, Math.max(0, y0 - 60)); l.fillRect(0, y1 + 60, W, H);
+  l.globalCompositeOperation = 'source-in'; l.fillStyle = cor || NE; l.fillRect(0, 0, W, H);
+  const S = camada(); S.x.drawImage(L.c, 0, 0, W, H, -W * .25, 0, W * 1.5, H);
+  for (let i = 0; i < Math.min(n, 4); i++) { S.x.globalAlpha = .5; S.x.drawImage(L.c, 0, 0, W, H, -W * .3 + (r() - .5) * 200, (r() - .5) * 30, W * 1.6, H); }
+  compoe(x, S, { alfa: alfa * 1.6, blur: 2.5 });
+}
+function nevoa(x, y, h, a) { const g = x.createLinearGradient(0, y - h, 0, y + h); g.addColorStop(0, 'rgba(232,210,160,0)'); g.addColorStop(.5, `rgba(232,210,160,${a})`); g.addColorStop(1, 'rgba(232,210,160,0)'); x.fillStyle = g; x.fillRect(0, y - h, W, h * 2); }
+function vinheta(x, f) {
+  f = f == null ? 1 : f; x.save(); x.translate(W / 2, H / 2); x.scale(1, H / W * 1.08);
+  const g = x.createRadialGradient(0, 0, W * .16, 0, 0, W * .66); g.addColorStop(0, 'rgba(6,4,1,0)'); g.addColorStop(.45, `rgba(6,4,1,${.32 * f})`); g.addColorStop(.75, `rgba(6,4,1,${.82 * f})`); g.addColorStop(1, `rgba(4,2,0,${f})`);
+  x.fillStyle = g; x.fillRect(-W, -W, W * 2, W * 2); x.restore();
+  for (const [cx, cy] of [[0, 0], [W, 0], [0, H], [W, H]]) { const c = x.createRadialGradient(cx, cy, 0, cx, cy, 420); c.addColorStop(0, `rgba(3,2,0,${.9 * f})`); c.addColorStop(1, 'rgba(3,2,0,0)'); x.fillStyle = c; x.fillRect(0, 0, W, H); }
+}
+function grao(x, r, a) {
+  const t = MK(256, 256), tx = t.getContext('2d'), id = tx.createImageData(256, 256);
+  for (let i = 0; i < 256 * 256; i++) { const v = Math.floor(r() * 255); id.data[i * 4] = v; id.data[i * 4 + 1] = v * .9; id.data[i * 4 + 2] = v * .72; id.data[i * 4 + 3] = 255; }
+  tx.putImageData(id, 0, 0); x.save(); x.globalCompositeOperation = 'overlay'; x.globalAlpha = a; x.fillStyle = x.createPattern(t, 'repeat'); x.fillRect(0, 0, W, H); x.restore();
+  x.save(); x.fillStyle = 'rgba(16,10,3,1)'; for (let i = 0; i < 110; i++) { x.globalAlpha = r() * .45; x.beginPath(); x.arc(r() * W, r() * H, r() * 1.8 + .3, 0, 7); x.fill(); }
+  x.strokeStyle = 'rgba(25,15,5,.22)'; x.lineWidth = .9; for (let i = 0; i < 3; i++) { const xx = r() * W; x.beginPath(); x.moveTo(xx, 0); x.lineTo(xx + (r() - .5) * 26, H); x.stroke(); } x.restore();
+}
+function brilho(x, X, Y, rr, a, cor) { const g = x.createRadialGradient(X, Y, 0, X, Y, rr); g.addColorStop(0, cor || `rgba(255,236,180,${a})`); g.addColorStop(1, 'rgba(255,220,150,0)'); x.fillStyle = g; x.beginPath(); x.arc(X, Y, rr, 0, 7); x.fill(); }
+function raios(x, r, X, Y, ang, abert, len, alfa, n) { x.save(); x.globalCompositeOperation = 'lighter'; for (let i = 0; i < (n || 9); i++) { const a = ang + (r() - .5) * abert, w = .02 + r() * .05; const g = x.createRadialGradient(X, Y, 0, X, Y, len); g.addColorStop(0, `rgba(120,100,60,${alfa})`); g.addColorStop(1, 'rgba(120,100,60,0)'); x.fillStyle = g; x.beginPath(); x.moveTo(X, Y); x.arc(X, Y, len, a - w, a + w); x.closePath(); x.fill(); } x.restore(); }
+
+/* ---------- formas ---------- */
+function traco(x, pts, w0, w1, cor) {
+  const n = pts.length, Lf = [], Rt = [];
+  for (let i = 0; i < n; i++) { const a = pts[Math.max(0, i - 1)], b = pts[Math.min(n - 1, i + 1)]; let dx = b[0] - a[0], dy = b[1] - a[1]; const d = Math.hypot(dx, dy) || 1; dx /= d; dy /= d; const w = (w0 + (w1 - w0) * i / (n - 1)) / 2; Lf.push([pts[i][0] - dy * w, pts[i][1] + dx * w]); Rt.push([pts[i][0] + dy * w, pts[i][1] - dx * w]); }
+  x.fillStyle = cor || TINTA; x.beginPath(); x.moveTo(Lf[0][0], Lf[0][1]); for (const p of Lf) x.lineTo(p[0], p[1]); for (let i = Rt.length - 1; i >= 0; i--) x.lineTo(Rt[i][0], Rt[i][1]); x.closePath(); x.fill();
+  if (w0 > 2.5) { x.beginPath(); x.arc(pts[0][0], pts[0][1], w0 / 2, 0, 7); x.fill(); }
+}
+function curva(p0, p1, p2, n = 8) { const o = []; for (let i = 0; i <= n; i++) { const t = i / n, u = 1 - t; o.push([u * u * p0[0] + 2 * u * t * p1[0] + t * t * p2[0], u * u * p0[1] + 2 * u * t * p1[1] + t * t * p2[1]]); } return o; }
+function poli(x, pts, cor) { x.fillStyle = cor || TINTA; x.beginPath(); x.moveTo(pts[0][0], pts[0][1]); for (const p of pts) x.lineTo(p[0], p[1]); x.closePath(); x.fill(); }
+function serrilha(r, pts, amp, passo) { const o = []; for (let i = 0; i < pts.length - 1; i++) { const a = pts[i], b = pts[i + 1]; const d = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1; const n = Math.max(1, Math.floor(d / passo)); const nx = -(b[1] - a[1]) / d, ny = (b[0] - a[0]) / d; for (let k = 0; k < n; k++) { const t = k / n; const j = (r() - .5) * 2 * amp; o.push([a[0] + (b[0] - a[0]) * t + nx * j, a[1] + (b[1] - a[1]) * t + ny * j]); } } o.push(pts[pts.length - 1]); return o; }
+
+function arvore(x, r, X, Y, h, o) {
+  o = Object.assign({ incl: 0, prof: 7, larg: h * .08, corvos: 0, cor: TINTA, abertura: .78, espinhos: true }, o); const pontas = [];
+  function ramo(px, py, ang, len, w, d) {
+    const curv = (r() - .5) * .8; const ex = px + Math.sin(ang) * len, ey = py - Math.cos(ang) * len;
+    const mx = (px + ex) / 2 + Math.cos(ang) * len * curv * .5, my = (py + ey) / 2 + Math.sin(ang) * len * curv * .5;
+    const w1 = w * (d > 1 ? .64 : .12); traco(x, curva([px, py], [mx, my], [ex, ey], 9), w, w1, o.cor);
+    if (d <= 1 || len < 5) { pontas.push([ex, ey, ang]); return; }
+    const n = d > o.prof - 2 ? 2 + (r() < .45 ? 1 : 0) : (r() < .66 ? 2 : (r() < .5 ? 3 : 1));
+    for (let i = 0; i < n; i++) { const da = (n > 1 ? (i / (n - 1) - .5) * o.abertura * 1.3 : 0) + (r() - .5) * o.abertura * .7; ramo(ex, ey, ang + da, len * (.6 + r() * .22), w1, d - 1); }
+    if (o.espinhos && d < 4) for (let i = 0; i < 2; i++) if (r() < .5) { const t = .3 + r() * .5, sx = px + (ex - px) * t, sy = py + (ey - py) * t, sa = ang + (r() < .5 ? -1 : 1) * (.8 + r() * .6); traco(x, [[sx, sy], [sx + Math.sin(sa) * len * .18, sy - Math.cos(sa) * len * .18]], Math.max(1, w * .35), .3, o.cor); }
+  }
+  for (let i = 0; i < 5; i++) { const s = (i < 2 ? -1 : 1) * (.5 + r() * 1.1); traco(x, curva([X + s * 3, Y - h * .05], [X + s * h * .08, Y - 2], [X + s * h * (.16 + r() * .12), Y + 8]), o.larg * (.5 + r() * .3), 1, o.cor); }
+  ramo(X, Y + 6, o.incl, h * .4, o.larg, o.prof);
+  for (let i = 0; i < o.corvos && pontas.length; i++) { pontas.sort((a, b) => a[1] - b[1]); const idx = Math.floor(r() * Math.min(pontas.length, 14)); const p = pontas.splice(idx, 1)[0]; corvo(x, r, p[0], p[1] + 3, 10 + r() * 6, r() < .5 ? 1 : -1, o.cor); }
+  return pontas;
+}
+function corvo(x, r, X, Y, s, dir, cor) {
+  x.save(); x.translate(X, Y); x.scale(dir * s / 10, s / 10); x.fillStyle = cor || TINTA;
+  x.beginPath(); x.ellipse(-1, -9, 5, 9, -.45, 0, 7); x.fill(); x.beginPath(); x.arc(3.2, -18, 3.4, 0, 7); x.fill();
+  x.beginPath(); x.moveTo(5.5, -19.5); x.quadraticCurveTo(10, -18.8, 12.5, -16.6); x.lineTo(5.8, -15.8); x.fill();
+  x.beginPath(); x.moveTo(-4, -4); x.lineTo(-13, 7); x.lineTo(-9, 7.5); x.lineTo(-2, 0); x.fill(); x.fillRect(-.6, -1, 1.2, 3.5); x.restore();
+}
+function corvoGrande(x, r, X, Y, s, cor) { // de perfil, virado à direita, pousado em (X,Y)
+  x.save(); x.translate(X, Y); x.scale(s / 100, s / 100); cor = cor || TINTA; x.fillStyle = cor;
+  x.beginPath(); x.moveTo(-60, -40); x.quadraticCurveTo(-40, -110, 20, -120); x.quadraticCurveTo(52, -124, 60, -150); x.quadraticCurveTo(70, -178, 96, -176);
+  x.quadraticCurveTo(116, -174, 122, -160); x.lineTo(168, -150); x.quadraticCurveTo(140, -142, 120, -138); x.quadraticCurveTo(110, -120, 100, -110);
+  x.quadraticCurveTo(80, -60, 40, -30); x.quadraticCurveTo(0, -4, -40, -10); x.closePath(); x.fill();
+  for (let i = 0; i < 7; i++) traco(x, [[-30 + i * 4, -30], [-90 - i * 6, 10 + i * 4], [-140 - i * 4, 30 + i * 6]], 14 - i, 1, cor);
+  for (let i = 0; i < 9; i++) traco(x, [[-20 + i * 12, -90 + i * 6], [-60 + i * 6, -50 + i * 6], [-80 + i * 4, -20 + i * 5]], 8, 1, cor);
+    traco(x, [[10, -20], [14, 0], [8, 6]], 6, 4, cor); traco(x, [[30, -26], [36, 0], [30, 6]], 6, 4, cor);
+  for (const bx of [8, 30]) for (let k = -1; k < 2; k++) traco(x, [[bx, 4], [bx + 12 + k * 4, 8 + Math.abs(k) * 2]], 3, .5, cor);
+  x.restore();
+}
+function ave(x, r, X, Y, s, fase, cor, gaivota) { // ave em voo vista de frente/baixo
+  x.save(); x.translate(X, Y); x.scale(s / 30, s / 30); x.fillStyle = cor || TINTA; const up = Math.sin(fase || 0);
+  for (const d of [-1, 1]) {
+    x.save(); x.scale(d, 1); x.rotate(-up * .5);
+    const pulso = [20, -9 - up * 3], ponta = gaivota ? [58, 4 + up * 6] : [48, 2 + up * 5];
+    x.beginPath(); x.moveTo(1, -3); x.quadraticCurveTo(10, -10, pulso[0], pulso[1]);
+    x.quadraticCurveTo(36, -8, ponta[0], ponta[1]);
+    if (gaivota) { x.quadraticCurveTo(40, 2, 30, 4); x.lineTo(26, 6); x.lineTo(22, 5); x.lineTo(18, 7); x.quadraticCurveTo(9, 7, 1, 5); }
+    else { const n = 5; for (let i = 0; i < n; i++) { const t = i / (n - 1); const bx = ponta[0] - 4 - t * 16, by = ponta[1] + 1 + t * 4; x.lineTo(bx + 4, by + 4 + (i % 2 ? 0 : 2)); x.lineTo(bx, by); } x.quadraticCurveTo(14, 9, 1, 5); }
+    x.closePath(); x.fill(); x.restore();
+  }
+  x.beginPath(); x.ellipse(0, 2, 3.2, 8, 0, 0, 7); x.fill(); x.beginPath(); x.arc(0, -5.5, 2.9, 0, 7); x.fill();
+  if (gaivota) { x.beginPath(); x.moveTo(-1.1, -7); x.lineTo(0, -12); x.lineTo(1.1, -7); x.fill(); x.beginPath(); x.moveTo(-3, 8); x.lineTo(0, 15); x.lineTo(3, 8); x.fill(); }
+  else { x.beginPath(); x.moveTo(-3, 8); x.lineTo(-5, 17); x.lineTo(0, 15); x.lineTo(5, 17); x.lineTo(3, 8); x.fill(); }
+  x.restore();
+}
+function bando(x, r, cx, cy, rx, ry, n, smin, smax, cor) { for (let i = 0; i < n; i++) { const a = r() * 6.28, d = Math.sqrt(r()); ave(x, r, cx + Math.cos(a) * rx * d, cy + Math.sin(a) * ry * d, smin + r() * (smax - smin), r() * 6.28, cor); } }
+function erva(x, r, x0, x1, y, hmax, dens, cor, fy) {
+  for (let X = x0; X < x1; X += 1.5 + r() * 5 / dens) { const yy = fy ? fy(X) : y; const h = hmax * (.2 + r() * r() * 1.2), l = (r() - .35) * h * .7; traco(x, curva([X, yy + 5], [X + l * .3, yy - h * .5], [X + l, yy - h]), 2.6 + r() * 2.2, .3, cor); }
+}
+function chao(x, r, f, cor, amp, passo) { x.fillStyle = cor || TINTA; x.beginPath(); x.moveTo(-10, H + 10); for (let X = -10; X <= W + 10; X += passo || 5) x.lineTo(X, f(X) + (r() - .5) * (amp || 0)); x.lineTo(W + 10, H + 10); x.closePath(); x.fill(); }
+function estacas(x, r, x0, x1, y, h, n, cor) { for (let i = 0; i < n; i++) { const X = x0 + (x1 - x0) * i / Math.max(1, n - 1) + (r() - .5) * 16, hh = h * (.45 + r() * .7), a = (r() - .5) * .4, w = 6 + r() * 6; x.save(); x.translate(X, y + 6); x.rotate(a); poli(x, [[-w / 2, 0], [-w / 2, -hh], [-w / 6, -hh - r() * 12], [w / 4, -hh + 3], [w / 2, -hh - r() * 7], [w / 2, 0]], cor); x.restore(); } }
+function cruz(x, X, Y, h, a, cor) { x.save(); x.translate(X, Y); x.rotate(a); x.fillStyle = cor || TINTA; x.fillRect(-h * .05, -h, h * .1, h + 4); x.fillRect(-h * .3, -h * .78, h * .6, h * .09); x.restore(); }
+function rocha(x, r, X, Y, w, h, cor) { const n = 10, pts = []; for (let i = 0; i <= n; i++) { const t = i / n; pts.push([X - w / 2 + w * t, Y - h * Math.pow(Math.sin(Math.PI * t), .7) * (.65 + r() * .5)]); } poli(x, serrilha(r, pts.concat([[X + w / 2, Y + 6], [X - w / 2, Y + 6]]), 3, 7), cor); }
+function falesia(x, r, pts, cor, amp) { poli(x, serrilha(r, pts, amp || 6, 9), cor); }
+
+/* figura humana alongada, de capa rasgada a esvoaçar */
+function figura(x, r, X, Y, h, o) {
+  o = Object.assign({ dir: 1, vento: .6, cor: TINTA, curv: 0 }, o); const k = h / 100, v = o.vento;
+  x.save(); x.translate(X, Y); x.scale(o.dir * k, k); x.fillStyle = o.cor; x.strokeStyle = o.cor;
+  if (o.ajoelha) {
+    poli(x, serrilha(r, [[-28, 0], [-22, -28], [-12, -50], [-4, -64], [6, -66], [12, -54], [18, -34], [30, -12], [44, 0]], 1.2, 5), o.cor);
+    x.beginPath(); x.ellipse(6, -72, 6, 7.5, .5, 0, 7); x.fill();
+    if (o.veu) poli(x, serrilha(r, [[0, -79], [-10, -60], [-22, -30], [-34, -2], [-16, -14], [-4, -40], [10, -70]], 1.2, 5), o.cor);
+    traco(x, [[8, -58], [20, -60], [24, -66]], 4, 3, o.cor); x.restore(); return;
+  }
+  if (o.sentado) { // sentado num banco, curvado
+    poli(x, serrilha(r, [[-14, -60], [-22, -36], [-24, -12], [-20, 0], [30, 0], [30, -6], [6, -12], [10, -40], [6, -58]], 1, 5), o.cor);
+    x.beginPath(); x.ellipse(2, -68, 6, 7.5, .2, 0, 7); x.fill(); if (o.chapeu) { x.fillRect(-11, -73, 24, 3); poli(x, [[-6, -72], [-5, -82], [7, -81], [8, -72]], o.cor); }
+    traco(x, [[24, -2], [28, -24]], 5, 4, o.cor); if (o.cachimbo) traco(x, [[7, -66], [16, -64], [19, -70]], 2.4, 2.4, o.cor);
+    x.restore(); return;
+  }
+  x.rotate(o.curv * .35);
+  // pernas
+  traco(x, [[-2, -18], [-4, -8], [-5, 0]], 4.2, 3.4, o.cor); traco(x, [[4, -18], [7, -8], [9, 0]], 4.2, 3.4, o.cor);
+  // capa
+  const costas = [[-6, -84], [-12 - 6 * v, -62], [-18 - 18 * v, -38], [-22 - 34 * v, -18 - 6 * v]];
+  const frente = [[7, -84], [10, -62], [12, -38], [14, -16]];
+  const bainha = []; const b0 = frente[3], b1 = costas[3]; const nb = 16;
+  for (let i = 0; i <= nb; i++) { const t = i / nb; const bx = b0[0] + (b1[0] - b0[0]) * t, by = b0[1] + (b1[1] - b0[1]) * t; const longo = r() < .3; bainha.push([bx - (longo ? 3 * v : 0), by + (longo ? 5 + r() * 10 * (.5 + t) : (r() - .5) * 3)]); }
+  poli(x, frente.concat(bainha, costas.slice().reverse()), o.cor);
+  for (let i = 0; i < 3 * v; i++) { const t = .2 + r() * .7; const sx = costas[1][0] + (costas[3][0] - costas[1][0]) * t, sy = costas[1][1] + (costas[3][1] - costas[1][1]) * t; traco(x, [[sx, sy], [sx - 10 - r() * 14 * v, sy + 4 + r() * 6], [sx - 18 - r() * 22 * v, sy + 10 + r() * 10]], 3, .4, o.cor); }
+  // cabeça
+  x.beginPath(); x.ellipse(1.5, -91, 5, 6.6, .12, 0, 7); x.fill();
+  if (o.capuz) poli(x, [[-6, -84], [-8, -96], [-2, -102], [6, -100], [9, -92], [8, -84]], o.cor);
+  if (o.chapeu) { x.fillRect(-11, -96, 25, 2.6); poli(x, [[-5, -95], [-4, -106], [8, -105], [9, -95]], o.cor); }
+  if (o.cabelo) for (let i = 0; i < 9; i++) traco(x, [[-3 + i, -96], [-6 - i * 2.4 - r() * 5, -84 + r() * 6], [-10 - i * 3.2 - r() * 10, -70 + r() * 16]], 1.6, .3, o.cor);
+  if (o.lanterna) { traco(x, [[6, -78], [18, -64], [28, -66]], 4.2, 3.6, o.cor); x.fillRect(27, -66, 1.4, 7); x.fillRect(23, -59, 10, 12); x.restore(); brilho(x, X + o.dir * 28 * k, Y - 53 * k, 70 * k, .55); return; }
+  if (o.espada) { traco(x, [[6, -78], [16, -90], [22, -104]], 4.2, 3.6, o.cor); traco(x, [[22, -104], [30, -150]], 3.4, .6, o.cor); x.fillRect(16, -108, 13, 2.4); }
+  if (o.bastao) { traco(x, [[6, -78], [14, -66], [20, -66]], 4.2, 3.6, o.cor); traco(x, [[20, -96], [22, -40], [24, 0]], 2.6, 2.2, o.cor); }
+  if (o.aponta) traco(x, [[6, -78], [24, -82], [44, -88]], 4.2, 2.4, o.cor);
+  if (o.bracos === 'frente') { for (const [dy, dl] of [[0, 0], [5, 6]]) { traco(x, [[6, -80 + dy], [24 + dl, -72 + dy], [44 + dl, -62 + dy]], 4.6, 2.4, o.cor); for (let i = 0; i < 4; i++) traco(x, [[43 + dl, -62 + dy], [50 + dl + i, -60 + dy + i * 2], [56 + dl + i * 1.5, -54 + dy + i * 3 + r() * 3]], 1.5, .2, o.cor); } }
+  else if (o.bracos === 'pendentes') { for (const s of [-1, 1]) { traco(x, [[s * 6, -82], [s * 14, -56], [s * 16, -28]], 4.4, 2.6, o.cor); for (let i = 0; i < 4; i++) traco(x, [[s * 16, -28], [s * (16 + i * 1.4 - 2), -18], [s * (15 + i * 2.4 - 3), -4 + r() * 6]], 1.4, .2, o.cor); } }
+  else if (o.bracos) { for (const s of [-1, 1]) { traco(x, [[s * 4, -80], [s * 26, -74], [s * 46, -70]], 4.6, 2.6, o.cor); for (let i = 0; i < 4; i++) traco(x, [[s * (44 + i * 1.5), -70], [s * (46 + i * 2), -62 + r() * 4], [s * (47 + i * 2.5), -50 - r() * 10]], 1.4, .2, o.cor); } }
+  if (o.algas) for (let i = 0; i < 10; i++) { const sx = -8 + r() * 18, sy = -84 + r() * 60; traco(x, [[sx, sy], [sx + (r() - .5) * 6, sy + 10 + r() * 10], [sx + (r() - .5) * 10, sy + 22 + r() * 24]], 1.8, .3, o.cor); }
+  if (o.barbatanas) poli(x, [[-8, -84], [-16, -100], [-6, -90], [-6, -108], [1, -92], [6, -110], [8, -92], [16, -104], [10, -84]], o.cor);
+  x.restore();
+}
+function farol(x, r, X, Y, h, o) {
+  o = Object.assign({ cor: TINTA, luz: false, larg: h * .17 }, o); const w = o.larg, top = Y - h, wt = w * .62; x.fillStyle = o.cor;
+  poli(x, [[X - w / 2, Y], [X - wt / 2, top + h * .12], [X + wt / 2, top + h * .12], [X + w / 2, Y]], o.cor);
+  x.fillRect(X - wt * .74, top + h * .1, wt * 1.48, h * .022); for (let i = 0; i <= 7; i++) x.fillRect(X - wt * .72 + i * wt * 1.44 / 7, top + h * .07, 1.8, h * .035); x.fillRect(X - wt * .72, top + h * .068, wt * 1.44, 1.8);
+  if (o.luz) { x.fillRect(X - wt * .44, top + h * .02, wt * .1, h * .08); x.fillRect(X + wt * .34, top + h * .02, wt * .1, h * .08); x.fillRect(X - wt * .05, top + h * .02, wt * .1, h * .08); }
+  else x.fillRect(X - wt * .44, top + h * .02, wt * .88, h * .08);
+  poli(x, [[X - wt * .52, top + h * .026], [X, top - h * .05], [X + wt * .52, top + h * .026]], o.cor); x.fillRect(X - 1, top - h * .085, 2, h * .04);
+  if (o.porta) { x.save(); x.fillStyle = 'rgba(0,0,0,0)'; x.restore(); }
+}
+function casa(x, r, X, Y, w, h, o) { o = o || {}; const cor = o.cor || TINTA; const tl = (r() - .5) * 12, sk = (r() - .5) * 6;
+  poli(x, [[X, Y], [X + sk, Y - h], [X + w / 2 + tl, Y - h - w * .46], [X + w + sk, Y - h], [X + w, Y]], cor);
+  x.fillStyle = cor; x.fillRect(X + w * .7, Y - h - w * .4, w * .12, w * .32);
+  if (o.fumo) { x.save(); x.globalAlpha = .35; for (let i = 0; i < 14; i++) { x.beginPath(); x.arc(X + w * .76 + Math.sin(i * .7) * 10 + i * 3, Y - h - w * .45 - i * 9, 5 + i * 1.6, 0, 7); x.fill(); } x.restore(); }
+  if (o.janelas) for (const [jx, jy] of o.janelas) { const wx = X + jx * w, wy = Y - h + jy * h; brilho(x, wx + w * .06, wy + h * .08, w * .55, .35); x.fillStyle = 'rgba(255,228,165,.95)'; x.fillRect(wx, wy, w * .13, h * .19); x.fillStyle = cor; x.fillRect(wx + w * .058, wy, w * .014, h * .19); }
+}
+function barco(x, r, X, Y, s, o) { o = o || {}; const cor = o.cor || TINTA; x.save(); x.translate(X, Y); x.scale(s, s); if (o.incl) x.rotate(o.incl); x.fillStyle = cor;
+  x.beginPath(); x.moveTo(-64, -10); x.quadraticCurveTo(0, 22, 66, -12); x.lineTo(60, -18); x.lineTo(-58, -18); x.closePath(); x.fill();
+  x.fillRect(-2, -120, 4, 104); if (o.partido) { x.fillRect(-2, -120, 4, 50); }
+  if (o.velas) { poli(x, serrilha(r, [[4, -112], [8, -64], [4, -22], [50, -30], [44, -70], [4, -112]], o.rasgada ? 4 : 0, 6), cor); poli(x, [[-4, -100], [-4, -24], [-42, -28]], cor); x.fillRect(-32, -80, 4, 62); poli(x, [[-34, -78], [-34, -26], [-62, -28]], cor); }
+  if (o.cordas) { x.strokeStyle = cor; x.lineWidth = 1.2; x.beginPath(); x.moveTo(0, -118); x.lineTo(-60, -16); x.moveTo(0, -118); x.lineTo(64, -16); x.stroke(); } x.restore(); }
+function onda(x, r, X, Y, w, h, dir, cor) {
+  x.save(); x.translate(X, Y); x.scale(dir, 1); x.fillStyle = cor || TINTA; x.beginPath(); x.moveTo(-w * .7, 0); x.quadraticCurveTo(-w * .25, -h * .15, -w * .05, -h * .75); x.quadraticCurveTo(w * .1, -h * 1.12, w * .34, -h * .98);
+  x.quadraticCurveTo(w * .46, -h * .78, w * .3, -h * .62); x.quadraticCurveTo(w * .2, -h * .72, w * .2, -h * .5); x.quadraticCurveTo(w * .32, -h * .2, w * .7, 0); x.closePath(); x.fill();
+  for (let i = 0; i < 6; i++) { const a = -.4 + i * .25; traco(x, [[w * .3, -h * .92], [w * (.36 + i * .03), -h * (.96 + .1 * Math.sin(a))], [w * (.42 + i * .05), -h * (.88 - i * .05)]], 3, .3, cor); }
+  for (let i = 0; i < 16; i++) { x.beginPath(); x.arc(w * (.15 + r() * .5), -h * (.9 + r() * .55), .8 + r() * 3, 0, 7); x.fill(); } x.restore(); }
+function mar(x, r, y0, cor, o) { o = o || {}; x.fillStyle = cor || TINTA; x.fillRect(0, y0, W, H - y0);
+  if (o.brilho) { x.save(); x.strokeStyle = o.brilho; for (let i = 0; i < 120; i++) { const yy = y0 + 3 + Math.pow(r(), 1.5) * (H - y0); const near = o.lx != null && r() < .6; const xx = near ? o.lx + (r() - .5) * (60 + (yy - y0) * 1.2) : r() * W; const l = 12 + r() * (near ? 60 : 140); x.lineWidth = .6 + r() * 2.2 * (near ? 1.4 : 1); x.globalAlpha = (near ? .5 : .2) + r() * .45; x.beginPath(); x.moveTo(xx - l / 2, yy); x.lineTo(xx + l / 2, yy); x.stroke(); } x.restore(); }
+  if (o.ondas) for (let i = 0; i < o.ondas; i++) { const X = r() * W, Y = y0 + 8 + r() * (H - y0) * .7, w = 40 + r() * 70; x.fillStyle = cor || TINTA; x.beginPath(); x.moveTo(X - w, Y); x.quadraticCurveTo(X, Y - 8 - r() * 8, X + w, Y); x.fill(); } }
+function sino(x, r, X, Y, s, cor) { x.save(); x.translate(X, Y); x.scale(s, s); x.fillStyle = cor || TINTA; x.beginPath(); x.moveTo(-90, 0); x.quadraticCurveTo(-80, -30, -66, -60); x.quadraticCurveTo(-52, -150, 0, -158); x.quadraticCurveTo(52, -150, 66, -60); x.quadraticCurveTo(80, -30, 90, 0); x.quadraticCurveTo(0, -14, -90, 0); x.fill();
+  x.fillRect(-20, -176, 40, 20); x.beginPath(); x.arc(0, -176, 16, Math.PI, 0); x.lineWidth = 6; x.strokeStyle = cor || TINTA; x.stroke(); x.restore(); }
+function caranguejo(x, r, X, Y, s, cor) { x.save(); x.translate(X, Y); x.scale(s, s); cor = cor || TINTA; x.fillStyle = cor;
+  for (const d of [-1, 1]) for (let i = 0; i < 4; i++) { const bx = d * (30 + i * 12), by = -30 + i * 6; traco(x, [[bx, by], [d * (70 + i * 16), by - 40 + i * 6], [d * (92 + i * 18), by + 34]], 9 - i, 2, cor); }
+  poli(x, serrilha(r, [[-80, -30], [-70, -60], [-30, -80], [30, -80], [70, -60], [80, -30], [50, -10], [-50, -10]], 5, 6), cor);
+  for (const d of [-1, 1]) { traco(x, [[d * 50, -60], [d * 90, -110], [d * 110, -150]], 18, 12, cor);
+    x.save(); x.translate(d * 116, -160); x.scale(d, 1); x.rotate(.25); x.beginPath(); x.ellipse(0, -10, 24, 36, 0, 0, 7); x.fill();
+    traco(x, curva([-10, -36], [-24, -84], [4, -124], 10), 26, 2, cor); traco(x, curva([14, -38], [30, -70], [26, -100], 10), 16, 2, cor);
+    for (let i = 0; i < 5; i++) { x.beginPath(); x.arc(-8 + i * 2, -60 - i * 12, 2.4, 0, 7); x.fill(); } x.restore(); }
+  traco(x, [[-10, -80], [-14, -104]], 3, 2, cor); traco(x, [[10, -80], [14, -104]], 3, 2, cor); x.beginPath(); x.arc(-14, -106, 5, 0, 7); x.arc(14, -106, 5, 0, 7); x.fill();
+  traco(x, [[-6, -84], [-60, -200], [-130, -250]], 2, .4, cor); traco(x, [[6, -84], [70, -210], [150, -240]], 2, .4, cor); x.restore(); }
+function sereia(x, r, X, Y, s, cor) { x.save(); x.translate(X, Y); x.scale(s, s); cor = cor || TINTA; x.fillStyle = cor;
+  x.beginPath(); x.moveTo(-6, -40); x.quadraticCurveTo(-14, -70, -4, -96); x.quadraticCurveTo(6, -104, 12, -94); x.quadraticCurveTo(18, -70, 10, -40); x.quadraticCurveTo(30, -10, 70, -4); x.quadraticCurveTo(110, 4, 128, -26); x.lineTo(150, -46); x.lineTo(140, -16); x.lineTo(166, -6); x.lineTo(130, -6); x.quadraticCurveTo(110, 26, 60, 18); x.quadraticCurveTo(-10, 10, -6, -40); x.fill();
+  x.beginPath(); x.ellipse(4, -110, 9, 11, .2, 0, 7); x.fill();
+  for (let i = 0; i < 14; i++) { const t = i / 13; const p0 = [-2 + t * 8, -118 + t * 4]; const pts = []; for (let k = 0; k <= 16; k++) { const u = k / 16; pts.push([p0[0] - u * (60 + t * 40) - Math.sin(u * 4 + t * 2) * 10, p0[1] + u * (70 + t * 40) + Math.sin(u * 6 + i) * 6]); } traco(x, pts, 5 - t * 2, .4, cor); }
+  traco(x, [[10, -88], [34, -102], [44, -126]], 6, 4, cor); x.restore(); }
+function tentaculo(x, r, X, Y, len, w, ang, enrola, cor) { const pts = []; let px = X, py = Y, a = ang; const n = 30; for (let i = 0; i <= n; i++) { pts.push([px, py]); a += enrola * Math.pow(i / n, 2) * .35 + (r() - .5) * .04; px += Math.sin(a) * len / n; py -= Math.cos(a) * len / n; } traco(x, pts, w, 1, cor);
+  x.save(); x.fillStyle = 'rgba(200,165,105,.5)'; for (let i = 3; i < n - 5; i += 2) { const p = pts[i], q = pts[i + 1]; const dx = q[0] - p[0], dy = q[1] - p[1], d = Math.hypot(dx, dy) || 1; const ww = w * (1 - i / n) * .5; x.beginPath(); x.arc(p[0] + dy / d * ww * .6, p[1] - dx / d * ww * .6, ww * .28 + .4, 0, 7); x.fill(); } x.restore(); }
+function estalactites(x, r, cor, n, hmax) { x.fillStyle = cor || TINTA; x.fillRect(0, 0, W, 24); for (let i = 0; i < n; i++) { const X = r() * W, w = 12 + r() * 50, h = 30 + r() * r() * (hmax || 220); poli(x, serrilha(r, [[X - w / 2, 0], [X - w * .25, h * .55], [X - 2, h], [X + 3, h * .96], [X + w * .2, h * .5], [X + w / 2, 0]], 2, 8), cor); } }
+function olhos(x, X, Y, s, a) { for (const d of [-1, 1]) { brilho(x, X + d * s, Y, s * 2.4, a * .6, `rgba(230,240,190,${a * .55})`); x.fillStyle = `rgba(245,250,215,${a})`; x.beginPath(); x.ellipse(X + d * s, Y, s * .55, s * .35, 0, 0, 7); x.fill(); } }
+function frasco(x, X, Y, w, h, cor) { x.fillStyle = cor || TINTA; x.beginPath(); x.moveTo(X - w * .2, Y - h); x.lineTo(X - w * .2, Y - h * .8); x.quadraticCurveTo(X - w * .5, Y - h * .7, X - w * .5, Y - h * .4); x.lineTo(X - w * .5, Y); x.lineTo(X + w * .5, Y); x.lineTo(X + w * .5, Y - h * .4); x.quadraticCurveTo(X + w * .5, Y - h * .7, X + w * .2, Y - h * .8); x.lineTo(X + w * .2, Y - h); x.fill(); x.fillRect(X - w * .26, Y - h - 4, w * .52, 6); }
+function caveira(x, X, Y, s, cor) { x.fillStyle = cor || TINTA; x.beginPath(); x.arc(X, Y, s, 0, 7); x.fill(); x.fillRect(X - s * .5, Y + s * .6, s, s * .6); x.save(); x.fillStyle = 'rgba(190,150,90,.6)'; x.beginPath(); x.arc(X - s * .38, Y, s * .26, 0, 7); x.arc(X + s * .38, Y, s * .26, 0, 7); x.fill(); x.restore(); }
+
+/* ---------- cenas ---------- */
+const CENAS = {
+cais(x, r) {
+  fundo(x, r, { lx: 880, ly: 200, lr: 380 }); astro(x, 880, 200, 44, .95); nuvens(x, r, 60, 200, 5, .45);
+  const F = camada(); falesia(F.x, r, [[600, H], [640, 440], [720, 360], [820, 320], [950, 250], [1090, 214], [W + 10, 206], [W + 10, H]], NE); farol(F.x, r, 1070, 222, 150, { cor: NE }); aguada(F, r, .5); compoe(x, F, { alfa: .62, blur: 2 });
+  const M = camada(); mar(M.x, r, 520, '#24180a', { brilho: 'rgba(255,236,190,1)', lx: 880 }); compoe(x, M, { alfa: .9 }); nevoa(x, 515, 30, .35);
+  const C = camada(); const fy = X => X < 560 ? 470 + Math.pow(X / 560, 3) * 70 + Math.sin(X / 60) * 4 : 540 + (X - 560) * .9;
+  chao(C.x, r, fy, TINTA, 2);
+  casa(C.x, r, 30, fy(30) + 8, 92, 70, { janelas: [[.22, .32]], fumo: 1 }); casa(C.x, r, 140, fy(140) + 8, 110, 92, { janelas: [[.55, .26]] }); casa(C.x, r, 262, fy(262) + 8, 80, 62);
+  poli(C.x, [[352, fy(352) + 10], [352, 360], [370, 336], [388, 360], [388, fy(388) + 10]]); cruz(C.x, 370, 338, 36, .04);
+  arvore(C.x, r, 470, fy(470) + 4, 330, { incl: .22, corvos: 6, prof: 8 });
+  C.x.fillRect(590, 548, 230, 8); estacas(C.x, r, 600, 810, 600, 54, 7); barco(C.x, r, 900, 600, .95, { cordas: 1 });
+  erva(C.x, r, 0, 600, 0, 46, 1.4, TINTA, X => fy(X));
+  bando(C.x, r, 700, 150, 120, 60, 7, 14, 30);
+  compoe(x, C);
+},
+taberna(x, r) {
+  fundo(x, r, { lx: 780, ly: 420, lr: 360, topo: '#8a6a3a', base: '#6a4c26', nuvens: .35 });
+  const F = camada(); const f = F.x; f.fillStyle = NE; f.fillRect(0, 0, W, 60); for (let i = 0; i < 7; i++) f.fillRect(i * 200 - 30, 0, 30, 110);
+  // lareira em pedra
+  f.beginPath(); f.moveTo(600, H); f.lineTo(600, 300); f.lineTo(640, 250); f.lineTo(920, 250); f.lineTo(960, 300); f.lineTo(960, H); f.closePath(); f.fill();
+  f.save(); f.globalCompositeOperation = 'destination-out'; f.beginPath(); f.moveTo(650, H); f.lineTo(650, 420); f.quadraticCurveTo(780, 340, 910, 420); f.lineTo(910, H); f.fill(); f.restore();
+  f.fillRect(580, 300, 400, 16); aguada(F, r, .35); compoe(x, F, { alfa: .9 });
+  brilho(x, 780, 560, 260, .95, 'rgba(255,214,140,.95)');
+  const Fo = camada(); const fo = Fo.x; fo.fillStyle = 'rgba(255,240,200,.95)';
+  for (let i = 0; i < 9; i++) { const X = 700 + i * 20 + (r() - .5) * 10, h = 50 + r() * 90; fo.beginPath(); fo.moveTo(X - 12, 600); fo.quadraticCurveTo(X - 14, 600 - h * .5, X + (r() - .5) * 12, 600 - h); fo.quadraticCurveTo(X + 10, 600 - h * .5, X + 12, 600); fo.fill(); }
+  compoe(x, Fo, { alfa: .75 });
+  const C = camada(); const c = C.x;
+  traco(c, [[690, 610], [870, 590]], 22, 20, TINTA); traco(c, [[700, 590], [860, 615]], 20, 18, TINTA);
+  c.fillRect(779, 316, 3, 160); c.beginPath(); c.ellipse(780, 500, 46, 34, 0, 0, Math.PI); c.fill(); c.fillRect(730, 486, 100, 10);
+  c.fillRect(0, 630, W, 50);
+  c.fillRect(380, 60, 2, 150); poli(c, [[366, 210], [396, 210], [390, 234], [372, 234]]);
+  c.fillRect(60, 500, 440, 16); c.fillRect(90, 516, 12, 120); c.fillRect(460, 516, 12, 120);
+  figura(c, r, 150, 540, 190, { sentado: 1, dir: 1 }); figura(c, r, 420, 540, 200, { sentado: 1, dir: -1, chapeu: 1 }); figura(c, r, 290, 520, 170, { sentado: 1, dir: 1, chapeu: 1 });
+  [[210, 500], [350, 500], [262, 500]].forEach(([a, b]) => { c.fillRect(a, b - 24, 15, 24); traco(c, [[a + 15, b - 20], [a + 24, b - 13], [a + 15, b - 6]], 3, 3, TINTA); });
+  figura(c, r, 1060, 640, 260, { sentado: 1, dir: -1, cachimbo: 1, chapeu: 1 });
+  for (const [bx, by] of [[1150, 640], [1150, 556]]) { c.beginPath(); c.ellipse(bx, by - 42, 34, 44, 0, 0, 7); c.fill(); }
+  compoe(x, C); brilho(x, 381, 228, 120, .55);
+  const Fm = camada(); Fm.x.fillStyle = 'rgba(40,28,12,.35)'; for (let i = 0; i < 26; i++) { Fm.x.beginPath(); Fm.x.arc(1040 - i * 5 + Math.sin(i * .6) * 14, 440 - i * 13, 5 + i * 1.5, 0, 7); Fm.x.fill(); } compoe(x, Fm, { blur: 2 });
+},
+capela(x, r) {
+  fundo(x, r, { lx: 600, ly: 220, lr: 300, topo: '#6e522a', base: '#4a3418', nuvens: .3 });
+  const Wd = camada(); const w = Wd.x; const jan = () => { w.beginPath(); w.moveTo(500, 470); w.lineTo(500, 220); w.quadraticCurveTo(505, 90, 600, 50); w.quadraticCurveTo(695, 90, 700, 220); w.lineTo(700, 470); w.closePath(); };
+  w.fillStyle = 'rgba(255,244,210,1)'; jan(); w.fill(); w.fillStyle = TINTA; w.fillRect(596, 50, 8, 420); w.fillRect(500, 260, 200, 8); w.fillRect(546, 120, 6, 350); w.fillRect(648, 120, 6, 350); w.beginPath(); w.arc(600, 180, 46, 0, 7); w.lineWidth = 6; w.strokeStyle = TINTA; w.stroke();
+  compoe(x, Wd); raios(x, r, 600, 200, Math.PI * .5 + .15, .9, 700, .16, 12); brilho(x, 600, 260, 330, .4);
+  const C = camada(); const c = C.x;
+  c.fillRect(0, 0, 120, H); c.fillRect(W - 120, 0, 120, H);
+  poli(c, [[380, 600], [380, 520], [820, 520], [820, 600]]); c.fillRect(360, 510, 480, 14);
+  for (const X of [420, 470, 730, 780]) { c.fillRect(X - 4, 450, 8, 62); } c.fillRect(0, 600, W, 80);
+  for (const X of [420, 470, 730, 780]) { brilho(x, X, 436, 40, .8); }
+  for (const [X, L] of [[180, 160], [250, 230], [960, 190], [1030, 140]]) { c.fillRect(X, 0, 1.2, L); barco(c, r, X, L + 30, .32, { velas: 1 }); }
+  figura(c, r, 300, 640, 150, { ajoelha: 1, veu: 1 });
+  compoe(x, C);
+  const p = camada(); p.x.fillStyle = 'rgba(255,240,200,.8)'; for (let i = 0; i < 70; i++) { p.x.globalAlpha = r(); p.x.beginPath(); p.x.arc(520 + r() * 200, 200 + r() * 360, r() * 1.6, 0, 7); p.x.fill(); } compoe(x, p);
+},
+casa(x, r) {
+  fundo(x, r, { lx: 620, ly: 250, lr: 330, topo: '#9a7a48', base: '#5a4020', nuvens: .4 });
+  astro(x, 720, 170, 34, .9); nuvens(x, r, 120, 260, 4, .35);
+  farol(x, r, 470, 420, 190, { cor: '#5a4426' }); falesia(x, r, [[300, 470], [380, 420], [520, 410], [640, 440], [800, 470]], '#5a4426');
+  const C = camada(); const c = C.x; c.fillStyle = TINTA; c.fillRect(0, 0, W, 70); c.fillRect(0, 0, 300, H); c.fillRect(W - 300, 0, 300, H); c.fillRect(0, 470, W, H);
+  c.fillRect(592, 70, 16, 400); c.fillRect(300, 262, 600, 14); // caixilhos
+  c.fillRect(300, 70, 600, 10);
+  // cortina rasgada
+  poli(c, serrilha(r, [[300, 70], [420, 70], [380, 200], [400, 330], [360, 470], [300, 470]], 4, 8), TINTA);
+  // poleiro com o corvo, à frente da janela
+  traco(c, [[520, 420], [860, 420]], 12, 10, TINTA); traco(c, [[850, 420], [890, 380], [900, 470]], 9, 9, TINTA);
+  corvoGrande(c, r, 640, 414, 150, TINTA);
+  // cadeira virada e papéis
+  traco(c, [[340, 560], [420, 520], [470, 600]], 10, 9, TINTA); traco(c, [[420, 520], [400, 450]], 9, 8, TINTA); traco(c, [[470, 600], [500, 560]], 8, 8, TINTA);
+  compoe(x, C);
+  const P = camada(); P.x.fillStyle = 'rgba(205,175,120,.55)'; for (let i = 0; i < 10; i++) { P.x.save(); P.x.translate(520 + r() * 300, 560 + r() * 60); P.x.rotate((r() - .5) * .9); P.x.fillRect(-14, -9, 28, 18); P.x.restore(); } compoe(x, P);
+  olhos(x, 784, 168, 3, .9);
+},
+afogado(x, r) {
+  fundo(x, r, { lx: 620, ly: 260, lr: 330, topo: '#9a7a48', base: '#5a4020', nuvens: .5 });
+  astro(x, 640, 220, 40, .9); nuvens(x, r, 100, 300, 4, .4);
+  const C = camada(); const c = C.x; c.fillStyle = TINTA; c.fillRect(0, 0, W, 60); c.fillRect(0, 0, 340, H); c.fillRect(W - 300, 0, 300, H); c.fillRect(0, 500, W, H);
+  c.fillRect(612, 60, 14, 440); c.fillRect(340, 280, 560, 12);
+  poli(c, serrilha(r, [[900, 60], [800, 60], [840, 220], [820, 400], [860, 500], [900, 500]], 4, 8), TINTA);
+  traco(c, [[100, 520], [100, 380], [130, 360]], 14, 12, TINTA); c.fillRect(100, 450, 220, 18);
+  compoe(x, C);
+  const D = camada(); const d = D.x;
+  figura(d, r, 560, 660, 520, { bracos: 'frente', cabelo: 1, algas: 1, vento: .25, curv: .25 });
+  d.save(); d.fillStyle = TINTA; for (let i = 0; i < 40; i++) { d.globalAlpha = .4 + r() * .6; d.beginPath(); d.ellipse(380 + r() * 440, 330 + r() * 320, 1.4, 2.8, 0, 0, 7); d.fill(); } d.restore();
+  d.save(); d.fillStyle = 'rgba(200,170,110,.4)'; d.beginPath(); d.ellipse(600, 650, 220, 18, 0, 0, 7); d.fill(); d.restore();
+  compoe(x, D); olhos(x, 613, 190, 5, .9);
+},
+cemiterio(x, r) {
+  fundo(x, r, { lx: 640, ly: 300, lr: 420 }); astro(x, 640, 300, 70, .9); nuvens(x, r, 80, 260, 6, .4);
+  const F = camada(); chao(F.x, r, X => 470 + Math.sin(X / 140) * 20, LONGE, 2); for (let i = 0; i < 8; i++) arvore(F.x, r, 40 + i * 160 + r() * 60, 472 + Math.sin(i) * 10, 110 + r() * 70, { prof: 5, cor: LONGE }); compoe(x, F, { alfa: .55, blur: 3 });
+  nevoa(x, 480, 50, .5);
+  const M = camada(); chao(M.x, r, X => 520 + Math.sin(X / 90) * 10, NE, 2); estacas(M.x, r, 700, 1150, 515, 60, 12, NE); aguada(M, r, .4); compoe(x, M, { alfa: .75, blur: 1.3 });
+  const C = camada(); const fy = X => 568 + Math.sin(X / 70) * 6 + (X > 800 ? (X - 800) * .05 : 0); chao(C.x, r, fy, TINTA, 3);
+  arvore(C.x, r, 200, 580, 560, { incl: .15, corvos: 9, prof: 8, abertura: .82 });
+  [[460, 70, -.12], [540, 56, .1], [700, 80, .05], [840, 60, -.2], [960, 74, .14]].forEach(([a, h, t]) => cruz(C.x, a, fy(a) + 6, h, t));
+  poli(C.x, [[590, 600], [610, 572], [680, 566], [700, 596]]);
+  estacas(C.x, r, 1000, 1190, 575, 100, 8);
+  figura(C.x, r, 770, fy(770) + 4, 150, { capuz: 1, lanterna: 1, dir: -1, vento: .9 });
+  erva(C.x, r, 0, W, 0, 44, 1.1, TINTA, fy);
+  bando(C.x, r, 760, 170, 260, 90, 12, 10, 26);
+  compoe(x, C);
+},
+falesia(x, r) {
+  fundo(x, r, { lx: 900, ly: 180, lr: 380, nuvens: .6 }); astro(x, 900, 180, 36, .8); nuvens(x, r, 60, 240, 7, .5);
+  const F = camada(); falesia(F.x, r, [[700, 300], [760, 230], [840, 210], [W + 10, 200], [W + 10, 330]], LONGE); farol(F.x, r, 1010, 214, 120, { cor: LONGE }); compoe(x, F, { alfa: .5, blur: 2.5 });
+  const M = camada(); mar(M.x, r, 420, '#2a1d0e', { brilho: 'rgba(255,236,190,1)', lx: 900, ondas: 12 }); compoe(x, M, { alfa: .85 }); nevoa(x, 420, 30, .4);
+  const C = camada(); const c = C.x;
+  falesia(c, r, [[-10, -10], [380, -10], [400, 80], [360, 160], [430, 240], [390, 330], [470, 420], [440, 520], [520, H + 10], [-10, H + 10]], TINTA, 9);
+  c.save(); c.globalCompositeOperation = 'destination-out'; c.globalAlpha = .55; traco(c, [[80, 690], [320, 600], [120, 520], [360, 440], [140, 360], [340, 280], [180, 200], [330, 120], [240, 40]], 6, 3, '#000'); c.restore();
+  figura(c, r, 210, 371, 70, { cor: TINTA, capuz: 1, vento: 1.2, dir: 1 });
+  erva(c, r, 360, 520, 0, 40, 1.4, TINTA, X => 80 + (X - 360) * 2.2);
+  onda(c, r, 640, 640, 360, 240, -1, TINTA); onda(c, r, 860, 650, 260, 150, -1, TINTA);
+  bando(c, r, 650, 230, 160, 70, 6, 14, 26);
+  compoe(x, C);
+  const S = camada(); S.x.fillStyle = 'rgba(240,225,190,.75)'; for (let i = 0; i < 160; i++) { S.x.globalAlpha = r(); S.x.beginPath(); S.x.arc(440 + r() * 380, 380 + r() * 200, r() * 2.6, 0, 7); S.x.fill(); } compoe(x, S);
+},
+ninhos(x, r) {
+  fundo(x, r, { lx: 600, ly: 240, lr: 400, nuvens: .7 }); nuvens(x, r, 50, 260, 8, .5);
+  const C = camada(); const c = C.x; const fy = X => 560 - Math.sin(X / 210) * 40 - Math.sin(X / 47) * 10;
+  chao(c, r, fy, TINTA, 5); for (let i = 0; i < 6; i++) rocha(c, r, 80 + i * 210 + r() * 40, fy(80 + i * 210) + 10, 120 + r() * 80, 60 + r() * 60, TINTA);
+  for (const X of [260, 640, 980]) { c.save(); c.strokeStyle = TINTA; c.lineWidth = 2; for (let i = 0; i < 26; i++) { const a = r() * 3.14; c.beginPath(); c.moveTo(X + Math.cos(a) * 40, fy(X) - 10 - Math.sin(a) * 10); c.lineTo(X - Math.cos(a) * 44, fy(X) - 4 - r() * 14); c.stroke(); } c.restore(); }
+  figura(c, r, 600, fy(600) + 2, 120, { espada: 1, vento: 1, dir: 1 });
+  ave(c, r, 380, 250, 170, 1.0, TINTA, 1); ave(c, r, 850, 190, 130, -.8, TINTA, 1); ave(c, r, 700, 360, 230, .2, TINTA, 1);
+  erva(c, r, 0, W, 0, 30, 1, TINTA, fy);
+  compoe(x, C);
+  const P = camada(); P.x.fillStyle = TINTA; for (let i = 0; i < 40; i++) { P.x.save(); P.x.translate(300 + r() * 600, 150 + r() * 360); P.x.rotate(r() * 6); P.x.beginPath(); P.x.ellipse(0, 0, 2, 7, 0, 0, 7); P.x.fill(); P.x.restore(); } compoe(x, P, { alfa: .7 });
+},
+avejao(x, r) {
+  fundo(x, r, { lx: 600, ly: 300, lr: 340, nuvens: .7, topo: '#b09060', base: '#7a5a30' });
+  const F = camada(); chao(F.x, r, X => 470 + Math.sin(X / 160) * 14, LONGE, 2); for (let i = 0; i < 6; i++) arvore(F.x, r, 80 + i * 210, 474, 120 + r() * 50, { prof: 5, cor: LONGE }); compoe(x, F, { alfa: .5, blur: 3 });
+  nevoa(x, 470, 90, .7);
+  const G = camada(); figura(G.x, r, 660, 610, 600, { cor: '#120b04', capuz: 1, vento: 1.6, bracos: 'pendentes' }); aguada(G, r, .5, 18); compoe(x, G, { alfa: .8, blur: 2.4 });
+  olhos(x, 668, 64, 7, .95);
+  nevoa(x, 560, 60, .55);
+  const C = camada(); const fy = X => 600 + Math.sin(X / 80) * 8; chao(C.x, r, fy, TINTA, 4); erva(C.x, r, 0, W, 0, 60, 1.6, TINTA, fy);
+  arvore(C.x, r, 140, 610, 380, { incl: .3, prof: 7, corvos: 3 }); arvore(C.x, r, 1090, 610, 300, { incl: -.35, prof: 7 });
+  figura(C.x, r, 360, fy(360) + 3, 110, { capuz: 1, lanterna: 1, dir: 1, vento: 1 });
+  compoe(x, C);
+},
+farol(x, r) {
+  fundo(x, r, { lx: 640, ly: 150, lr: 300, nuvens: .8 }); astro(x, 680, 150, 40, .7); nuvens(x, r, 40, 280, 9, .65);
+  const C = camada(); falesia(C.x, r, [[-10, H], [-10, 570], [200, 548], [420, 528], [600, 520], [800, 528], [1000, 552], [W + 10, 566], [W + 10, H]], TINTA, 7);
+  farol(C.x, r, 600, 528, 480, { larg: 124 });
+  arvore(C.x, r, 1020, 560, 260, { incl: -.5, prof: 7, corvos: 4, abertura: .7 });
+  erva(C.x, r, 0, W, 545, 40, 1.4); figura(C.x, r, 290, 546, 86, { capuz: 1, vento: 1.2 });
+  bando(C.x, r, 380, 260, 200, 90, 8, 12, 28);
+  compoe(x, C); brilho(x, 600, 82, 90, .4, 'rgba(170,220,160,.5)');
+  const R = camada(); R.x.strokeStyle = 'rgba(30,20,10,.35)'; R.x.lineWidth = 1; for (let i = 0; i < 260; i++) { const X = r() * W, Y = r() * H; R.x.beginPath(); R.x.moveTo(X, Y); R.x.lineTo(X - 6, Y + 22); R.x.stroke(); } compoe(x, R);
+},
+praia(x, r) {
+  fundo(x, r, { lx: 300, ly: 220, lr: 380 }); astro(x, 300, 220, 40, .85); nuvens(x, r, 50, 220, 5, .45);
+  const M = camada(); mar(M.x, r, 470, '#2a1d0e', { brilho: 'rgba(255,236,190,1)', lx: 300, ondas: 10 }); compoe(x, M, { alfa: .85 });
+  const C = camada(); const c = C.x;
+  falesia(c, r, [[520, H + 10], [560, 360], [620, 200], [740, 90], [900, 40], [W + 10, 20], [W + 10, H + 10]], TINTA, 8);
+  chao(c, r, X => 600 - X * .04 + Math.sin(X / 50) * 3, TINTA, 2);
+  for (let i = 0; i < 5; i++) rocha(c, r, 60 + i * 110 + r() * 30, 600 - (60 + i * 110) * .04, 50 + r() * 40, 24 + r() * 30);
+  onda(c, r, 380, 560, 260, 90, 1, TINTA); onda(c, r, 120, 560, 200, 70, 1, TINTA);
+  figura(c, r, 520, 586, 80, { lanterna: 1, capuz: 1, dir: 1, vento: 1 });
+  bando(c, r, 420, 160, 160, 60, 5, 12, 22);
+  compoe(x, C);
+  const B = camada(); B.x.fillStyle = 'rgba(205,175,115,.7)'; B.x.beginPath(); B.x.moveTo(700, H); B.x.quadraticCurveTo(700, 330, 900, 300); B.x.quadraticCurveTo(1070, 330, 1080, H); B.x.fill(); aguada(B, r, .6, 20);
+  B.x.globalCompositeOperation = 'source-over'; estalactites(B.x, r, TINTA, 0); compoe(x, B, { alfa: .25 });
+},
+gruta(x, r) {
+  fundo(x, r, { lx: 600, ly: 360, lr: 260, topo: '#3a2810', base: '#2a1c0a', nuvens: .2, luz: .9 });
+  const F = camada(); const f = F.x; f.fillStyle = NE; f.fillRect(0, 0, W, H);
+  f.save(); f.globalCompositeOperation = 'destination-out'; for (const [X, Y, w, h] of [[220, 440, 150, 200], [600, 420, 180, 230], [980, 440, 150, 200]]) { f.beginPath(); f.ellipse(X, Y, w, h, 0, Math.PI, 0); f.lineTo(X + w, Y + 60); f.lineTo(X - w, Y + 60); f.fill(); } f.restore();
+  aguada(F, r, .4); compoe(x, F, { alfa: .8 });
+  brilho(x, 600, 400, 420, .55); brilho(x, 220, 400, 120, .15); brilho(x, 980, 420, 120, .15);
+  const C = camada(); const c = C.x;
+  estalactites(c, r, TINTA, 34, 260);
+  c.fillRect(0, 0, 110, H); c.fillRect(W - 110, 0, 110, H); falesia(c, r, [[-10, 200], [150, 260], [180, 420], [130, H + 10], [-10, H + 10]], TINTA, 6); falesia(c, r, [[W + 10, 200], [1060, 280], [1040, 450], [1090, H + 10], [W + 10, H + 10]], TINTA, 6);
+  for (let i = 0; i < 6; i++) c.fillRect(1050 - i * 28, 560 - i * 36, 34, 10);
+  mar(c, r, 560, TINTA, {});
+  figura(c, r, 600, 560, 110, { lanterna: 1, capuz: 1, vento: .2 });
+  compoe(x, C);
+  const A = camada(); mar(A.x, r, 560, 'rgba(0,0,0,0)', { brilho: 'rgba(255,230,170,1)', lx: 600 }); compoe(x, A, { alfa: .7 });
+  const S = camada(); S.x.strokeStyle = 'rgba(200,170,110,.7)'; S.x.lineWidth = 3; S.x.beginPath(); S.x.moveTo(160, 330); S.x.lineTo(176, 300); S.x.lineTo(192, 330); S.x.moveTo(176, 300); S.x.lineTo(176, 350); S.x.stroke(); compoe(x, S);
+},
+galerias(x, r) {
+  fundo(x, r, { lx: 600, ly: 420, lr: 160, topo: '#1c1308', base: '#120c05', nuvens: .2, luz: .35 });
+  const F = camada(); estalactites(F.x, r, NE, 30, 300); chao(F.x, r, X => 560 + Math.sin(X / 60) * 20, NE, 6); aguada(F, r, .5); compoe(x, F, { alfa: .9, blur: 1.5 });
+  for (let i = 0; i < 6; i++) olhos(x, 120 + r() * 960, 200 + r() * 200, 3 + r() * 3, .5 + r() * .5); olhos(x, 662, 382, 3, .9); olhos(x, 548, 470, 3, .9); olhos(x, 662, 562, 3, .9);
+  const C = camada(); for (let i = 0; i < 3; i++) { const pts = []; const y0 = 380 + i * 90 + r() * 40, x0 = i % 2 ? 1100 : 100, dir = i % 2 ? -1 : 1; for (let k = 0; k < 40; k++) pts.push([x0 + dir * k * 14, y0 + Math.sin(k / 4 + i * 2) * 30 * (k / 40)]); pts.reverse(); traco(C.x, pts, 26, 2, TINTA); const h = pts[0]; C.x.beginPath(); C.x.ellipse(h[0] + dir * 8, h[1], 20, 13, 0, 0, 7); C.x.fill(); }
+  figura(C.x, r, 600, 600, 90, { capuz: 1, vento: .2 }); compoe(x, C);
+},
+moira(x, r) {
+  fundo(x, r, { lx: 600, ly: 640, lr: 420, topo: '#3a2c14', base: '#c9b07a', nuvens: .3 });
+  const F = camada(); estalactites(F.x, r, NE, 26, 240); F.x.fillRect(0, 0, 120, H); F.x.fillRect(W - 120, 0, 120, H); aguada(F, r, .4); compoe(x, F, { alfa: .85 });
+  raios(x, r, 600, 720, -Math.PI / 2, .9, 700, .12, 10);
+  const C = camada(); const c = C.x; rocha(c, r, 600, 640, 420, 170, TINTA); c.fillRect(0, 630, W, 60);
+  sereia(c, r, 560, 520, 1.5, TINTA);
+  compoe(x, C);
+  const A = camada(); A.x.strokeStyle = 'rgba(255,240,200,.8)'; A.x.lineWidth = 1.4; for (let i = 0; i < 6; i++) { A.x.beginPath(); A.x.ellipse(600, 650, 260 + i * 70, 10 + i * 4, 0, 0, 7); A.x.globalAlpha = .6 - i * .08; A.x.stroke(); } compoe(x, A);
+  const N = camada(); N.x.fillStyle = 'rgba(255,240,205,.9)'; for (let i = 0; i < 50; i++) { N.x.globalAlpha = r(); N.x.beginPath(); N.x.arc(620 + r() * 300, 160 + r() * 260, r() * 2.4, 0, 7); N.x.fill(); } compoe(x, N);
+},
+sino(x, r) {
+  fundo(x, r, { lx: 520, ly: 300, lr: 300, topo: '#3a2810', base: '#5a4020', nuvens: .2 });
+  const F = camada(); estalactites(F.x, r, NE, 24, 220); F.x.fillRect(0, 0, 100, H); F.x.fillRect(W - 100, 0, 100, H); aguada(F, r, .4); compoe(x, F, { alfa: .85 });
+  brilho(x, 470, 380, 300, .4);
+  const B = camada(); sino(B.x, r, 430, 590, 1.6, '#2a1d0c'); compoe(x, B);
+  const C = camada(); const c = C.x; chao(c, r, X => 590 + Math.sin(X / 50) * 6, TINTA, 3);
+  caranguejo(c, r, 860, 600, 1.35, TINTA);
+  figura(c, r, 200, 596, 120, { espada: 1, dir: 1, vento: .6 });
+  compoe(x, C);
+  const D = camada(); D.x.fillStyle = 'rgba(200,170,110,.6)'; for (let i = 0; i < 70; i++) { D.x.beginPath(); D.x.arc(330 + r() * 200, 400 + r() * 170, 1 + r() * 3, 0, 7); D.x.fill(); } compoe(x, D);
+},
+ossario(x, r) {
+  fundo(x, r, { lx: 600, ly: 330, lr: 280, topo: '#2e200e', base: '#3e2c14', nuvens: .2 });
+  const F = camada(); const f = F.x; f.fillStyle = NE; f.fillRect(0, 0, W, H);
+  f.save(); f.globalCompositeOperation = 'destination-out'; for (let row = 0; row < 3; row++) for (let i = 0; i < 9; i++) { if (i > 2 && i < 6) continue; f.fillRect(40 + i * 128, 100 + row * 150, 100, 110); } f.restore();
+  for (let row = 0; row < 3; row++) for (let i = 0; i < 9; i++) { if (i > 2 && i < 6) continue; const X = 90 + i * 128, Y = 210 + row * 150; if (r() < .5) frasco(f, X - 20, Y, 34, 70, NE); else caveira(f, X - 22, Y - 22, 14, NE); if (r() < .6) frasco(f, X + 24, Y, 28, 54, NE); }
+  compoe(x, F, { alfa: .92 });
+  brilho(x, 600, 360, 260, .55);
+  const C = camada(); const c = C.x; chao(c, r, X => 610 + Math.sin(X / 40) * 4, TINTA, 4);
+  // guardião de coral: corpo feito de ramos
+  figura(c, r, 620, 612, 470, { bracos: 'pendentes', curv: .15, vento: .2 });
+  for (const [X, Y, h, inc] of [[600, 210, 200, -.5], [650, 200, 230, .4], [560, 250, 160, -1.1], [690, 250, 170, 1.1], [622, 170, 150, 0]]) arvore(c, r, X, Y, h, { incl: inc, prof: 5, larg: 14, abertura: .7, espinhos: false });
+  figura(c, r, 280, 608, 110, { lanterna: 1, capuz: 1, dir: 1, vento: .3 });
+  compoe(x, C); olhos(x, 652, 186, 6, 1);
+},
+torre(x, r) {
+  fundo(x, r, { lx: 860, ly: 220, lr: 260, topo: '#6a4f28', base: '#4a3418', nuvens: .3 });
+  const Wn = camada(); Wn.x.fillStyle = '#f2e2b8'; Wn.x.fillRect(850, 120, 34, 200); compoe(x, Wn); brilho(x, 867, 220, 220, .55);
+  raios(x, r, 867, 220, Math.PI * .8, .45, 800, .14, 9);
+  const B = camada(); const b = B.x; const C = camada(); const c = C.x; c.fillStyle = TINTA;
+  c.fillRect(0, 0, 230, H); c.fillRect(970, 0, 230, H); c.fillRect(850, 0, 120, 120); c.fillRect(850, 320, 120, H); c.fillRect(884, 120, 86, 200);
+  c.fillRect(592, 0, 16, H);
+  for (let i = 0; i < 60; i++) { const a = i * .38, y = 700 - i * 14, cs = Math.cos(a), sn = Math.sin(a); const R = 300; const xe = 600 + cs * R; const frente = sn > 0; const L = frente ? c : b;
+    L.fillStyle = frente ? TINTA : NE; L.beginPath(); L.moveTo(600, y); L.lineTo(xe, y - 6 + sn * 8); L.lineTo(xe, y + 4 + sn * 8); L.lineTo(600, y + 9); L.closePath(); L.fill(); }
+  c.strokeStyle = TINTA; c.lineWidth = 3; c.beginPath(); for (let i = 0; i < 240; i++) { const a = i * .095, y = 700 - i * 3.5 - 46; const sn = Math.sin(a); if (sn < 0) { c.stroke(); c.beginPath(); continue; } c.lineTo(600 + Math.cos(a) * 300, y + sn * 8); } c.stroke();
+  aguada(B, r, .3); compoe(x, B, { alfa: .55, blur: 1.5 }); compoe(x, C);
+  figura(x, r, 470, 512, 70, { capuz: 1, espada: 1, dir: 1, vento: .2 });
+  const G = camada(); figura(G.x, r, 780, 560, 380, { bracos: 'frente', cor: '#1a1209', vento: 1.3, cabelo: 1, dir: -1 }); aguada(G, r, .6, 14); compoe(x, G, { alfa: .72, blur: 1.8 });
+  olhos(x, 776, 196, 5, .8);
+  const S = camada(); S.x.fillStyle = 'rgba(240,230,210,.8)'; for (let i = 0; i < 160; i++) { S.x.globalAlpha = r() * .7; S.x.beginPath(); S.x.arc(620 + r() * 300, 140 + r() * 460, r() * 2.2, 0, 7); S.x.fill(); } compoe(x, S);
+},
+lanterna(x, r) {
+  fundo(x, r, { lx: 560, ly: 300, lr: 300, topo: '#3a3018', base: '#2a2010', nuvens: .5 });
+  brilho(x, 560, 300, 300, .5, 'rgba(190,225,165,.5)');
+  const L = camada(); const l = L.x; l.strokeStyle = TINTA; for (let i = 0; i < 9; i++) { l.lineWidth = 3; l.beginPath(); l.ellipse(560, 300, 40 + i * 18, 70 + i * 26, 0, 0, 7); l.stroke(); } l.fillRect(552, 60, 16, 480); compoe(x, L, { alfa: .55 });
+  const C = camada(); const c = C.x; c.fillRect(0, 0, W, 50); for (const X of [80, 320, 820, 1080]) c.fillRect(X, 0, 14, H); c.fillRect(0, 560, W, H);
+  poli(c, [[470, 560], [490, 470], [630, 470], [650, 560]]);
+  c.fillRect(170, 50, 30, 520); figura(c, r, 210, 566, 140, { ajoelha: 1 }); c.strokeStyle = TINTA; c.lineWidth = 4; c.beginPath(); c.moveTo(190, 280); c.quadraticCurveTo(220, 380, 225, 470); c.stroke();
+  for (let i = 0; i < 10; i++) { c.beginPath(); c.ellipse(198 + i * 2.6, 290 + i * 18, 4, 7, .2, 0, 7); c.lineWidth = 2.2; c.stroke(); }
+  figura(c, r, 900, 566, 420, { barbatanas: 1, vento: 1.5, dir: -1, espada: 1 });
+  compoe(x, C); olhos(x, 894, 186, 4, .9);
+  const R = camada(); R.x.strokeStyle = 'rgba(25,18,8,.4)'; for (let i = 0; i < 200; i++) { const X = r() * W, Y = 50 + r() * 500; R.x.lineWidth = 1; R.x.beginPath(); R.x.moveTo(X, Y); R.x.lineTo(X - 8, Y + 26); R.x.stroke(); } compoe(x, R);
+},
+rei(x, r) {
+  fundo(x, r, { lx: 600, ly: 220, lr: 300, nuvens: .9, topo: '#a78558', base: '#5e4524' }); nuvens(x, r, 30, 300, 10, .7);
+  const M = camada(); mar(M.x, r, 470, '#22170a', { ondas: 26 }); compoe(x, M, { alfa: .9 });
+  const C = camada(); const c = C.x;
+  falesia(c, r, [[440, H + 10], [480, 520], [540, 470], [660, 470], [720, 520], [760, H + 10]], TINTA, 6); farol(c, r, 600, 474, 300, { larg: 74 });
+  [[200, 640, 520, 70, .5, 1.6], [360, 660, 380, 50, .2, -1.4], [940, 650, 540, 74, -.5, -1.6], [1080, 670, 380, 54, -.2, 1.5], [80, 670, 300, 40, .6, 1.2], [820, 670, 300, 40, -.1, 1.8]].forEach(a => tentaculo(c, r, a[0], a[1], a[2], a[3], a[4], a[5], TINTA));
+  onda(c, r, 300, 680, 380, 160, 1, TINTA); onda(c, r, 980, 690, 380, 170, -1, TINTA);
+  compoe(x, C); olhos(x, 600, 600, 14, .7);
+  const S = camada(); S.x.fillStyle = 'rgba(240,225,190,.7)'; for (let i = 0; i < 200; i++) { S.x.globalAlpha = r(); S.x.beginPath(); S.x.arc(r() * W, 400 + r() * 280, r() * 2.6, 0, 7); S.x.fill(); } compoe(x, S);
+},
+aceso(x, r) {
+  fundo(x, r, { lx: 900, ly: 470, lr: 460, topo: '#bc9a63', base: '#d8bb82' }); astro(x, 900, 480, 70, .9); nuvens(x, r, 80, 300, 7, .4);
+  raios(x, r, 230, 190, .25, .2, 1200, .5, 6);
+  const M = camada(); mar(M.x, r, 500, '#2a1d0e', { brilho: 'rgba(255,240,200,1)', lx: 900 }); compoe(x, M, { alfa: .85 });
+  const C = camada(); const c = C.x;
+  falesia(c, r, [[-10, H + 10], [-10, 260], [120, 250], [260, 268], [330, 360], [380, 520], [440, H + 10]], TINTA, 7); farol(c, r, 230, 260, 220, { luz: true, larg: 56 });
+  barco(c, r, 640, 560, .9, { velas: 1, cordas: 1 }); barco(c, r, 820, 545, .6, { velas: 1 }); barco(c, r, 1000, 530, .45, { velas: 1 }); barco(c, r, 1110, 522, .32, { velas: 1 });
+  bando(c, r, 640, 260, 300, 90, 9, 10, 24);
+  compoe(x, C); brilho(x, 230, 200, 120, .9, 'rgba(255,250,225,.9)');
+},
+naufragio(x, r) {
+  fundo(x, r, { lx: 700, ly: 220, lr: 280, nuvens: .9, topo: '#8c6c40', base: '#5a4020' }); nuvens(x, r, 30, 260, 10, .7);
+  const M = camada(); mar(M.x, r, 470, '#22170a', { ondas: 30 }); compoe(x, M, { alfa: .9 });
+  const C = camada(); const c = C.x;
+  for (const [X, w, h] of [[300, 140, 200], [520, 120, 260], [700, 100, 160], [880, 160, 230]]) rocha(c, r, X, 640, w, h, TINTA);
+  barco(c, r, 560, 470, 1.1, { velas: 1, rasgada: 1, incl: .5, partido: 1 }); barco(c, r, 860, 500, .7, { incl: -.7 });
+  onda(c, r, 200, 690, 360, 150, 1, TINTA); onda(c, r, 1000, 690, 360, 170, -1, TINTA);
+  bando(c, r, 640, 200, 260, 80, 11, 12, 26);
+  compoe(x, C);
+},
+};
+
+function desenhar(chave, canvas, semente) { const x = canvas.getContext('2d'); const r = rng(semente || 7); (CENAS[chave] || CENAS.cais)(x, r); vinheta(x, 1); grao(x, r, .2); }
+const api = { W, H, CENAS, desenhar, usar(mk) { MK = mk; } };
+if (typeof module !== 'undefined') module.exports = api; else raiz.Arte = api;
+})(this);
+
+</script>
+<script>
+/* The Raven Lighthouse: original story (English translation of O Farol do Corvo).
+   Each section: t (text), cena (illustration), lugar (map), ch (choices), and optionally
+   fx (effects on 1st visit), fxA (always), teste, duelo, luta, loja, escuro (uses torch), som, fim. */
+(function (raiz) {
+const c = (t, to, cond) => Object.assign({ t, to }, cond || {});
+const H = {
+
+/* ===================== CHAPTER I · VILA NEGRA ===================== */
+start: { cap: 'I · Vila Negra', cena: 'cais', lugar: 'cais', t:
+`The mail boat leaves you on the quay at Vila Negra just as the sun is drowning in the sea. Nobody is waiting for you. The nets are hung out to dry but there are no fishermen, and every window in the village is shut, though it is not yet night.
+
+High above, at the tip of the island, the Raven Lighthouse has been dark for three nights. In that time four boats have broken on the Teeth, the rocks that close off the bay. The town council of Porto Alto has paid you to find out what happened to the keeper, Master Anselmo, and to light the lamp again.
+
+The boatman is already untying the rope, in a hurry to leave.
+
+“Spring tide tonight,” he says, without looking at you. “The cod fleet comes in at dawn. If that light isn’t lit before the tide is full, not one boat will be left.”`,
+ ch: [c('Ask the boatman why he is in such a hurry', 'barqueiro'), c('Climb up to the village square', 'praca')] },
+
+barqueiro: { cena: 'cais', lugar: 'cais', fx: { flag: 'aviso' }, t:
+`The boatman stops fiddling with the rope. He looks up at the cliff, then at you, and lowers his voice.
+
+“For three nights there have been green lights at the top of the lighthouse. And for three nights the drowned haven’t stayed at the bottom of the sea. My sister saw one knocking at her door, wearing her husband’s face.”
+
+He spits into the water.
+
+“Here’s some advice, and it’s free. If you hear your name in the fog, don’t answer. No matter whose voice it is.”
+
+He pushes off with the oar and drifts away without a goodbye. You are alone on the quay, listening to the waves.`,
+ ch: [c('Climb up to the square', 'praca')] },
+
+praca: { cena: 'cais', lugar: 'praca', t:
+`The square of Vila Negra is a patch of beaten earth around a stone cross. You notice something odd: across every doorstep runs a line of coarse white salt, as if the people inside wanted to keep something from coming in.
+
+Smoke and a murmur of voices drift from the tavern. The chapel, on a rock further up, has its candles lit. The keeper’s house stands at the start of the cliff path, its door wide open. Beyond the low wall, among the crooked crosses, lies the cemetery.`,
+ ch: [c('Go into the Salt Cod Tavern', 'taberna'), c('Climb up to the chapel', 'capela'), c("Go to the keeper's house", 'casa'), c('Enter the cemetery', 'cemiterio', { notFlag: 'cemiterio' }), c('Take the cliff path', 'falesia1')] },
+
+taberna: { cena: 'taberna', lugar: 'taberna', fx: { mare: 1 }, t:
+`The Salt Cod Tavern is low and dark and smells of sour wine. Three fishermen drink in silence at the middle table. When you walk in they stop talking and stare at the door behind you until you close it.
+
+Behind the counter, a woman with folded arms looks you up and down: this is Dona Rosário. In the corner by the fire, an old man in an oilskin hat smokes a pipe and smiles as if he had been waiting for you a long time.`,
+ ch: [c('Talk to Dona Rosário', 'rosario', { notFlag: 'rosario' }), c('Sit with the old man by the fire', 'velho', { notFlag: 'velho' }), c('Take a torch from the woodpile by the fire', 'archote', { notFlag: 'archote' }), c('Buy supplies', 'loja'), c('Go back out to the square', 'praca')] },
+
+rosario: { cena: 'taberna', lugar: 'taberna', fx: { flag: 'rosario', item: 'Whale Oil' }, t:
+`“You’ve come about the lighthouse,” she says, before you can open your mouth. “Four nights ago a man came in here I’d never seen before. Tall, in a dark green cloak that shone like eel skin. He paid with coins crusted in salt and said his name was Dom Vidal. The next night, the light went out.”
+
+From under the counter she takes a clay jug sealed with wax.
+
+“Whale oil. Anselmo came to fetch it and never came back for it. Without this, that lamp won’t light even with prayers.”
+
+Then, more quietly:
+
+“Anselmo never went into the cave without his hurricane lantern. He used to say that down there, a man without light is a dead man.”`,
+ ch: [c('Keep the oil and go back to the counter', 'taberna')] },
+
+velho: { cena: 'taberna', lugar: 'taberna', fx: { flag: 'velho', mare: 1 }, t:
+`The old man’s name is Tomé, and he kept the lighthouse before Anselmo. When you say the name Vidal, he stops smiling.
+
+“Tide witch. He was here in my grandfather’s day. He drowns the boats and keeps the men’s souls in jars, down below, in an ossuary under the lighthouse. Every soul gives him one more year of life.”
+
+He taps his pipe on the table.
+
+“Two things make him tremble. The Bell of Saint Barbara, which fell from the old church into the sea and lies in the Drowned Cave. And his true name, which nobody knows. They say it’s written on a stone, but nobody remembers which.”
+
+Then he smiles again and takes two bone dice from his pocket.
+
+“Now, will you play a round with an old man? Three coins.”`,
+ ch: [c('Accept the game of bones (3 coins)', 'jogo', { ouro: 3 }), c('Refuse and go back to the counter', 'taberna')] },
+
+jogo: { cena: 'taberna', lugar: 'taberna', t: `Tomé blows on the dice for luck. Each of you throws. Whoever scores higher takes the coins.`,
+ duelo: { win: 'jogo_ganha', lose: 'jogo_perde', quem: 'Tomé' } },
+
+jogo_ganha: { cena: 'taberna', lugar: 'taberna', som: 'sorte', fx: { item: 'Shark Tooth' }, t:
+`Tomé laughs until he coughs. Instead of coins, he takes from his neck a shark’s tooth on a leather cord.
+
+“A bet’s a bet, and I’ve got no coins. This brought me luck for fifty years at sea. Wear it round your neck and your hand won’t shake.”`,
+ ch: [c('Hang the tooth round your neck and go back to the counter', 'taberna')] },
+
+jogo_perde: { cena: 'taberna', lugar: 'taberna', fx: { ouro: -3 }, t:
+`“The bones like me,” says Tomé, slipping your coins into his pocket. “No hard feelings. Have some advice for free: in the cave, follow the raven. Anselmo marked everything with a raven.”`,
+ fx2: { flag: 'dica_corvo' },
+ ch: [c('Go back to the counter', 'taberna')] },
+
+archote: { cena: 'taberna', lugar: 'taberna', fx: { flag: 'archote', archote: 6 }, t:
+`You pick a pine stick with its end soaked in resin and light it in the embers. Dona Rosário sees you, but says nothing.
+
+One of the fishermen speaks for the first time, without looking up from his glass:
+
+“That won’t last long. Down there, when it goes out, it goes out for good.”
+
+A torch gives light only for a short while. Your Adventure Sheet shows how much is left.`,
+ ch: [c('Go back to the counter', 'taberna')] },
+
+loja: { cena: 'taberna', lugar: 'taberna', t: `Dona Rosário opens the pantry and shows you what she has. She gives no discounts, but she cheats nobody either.`,
+ loja: [
+  { nome: 'Provisions', preco: 2, prov: 1, d: 'Bread, cheese and chouriço. Restore 4 Stamina.' },
+  { nome: 'Bag of Salt', preco: 2, item: 'Bag of Salt', d: 'The drowned cannot cross salt.' },
+  { nome: 'Hemp Rope', preco: 3, item: 'Hemp Rope', d: 'Twelve fathoms, with an iron hook.' },
+  { nome: 'Throwing Knife', preco: 4, item: 'Throwing Knife', d: 'In combat, 2 sure damage. Once only.' }],
+ ch: [c('Go back to the counter', 'taberna')] },
+
+capela: { cena: 'capela', lugar: 'capela', fx: { mare: 1 }, t:
+`The Chapel of Saint Peter of the Shipwrecked is small and cold. Moonlight falls through the high window onto the altar. Dozens of little wooden boats hang from the beams, offered by those who came back from the sea. On the walls are portraits of those who did not.
+
+A woman in black kneels in prayer before the altar. She does not turn when you come in, but she stops praying.`,
+ ch: [c('Kneel and pray', 'rezar', { notFlag: 'rezou' }), c('Talk to the woman in black', 'beata', { notFlag: 'beata' }), c('Read the papers pinned to the offerings', 'exvotos', { notFlag: 'exvotos' }), c('Go back to the square', 'praca')] },
+
+rezar: { cena: 'capela', lugar: 'capela', som: 'sorte', fx: { flag: 'rezou', sorte: 2 }, t:
+`You kneel on the cold stone and close your eyes. You are not sure whom you are asking, but you ask. When you stand up, the flame of the nearest candle straightens, as if someone had closed a window that isn’t there.
+
+You regain 2 points of Luck.`,
+ ch: [c('Go back to the nave', 'capela')] },
+
+beata: { cena: 'capela', lugar: 'capela', fx: { flag: 'beata', item: 'Conch Amulet' }, t:
+`The woman’s name is Benedita. Her son, Joaquim, was on the second boat lost on the Teeth. They never found the body.
+
+“I hear him,” she says. “At night, under the floor, calling for me. He isn’t dead like the other dead. He’s trapped.”
+
+From her pocket she takes a small pierced conch shell on a cord.
+
+“Joaquim wore this against the song of the moiras. That morning he forgot it. You take it. And if you find him down there, tell him his mother isn’t angry.”`,
+ ch: [c('Promise her you will try', 'capela')] },
+
+exvotos: { cena: 'capela', lugar: 'capela', fx: { flag: 'exvotos' }, fx2: { flag: 'nota' }, t:
+`You walk along the wall with a candle in your hand. Among the old offerings is a folded paper, held by a pin, the ink still fresh. You unfold it.
+
+“If anything happens to me, the lighthouse key is where the raven sleeps. Do not trust green lights. A.”`,
+ ch: [c('Keep the paper and go back to the nave', 'capela')] },
+
+casa: { cena: 'casa', lugar: 'casa', fx: { mare: 1 }, t:
+`The door of the keeper’s house bangs in the wind. Inside, chairs are overturned and drawers emptied onto the floor. Someone searched for something in a hurry and did not find it, because they came back several times: there are wet footprints everywhere, one on top of another.
+
+In front of the window, a stuffed raven watches the room from a perch. At the back there is a door to the bedroom and a smaller one to the pantry. From the pantry comes the sound of claws scratching wood.`,
+ ch: [c('Examine the stuffed raven', 'corvo', { notFlag: 'corvo' }), c('Go into the bedroom', 'quarto', { notFlag: 'quarto' }), c('Open the pantry', 'despensa', { notFlag: 'despensa' }), c('Go out onto the cliff path', 'falesia1'), c('Go back to the square', 'praca')] },
+
+corvo: { cena: 'casa', lugar: 'casa', fx: { flag: 'corvo' }, t:
+`The raven smells of dust and camphor. Its glass eyes seem to follow you. The perch is a thick log nailed to the wall below the window.`,
+ ch: [c('Search under the perch, as the paper in the chapel said', 'corvo_chave', { flag: 'nota' }), c('Search the raven at random', 'corvo_procura', { notFlag: 'nota' })] },
+
+corvo_procura: { cena: 'casa', lugar: 'casa', t: `You turn the bird every which way, feel the feathers, shake the perch. Finding anything here will depend on your luck.`,
+ teste: { tipo: 'sorte', ok: 'corvo_chave', ko: 'corvo_nada' } },
+
+corvo_chave: { cena: 'casa', lugar: 'casa', som: 'chave', fx: { item: 'Lighthouse Key' }, t:
+`Under the perch, the wood has a hollow sealed with wax. Inside is an iron key as long as your hand, with a raven engraved on the bow.`,
+ ch: [c('Keep the key', 'casa')] },
+
+corvo_nada: { cena: 'casa', lugar: 'casa', t:
+`A wing snaps off in your hand and a shower of feathers and sawdust falls. You find nothing. The raven, now crooked, seems to look at you with contempt.`,
+ ch: [c('Give up on the raven', 'casa')] },
+
+quarto: { cena: 'afogado', lugar: 'casa', som: 'gemido', fx: { mare: 1 }, t:
+`The bedroom is dark and smells of low tide. Someone is sitting on the bed with their back to you, dripping water onto the floorboards.
+
+“Anselmo?” you call.
+
+The figure turns its head slowly, far too slowly, and then the rest of its body. It is not Anselmo. It is a bloated white man, with weed in his hair and eyes as milky as boiled fish. A DROWNED ONE.
+
+He opens his mouth and seawater pours out. He gets up and comes at you with his arms outstretched.`,
+ luta: { foes: [{ nome: 'Drowned One', hab: 7, en: 7 }], win: 'quarto_ganho', fuga: 'casa', fugaApos: 2 },
+ ch_extra: [c('Throw salt in his face', 'quarto_sal', { req: 'Bag of Salt' })] },
+
+quarto_sal: { cena: 'afogado', lugar: 'casa', som: 'gemido', fx: { drop: 'Bag of Salt' }, t:
+`You throw the salt in his face. The drowned man shrieks like a kettle, covers his eyes with his hands and melts into water right there at your feet. You have used all the salt.`,
+ ch: [c('Search the bedroom', 'quarto_ganho')] },
+
+quarto_ganho: { cena: 'afogado', lugar: 'casa', fx: { flag: 'quarto', ouro: 4 }, fx2: { flag: 'marcas' }, t:
+`All that is left of the drowned man is a puddle running through the cracks in the floor.
+
+Under the bed you find Anselmo’s diary. You read the last pages by the light from the window:
+
+“I carved the mark of the raven on the rocks of the Drowned Cave so I would never get lost. Whoever has light, follow the raven’s beak. Where the raven has a cross above it, that is his ossuary. Do not go in there.”
+
+“He wants the light out until the great tide. He fears bronze. He fears the bell.”
+
+Between the pages are four coins, which you keep.`,
+ ch: [c('Go back to the main room', 'casa')] },
+
+despensa: { cena: 'casa', lugar: 'casa', som: 'garras', fx: { flag: 'despensa' }, t:
+`You open the pantry door and the noise stops. Then it starts again, closer. Out of the dark come dozens of small red eyes and a stench of rotten fish: SEA RATS, as big as cats, with bald, scaly tails.
+
+Behind them, hanging on a nail, you see a hurricane lantern.`,
+ luta: { foes: [{ nome: 'Sea Rats', hab: 5, en: 7 }], win: 'despensa_ganha', fuga: 'casa', fugaApos: 1 } },
+
+despensa_ganha: { cena: 'casa', lugar: 'casa', som: 'chave', fx: { item: 'Hurricane Lantern' }, t:
+`The surviving rats flee through a hole in the floor. You take the lantern off its nail. It has thick glass, an iron cage and the reservoir is still half full. It lights at the first try.
+
+With this, no darkness will catch you unprepared.`,
+ ch: [c('Go back to the main room', 'casa')] },
+
+cemiterio: { cena: 'cemiterio', lugar: 'cemiterio', fx: { flag: 'cemiterio', mare: 1 }, t:
+`The cemetery is a stretch of hillside where all the crosses lean towards the sea, as if the wind had combed them. The moon is huge above the dead tree in the middle, and the tree is full of ravens. Not one of them croaks.
+
+You notice the recent graves. They are open. The earth was not dug from the outside in: it was pushed from the inside out.
+
+Something moves behind the crosses at the back. Then something else. Two figures rise slowly, wet, with seaweed dripping from their shoulders.`,
+ ch: [c('Scatter the salt around you', 'cemiterio_sal', { req: 'Bag of Salt' }), c('Draw your sword', 'cemiterio_luta'), c('Run back to the square', 'praca')] },
+
+cemiterio_sal: { cena: 'cemiterio', lugar: 'cemiterio', fx: { drop: 'Bag of Salt' }, t:
+`You draw a circle of salt around yourself. The drowned stop at the white line, moan, and do not cross it. They stand there staring at you, dripping, until one by one they lie down in their graves again.
+
+You have used up the salt, but you can search the cemetery in peace.`,
+ ch: [c('Read the old headstones', 'lapide')] },
+
+cemiterio_luta: { cena: 'cemiterio', lugar: 'cemiterio', som: 'gemido', t:
+`The drowned come at you unhurried, like people walking under water. Their hands are cold and strong, their nails full of sand.`,
+ luta: { foes: [{ nome: 'First Drowned One', hab: 6, en: 5 }, { nome: 'Second Drowned One', hab: 7, en: 5 }], win: 'lapide', fuga: 'praca', fugaApos: 2 } },
+
+lapide: { cena: 'cemiterio', lugar: 'cemiterio', fx: { flag: 'nome' }, t:
+`At the far end of the cemetery, almost hidden by brambles, is a headstone older than all the others, crusted with salt instead of moss. You scrape the salt off with your blade.
+
+HERE LIES VIDAL ESCAMADO
+DROWNED IN 1789
+MAY THE SEA KEEP HIM
+
+Underneath, someone has scratched with a knife: “it didn’t.”
+
+Now you know the true name of the tide witch.`,
+ ch: [c('Go back to the square', 'praca'), c('Take the cliff path', 'falesia1')] },
+
+/* ===================== CHAPTER II · THE CLIFF ===================== */
+falesia1: { cap: 'II · The Cliff', cena: 'falesia', lugar: 'falesia', fxA: { mare: 1 }, t:
+`The cliff path is narrow and zigzags up between heather and loose stones. The wind pushes you towards the edge like an open hand. Far below, the sea boils against the rocks.
+
+Halfway up, the path splits. A goat track runs down to a small beach, where the black mouth of a cave swallows and spits out the waves. Another, shorter path cuts straight across the moor, where the fog has already settled.`,
+ ch: [c('Keep to the path up to the lighthouse', 'falesia2'), c('Take the shortcut across the moor, through the fog', 'charneca'), c('Go down the goat track to the beach', 'praia'), c('Go back to the village', 'praca')] },
+
+charneca: { cena: 'avejao', lugar: 'charneca', t:
+`The fog closes in behind you. After a few steps you can no longer see the sea or the village. You hear only the wind in the heather and your own heart.
+
+Then, very close, someone says your name.
+
+It is a voice you know. You can’t tell from where, but you know it. The voice of someone you love and haven’t seen for a long time. It calls again, softer, almost crying.`,
+ ch: [c('Answer the voice', 'avejao_resp'), c("Remember the boatman's warning and walk on in silence", 'charneca_aviso', { flag: 'aviso' }), c('Cover your ears and walk on in silence', 'charneca_teste', { notFlag: 'aviso' }), c('Run back the way you came', 'falesia1')] },
+
+charneca_aviso: { cena: 'avejao', lugar: 'charneca', t:
+`You bite your tongue and keep walking, eyes on the ground. The voice calls three more times, angrier each time, and then falls silent.
+
+When the fog parts, you are at the top of the cliff, right by the lighthouse. The shortcut has saved you time.`,
+ ch: [c('Go to the lighthouse door', 'portafarol')] },
+
+charneca_teste: { cena: 'avejao', lugar: 'charneca', t: `You cover your ears with your hands and walk. The voice won’t stop. It calls you by your name, and by the name they called you as a child.`,
+ teste: { tipo: 'sorte', ok: 'charneca_aviso', ko: 'avejao_resp' } },
+
+avejao_resp: { cena: 'avejao', lugar: 'charneca', som: 'rugido', t:
+`“Yes?” you answer, before you can stop yourself.
+
+The fog in front of you hardens. It rises to twice your height, grows shoulders and long arms that reach its knees, and two pale embers where its eyes should be. It is an AVEJÃO, the thing that lives in the fog and feeds on those who answer it.`,
+ luta: { foes: [{ nome: 'Avejão', hab: 9, en: 8 }], win: 'avejao_ganho', fuga: 'falesia1', fugaApos: 2 } },
+
+avejao_ganho: { cena: 'avejao', lugar: 'charneca', fx: { en: -1 }, t:
+`Your sword passes through it one last time and the avejão dissolves into cold smoke, which gets into your mouth and nose and leaves you shivering.
+
+The fog lifts. You are at the top of the cliff, by the lighthouse.`,
+ ch: [c('Go to the lighthouse door', 'portafarol')] },
+
+falesia2: { cena: 'ninhos', lugar: 'ninhos', som: 'gaivota', t:
+`Near the top, the ground turns white with droppings and the air stinks of rotten fish. You hear a heavy beating of wings, like wet sheets in the wind. Three GREAT GULLS rise from the rocks, birds as big as a man, with beaks curved like skinning knives.
+
+There are nests everywhere, and you are standing in the middle of them.`,
+ ch: [c('Draw your sword and cut your way through', 'gaivotas_luta'), c('Press your back to the rock and edge past slowly', 'gaivotas_teste')] },
+
+gaivotas_teste: { cena: 'ninhos', lugar: 'ninhos', t: `You press your back to the rock and move sideways, step by step, never taking your eyes off the birds. One loose stone underfoot could ruin everything.`,
+ teste: { tipo: 'hab', ok: 'gaivotas_ok', ko: 'gaivotas_luta' } },
+
+gaivotas_ok: { cena: 'ninhos', lugar: 'ninhos', t: `The great gulls follow you with their yellow eyes, but none of them moves. You pass the last nest and reach the clifftop without a scratch.`,
+ ch: [c('Go on to the lighthouse door', 'portafarol')] },
+
+gaivotas_luta: { cena: 'ninhos', lugar: 'ninhos', som: 'gaivota', t: `The great gulls dive at you screaming, one at a time, pecking and beating their wings.`,
+ luta: { foes: [{ nome: 'First Great Gull', hab: 5, en: 4 }, { nome: 'Second Great Gull', hab: 6, en: 4 }, { nome: 'Third Great Gull', hab: 5, en: 5 }], win: 'portafarol' } },
+
+portafarol: { cena: 'farol', lugar: 'farol', t:
+`The Raven Lighthouse rises before you, white and immensely tall against the racing clouds. Up above, behind the glass, you see a weak greenish light moving slowly, as if someone were walking about up there carrying it.
+
+The door is oak bound with iron, and it is locked.`,
+ ch: [c("Open the door with the raven's key", 'base', { req: 'Lighthouse Key' }), c('Throw your shoulder against the door', 'porta_ombro'), c('Climb the outside wall with the rope', 'escalar', { req: 'Hemp Rope' }), c('Go down to the cave beach', 'praia')] },
+
+porta_ombro: { cena: 'farol', lugar: 'farol', som: 'porta', fxA: { en: -2 }, t: `You hurl yourself at the door with all your strength. It is like shouldering a cliff. Up above, the green light stops moving, as if listening. You lose 2 points of Stamina.`,
+ ch: [c('Think of another way', 'portafarol')] },
+
+escalar: { cena: 'farol', lugar: 'farol', t: `You throw the rope’s hook. On the third throw it catches on the iron railing far above. You start climbing the wet wall, with the wind trying to tear you off it.`,
+ teste: { tipo: 'hab', ok: 'galeria', ko: 'escalar_cai' } },
+
+escalar_cai: { cena: 'farol', lugar: 'farol', som: 'queda', fx: { en: -4, drop: 'Hemp Rope' }, t: `Halfway up the wall, the rope rubs against an edge and snaps. You slide several metres and land hard on your side. You lose 4 points of Stamina, and the rope is useless now.`,
+ ch: [c('Get up with difficulty', 'portafarol')] },
+
+/* ===================== CHAPTER III · THE DROWNED CAVE ===================== */
+praia: { cap: 'III · The Drowned Cave', cena: 'praia', lugar: 'praia', fxA: { mare: 1 }, t:
+`The beach is a tongue of dark sand that the tide has already started to eat. The mouth of the Drowned Cave is as tall as a church, and inside the darkness is total. From very far away, from deep within, comes a muffled sound: the sea striking metal, like a bell rung under water.
+
+You can’t see a hand in front of your face. Without light, in there you are blind.`,
+ ch: [c('Light the hurricane lantern and go in', 'gruta1', { req: 'Hurricane Lantern' }), c('Go in with the lit torch', 'gruta1', { luzArchote: 1, notItem: 'Hurricane Lantern' }), c('Go in blind, feeling your way', 'perdido1', { semLuz: 1 }), c('Climb back up the goat track', 'falesia1')] },
+
+gruta1: { cena: 'gruta', lugar: 'gruta', escuro: 1, t:
+`Your light draws the cave around you. The water is knee-deep and freezing. The walls glisten with slime and with little crabs fleeing from the brightness.
+
+To the left, from a tunnel, comes a woman’s sweet singing. To the right, from another tunnel, comes the sound of bronze. Straight ahead, the water turns black and deep, in a well.
+
+And on the rock, right beside your hand, someone has carved a small raven, its beak pointing to the back of the cave. Without light, you would never have seen it.`,
+ ch: [c('Follow the singing into the left tunnel', 'moira', { notFlag: 'moira' }), c('Follow the sound of bronze into the right tunnel', 'sino_sala', { notItem: 'Bronze Clapper' }), c('Dive into the well', 'poco', { notFlag: 'poco' }), c("Follow the raven's marks", 'marcas'), c('Go out to the beach', 'praia')] },
+
+marcas: { cena: 'gruta', lugar: 'gruta', escuro: 1, t:
+`You follow the carved ravens from rock to rock. They are small and easy to miss. At the end of a narrow passage there are two: one points to some steps cut into the stone, going up. The other has a cross scratched above it and points to a low passage, from which comes a sweet, sickly smell, like rotting flowers.`,
+ ch: [c('Climb the steps the raven points to', 'degraus', { flag: 'marcas' }), c('Enter the passage marked with the cross', 'ossario', { flag: 'marcas' }), c('Pick one of the ways at random', 'marcas_teste', { notFlag: 'marcas' })] },
+
+marcas_teste: { cena: 'gruta', lugar: 'gruta', t: `You don’t know what the marks mean. One has a cross, the other doesn’t. You pick one and hope you won’t regret it.`,
+ teste: { tipo: 'sorte', ok: 'degraus', ko: 'ossario' } },
+
+perdido1: { cena: 'galerias', lugar: 'galerias', fxA: { mare: 1 }, t:
+`You feel your way forward, one hand on the rock and the other in front of your face. The cave mouth disappears behind you after twenty steps. The water rises to your waist, then falls again.
+
+You no longer know which way the sea is. Somewhere to your left, something large slides through the water without making a ripple.`,
+ ch: [c('Follow the left-hand wall', 'perdido2'), c('Follow the sound of running water', 'perdido3')] },
+
+perdido2: { cena: 'galerias', lugar: 'galerias', som: 'rugido', fxA: { mare: 1 }, t:
+`The wall curves and ends at a pool. You hear the water part. Something smooth and icy wraps around your legs, then another. BLIND EELS, thick as arms, with mouths full of inward-curving teeth.
+
+You can’t see them. You have to fight by touch.`,
+ luta: { foes: [{ nome: 'Blind Eels', hab: 7, en: 8 }], win: 'perdido4', ceguinho: 1 } },
+
+perdido3: { cena: 'galerias', lugar: 'galerias', fxA: { mare: 1, en: -2 }, t:
+`You follow the sound of the water. The floor vanishes beneath your feet and you fall into a deep channel. The current carries you off, slams you against the rocks, forces you through a tunnel you barely fit into, and dumps you somewhere just as dark.
+
+Coughing, you climb onto a rock.`,
+ ch: [c('Crawl towards where the air feels fresher', 'perdido4')] },
+
+perdido4: { cena: 'galerias', lugar: 'galerias', fxA: { mare: 1 }, t:
+`After you don’t know how long, you see a grey glimmer. You drag yourself towards it on your knees.
+
+You come out on the same beach where you went in. The tide has risen a lot. You have lost time and strength wandering in circles in the dark, and found nothing.
+
+In there, without light, there is no way through. You need a lantern, or at least a torch.`,
+ ch: [c('Catch your breath on the beach', 'praia')] },
+
+apagou: { cena: 'galerias', lugar: 'galerias', t:
+`The torch flame shrinks, turns blue, crackles and dies. The dark falls on you like water.
+
+You stand still, listening. You hear your own breathing, the sea far away, and something moving in the water, close by.`,
+ ch: [c('Try to feel your way back', 'perdido1')] },
+
+moira: { cena: 'moira', lugar: 'moira', fx: { flag: 'moira' }, t:
+`The tunnel opens into a chamber where the water is clean and pale green, lit from below as if the sun were shining at the bottom of the sea. Sitting on a rock, a woman combs hair that falls all the way to the water. Her skin is the colour of pearl and, instead of legs, she has a scaly tail: a WATER MOIRA, an enchanted maiden of the old tales.
+
+She sings, and the song pulls you towards her like a rope around your neck. You take a step into the water without meaning to. Then another.`,
+ ch: [c('Grab the conch shell you wear on your chest', 'moira_amuleto', { req: 'Conch Amulet' }), c('Dig your nails into your hands and resist the song', 'moira_teste', { notItem: 'Conch Amulet' })] },
+
+moira_teste: { cena: 'moira', lugar: 'moira', t: `You dig your nails into your palms and try to think of anything else: the cold, the lighthouse, the boatman. The song goes on, sweeter and sweeter.`,
+ teste: { tipo: 'sorte', ok: 'moira_resiste', ko: 'moira_cai' } },
+
+moira_cai: { cena: 'moira', lugar: 'moira', som: 'splash', fx: { en: -4, mare: 2 }, t:
+`When you come to your senses, the water is up to your neck and the moira is holding out her arms to you. You tear yourself away, stumbling and coughing up salt water. She laughs and dives.
+
+You have lost strength and time: 4 Stamina, and the tide has risen 2 more.`,
+ ch: [c('Go back to the cave entrance', 'gruta1')] },
+
+moira_resiste: { cena: 'moira', lugar: 'moira', t: `The song slides through your ears without catching hold. The moira falls silent and looks at you with curiosity, tilting her head like a gull.`,
+ ch: [c('Listen to what she has to say', 'moira_fala')] },
+
+moira_amuleto: { cena: 'moira', lugar: 'moira', som: 'sorte', t:
+`The conch starts to hum against your chest, like a shell held to your ear, and the moira’s song dissolves into that sound of the sea. She stops, surprised, and looks at the amulet.
+
+“That’s Joaquim’s,” she says. “He sang better than I do. Then we can talk.”`,
+ ch: [c('Listen to what she has to say', 'moira_fala')] },
+
+moira_fala: { cena: 'moira', lugar: 'moira', t:
+`“Vidal has poisoned my waters,” she says. “Since he came back, the fish flee and the dead won’t rest. He keeps their souls in jars, in the ossuary, behind the mark of the raven with the cross. Breaking the jars sets them free. But the ossuary has a guardian.”
+
+She combs her hair slowly.
+
+“The bell undoes his skin. The name undoes his will. If you are going to face him, I will help you. But in the sea nothing is given for free. Give me something that shines.”`,
+ fx: { flag: 'dica_moira' },
+ ch: [c('Give her 5 coins', 'moira_perola', { ouro: 5 }), c('Give her the Shark Tooth', 'moira_perola2', { req: 'Shark Tooth' }), c('Refuse and go back to the cave entrance', 'gruta1')] },
+
+moira_perola: { cena: 'moira', lugar: 'moira', som: 'sorte', fx: { ouro: -5, item: 'Black Pearl' }, t:
+`The moira bites a coin, smiles and hides the others in her hair. Then she hands you a black pearl the size of a pigeon’s egg.
+
+“When you are at death’s door, crack it between your teeth.”`,
+ ch: [c('Keep the pearl and go back to the entrance', 'gruta1')] },
+
+moira_perola2: { cena: 'moira', lugar: 'moira', som: 'sorte', fx: { drop: 'Shark Tooth', item: 'Black Pearl' }, t:
+`The moira holds the tooth up to the light and runs it through her hair like a comb. Satisfied, she hands you a black pearl the size of a pigeon’s egg.
+
+“When you are at death’s door, crack it between your teeth.”`,
+ ch: [c('Keep the pearl and go back to the entrance', 'gruta1')] },
+
+sino_sala: { cena: 'sino', lugar: 'sino', escuro: 1, som: 'garras', t:
+`The tunnel slopes down to a round chamber. In the centre, half buried in sand and covered in barnacles, is a bronze bell bigger than you: the Bell of Saint Barbara. The clapper is still inside.
+
+But the sand around it is moving. First come two antennae as long as whips. Then two pincers the size of doors. Then a rust-coloured shell covered in spines. The KING CRAB rises from the sand and places itself between you and the bell.`,
+ luta: { foes: [{ nome: 'King Crab', hab: 9, en: 10 }], win: 'sino_ganho', fuga: 'gruta1', fugaApos: 3 } },
+
+sino_ganho: { cena: 'sino', lugar: 'sino', som: 'sinogrande', fx: { item: 'Bronze Clapper' }, t:
+`The crab topples onto its side and its legs stop moving. You crawl under the bell and, with great effort, free the bronze clapper, heavy as a war mace.
+
+When you touch it, you feel it vibrate, as if it remembered every hour it ever rang. Far above, you think you hear someone scream.`,
+ ch: [c('Go back to the cave entrance', 'gruta1')] },
+
+poco: { cena: 'gruta', lugar: 'poco', escuro: 1, fx: { flag: 'poco' }, t: `You set your light on a rock, take a deep breath and dive into the black well. The water squeezes your temples. Down below, the light barely reaches.`,
+ teste: { tipo: 'hab', ok: 'poco_ok', ko: 'poco_ko' } },
+
+poco_ok: { cena: 'gruta', lugar: 'poco', som: 'chave', fx: { ouro: 12, item: 'Whale Oil' }, t:
+`At the bottom, among bones and rotten wood, you find a sailor’s chest. You force the lid open. Twelve gold coins, and a jug of whale oil, still sealed. Someone hid it here for a day of need.
+
+You surface laughing.`,
+ ch: [c('Go back to the cave entrance', 'gruta1')] },
+
+poco_ko: { cena: 'gruta', lugar: 'poco', som: 'splash', fx: { en: -3 }, t: `A cold current grabs your legs and drags you down. You hit your head on a rock and come up bleeding. You lose 3 points of Stamina.`,
+ ch: [c('Climb out of the well', 'gruta1')] },
+
+ossario: { cena: 'ossario', lugar: 'ossario', escuro: 1, som: 'ameaca', fxA: { mare: 1 }, t:
+`The passage leads to a long hall carved into the rock. The walls are full of niches, and the niches are full of green glass jars, hundreds of them. Inside each jar a pale little light beats against the glass like a moth.
+
+They are souls. Some are calling out names.
+
+At the end of the hall, what you took for a heap of coral moves. It stands up. It is a huge, hunched figure, with arms that reach the floor and its head and shoulders covered in branches of coral. The CORAL WARDEN opens two eyes that glow like the jars.`,
+ luta: { foes: [{ nome: 'Coral Warden', hab: 9, en: 12 }], win: 'ossario_ganho', fuga: 'gruta1', fugaApos: 3 } },
+
+ossario_ganho: { cena: 'ossario', lugar: 'ossario', som: 'sinogrande', fx: { flag: 'almas', sorteMax: 1 }, t:
+`The warden crumbles into a heap of broken coral. You start breaking the jars, one by one. Each little light that escapes rises to the ceiling, circles your head and vanishes through the rock, on its way to the sea.
+
+From the last jar comes a light that does not leave. It stays in front of you and takes the shape of a boy.
+
+“I’m Joaquim. Tell my mother I’m all right. And listen: he isn’t afraid of the sword. He’s afraid of being remembered. When you stand before him, we’ll be with you.”
+
+Your Luck returns in full.`,
+ ch: [c('Take the passage on the far side of the ossuary', 'degraus')] },
+
+degraus: { cena: 'gruta', lugar: 'gruta', escuro: 1, som: 'porta', fxA: { mare: 1 }, t:
+`The steps spiral up through the rock, slippery with slime. You count one hundred and twelve before you reach a wooden trapdoor above your head.
+
+You push with your shoulder. It gives.`,
+ ch: [c('Enter the lighthouse', 'base')] },
+
+/* ===================== CHAPTER IV · THE TOWER ===================== */
+base: { cap: 'IV · The Tower', cena: 'torre', lugar: 'torre', t:
+`You are at the foot of the lighthouse. An iron spiral staircase climbs through the middle of the tower and disappears into the dark, two hundred steps up. Beside it, a small door leads to the storeroom, and in the floor is the trapdoor to the cave.
+
+From above comes a smell of rotting seaweed and, now and then, a human groan. The staircase vibrates, as if someone were walking on it.`,
+ ch: [c('Climb the iron staircase', 'escada'), c('Go into the storeroom', 'arrecad', { notFlag: 'arrecad' }), c('Go down through the trapdoor to the cave', 'gruta1', { luz: 1 }), c('Leave by the main door', 'portafarol')] },
+
+arrecad: { cena: 'torre', lugar: 'torre', fx: { flag: 'arrecad', prov: 2 }, t:
+`Among nets, paint tins and a cracked, empty oil barrel, you find a sack of hard bread and chouriço. You gain 2 Provisions.
+
+In a corner there is a small cask with a finger of oil at the bottom. Not enough for a whole night, but perhaps enough for a few hours, if it comes to that.`,
+ ch: [c('Go back to the foot of the tower', 'base')] },
+
+escada: { cena: 'torre', lugar: 'torre', som: 'sopro', fxA: { mare: 1 }, t:
+`You climb. The iron steps shake with every step and the echo repeats them above you, a little late, as if someone were climbing up there imitating you.
+
+Halfway up the tower, the staircase passes a narrow window. From the glass peels a damp shadow in the shape of a man, made of salt and foam: a SALT SHADE. Wherever it touches you, your skin burns and cracks.`,
+ luta: { foes: [{ nome: 'Salt Shade', hab: 8, en: 7 }], win: 'patamar' } },
+
+patamar: { cena: 'torre', lugar: 'torre', t:
+`The shade crumbles into salt, which falls down the stairs tinkling like sand on glass.
+
+The last steps. Above you, a half-open door lets out a sickly green light. You hear a man’s voice, calm and pleasant, humming. And you hear chains dragging on the floor.
+
+You lean against the wall and take a deep breath. This is it.`,
+ ch: [c('Enter the lantern room', 'topo')] },
+
+galeria: { cena: 'lanterna', lugar: 'lanterna', t:
+`You reach the iron gallery that runs around the lantern room. Through the glass you see Master Anselmo chained to a pillar and, with his back to you, a tall man in a cloak that shines like eel skin. He is bent over the lens, smearing it with black slime.
+
+With the howling of the wind, he hasn’t heard you coming.`,
+ ch: [c('Strike the railing with the bronze clapper', 'vidal_sino', { req: 'Bronze Clapper' }), c('Smash the glass and attack him from behind', 'vidal_costas')] },
+
+/* ===================== CHAPTER V · DOM VIDAL ===================== */
+topo: { cap: 'V · The Tide Witch', cena: 'lanterna', lugar: 'lanterna', som: 'ameaca', t:
+`The lantern room is round and walled with glass. The great lens of the lighthouse is covered in black slime, and the green light comes from beneath it. Chained to a pillar, Master Anselmo, thin and hollow-eyed, raises his head and shakes it slowly, begging you to run.
+
+By the lens, with his back to you, stands a tall man in a cloak that shines like eel skin. He turns. His face is handsome and far too smooth, with lidless fish eyes. Around his neck, where a collar should be, fins open and close.
+
+“You’re too late to save anyone,” says DOM VIDAL, in a friendly voice. “But just in time to do business.”`,
+ ch: [c('Strike the iron grille with the bronze clapper', 'vidal_sino', { req: 'Bronze Clapper' }), c('Call him by his true name: Vidal Escamado', 'vidal_nome', { flag: 'nome', notFlag: 'nomeado' }), c('Attack him, sword in hand', 'vidal_luta'), c('Hear his offer', 'vidal_proposta')] },
+
+vidal_nome: { cena: 'lanterna', lugar: 'lanterna', som: 'sopro', fx: { flag: 'nomeado' }, t:
+`“Vidal Escamado,” you say. “Drowned in 1789.”
+
+His smile cracks, literally: a split opens from his mouth to his ear, and beneath it you see fish skin, grey and old. He steps back, then again.
+
+“Who told you that? Who...”
+
+For the first time, he is afraid. But a frightened beast still bites.`,
+ ch: [c('Strike the grille with the clapper while he hesitates', 'vidal_sino', { req: 'Bronze Clapper' }), c("Attack now while he's weak", 'vidal_luta_nome')] },
+
+vidal_proposta: { cena: 'lanterna', lugar: 'lanterna', t:
+`“The boats that sink tonight carry Brazilian silver in their holds,” says Vidal, and his voice drips like honey. “The silver is yours. I only want the men. All you have to do is walk back down those stairs and forget you ever came.”
+
+As he talks his words grow sweeter and sweeter, and you catch yourself thinking it might not be such a bad idea. After all, you don’t know those men.`,
+ ch: [c('Let the conch clear your head and refuse', 'vidal_luta', { req: 'Conch Amulet' }), c('Fight his voice and refuse', 'vidal_encanto', { notItem: 'Conch Amulet' }), c('Accept the deal', 'fim_mau')] },
+
+vidal_encanto: { cena: 'lanterna', lugar: 'lanterna', t: `You shake your head like someone shaking water out of their ears. Vidal’s words cling to you like slime.`,
+ teste: { tipo: 'sorte', ok: 'vidal_luta', ko: 'vidal_encantado' } },
+
+vidal_encantado: { cena: 'lanterna', lugar: 'lanterna', som: 'ferida', fx: { en: -4 }, t: `You take too long to answer. Vidal seizes the moment and drives a coral dagger between your ribs. The pain wakes you up for good. You lose 4 points of Stamina.`,
+ ch: [c('Draw your sword', 'vidal_luta')] },
+
+vidal_luta: { cena: 'lanterna', lugar: 'lanterna', t:
+`Vidal sighs, like someone regretting a bad deal, and draws a thin sword that ripples like a wave. He moves like water: he is never where the blow lands.`,
+ luta: { foes: [{ nome: 'Dom Vidal', hab: 11, en: 14 }], win: 'transformacao' } },
+
+vidal_luta_nome: { cena: 'lanterna', lugar: 'lanterna', t:
+`You strike before he can recover. Vidal defends himself with a rippling sword, but misses blows he would never have missed before. Hearing his own name has made him slow.`,
+ luta: { foes: [{ nome: 'Vidal Escamado', hab: 9, en: 12 }], win: 'transformacao' } },
+
+vidal_costas: { cena: 'lanterna', lugar: 'lanterna', som: 'espada', t:
+`You smash the glass with your elbow and fall on him before he can turn. Your blade sinks deep into his shoulder. Vidal roars and draws a sword that ripples like a wave.`,
+ luta: { foes: [{ nome: 'Dom Vidal, wounded', hab: 11, en: 9 }], win: 'transformacao' } },
+
+vidal_sino: { cena: 'lanterna', lugar: 'lanterna', som: 'sinogrande', fx: { flag: 'sinotocado' }, t:
+`You raise the clapper and strike the iron grille. The sound fills the room like church thunder and makes every pane of glass shake at once.
+
+Vidal screams. The scales of his cloak fall like dead leaves, his smooth face fills with wrinkles, his fish eyes turn dull. In a few seconds a bent old man stands before you, reeking of rotten fish. He can no longer change his shape.
+
+Even so, he attacks you in a fury.`,
+ luta: { foes: [{ nome: 'Vidal, undone by the bell', hab: 8, en: 10 }], win: 'vitoria_vidal' } },
+
+transformacao: { cena: 'rei', lugar: 'lanterna', som: 'rugido_grande', t:
+`Vidal falls to his knees, and for a moment you think it’s over. Then he laughs, in a voice that is no longer a man’s, and hurls himself out of the window.
+
+You don’t hear his body hit the rocks. You hear the sea open.
+
+The whole lighthouse shudders. From the water all around the island rise enormous grey arms covered in suckers, taller than the tower. One of them coils round the gallery and rips away half the railing. Far below, in the foam, an eye the size of a door opens.
+
+Vidal has stopped pretending to be a man. He is the TIDE KING.`,
+ ch: [c("Strike the gallery's iron with the clapper", 'rei_sino', { req: 'Bronze Clapper' }), c('Call on the souls you freed in the ossuary', 'rei_almas', { flag: 'almas' }), c('Face the tentacle with your sword', 'rei_luta')] },
+
+rei_sino: { cena: 'rei', lugar: 'lanterna', som: 'sinogrande', t:
+`The bell rings, and the whole sea seems to shrink back. The tentacles tremble and lose their strength, but they don’t let go of the tower. One of them comes straight at you.`,
+ luta: { foes: [{ nome: 'Tide King, stunned', hab: 8, en: 10 }], win: 'vitoria_vidal' } },
+
+rei_almas: { cena: 'rei', lugar: 'lanterna', som: 'sopro', t:
+`You call for Joaquim, and for all the others. From the water rise hundreds of pale little lights, like sparks falling upwards. They coil around the tentacles and drag them down, down to the depths, to where they themselves were held prisoner.
+
+The monster howls. Only one arm manages to reach you.`,
+ luta: { foes: [{ nome: 'Tide King, dragged by the souls', hab: 8, en: 9 }], win: 'vitoria_vidal' } },
+
+rei_luta: { cena: 'rei', lugar: 'lanterna', t:
+`You cling to what is left of the gallery and slash at the tentacle coming for you. It is like hitting a wet tree trunk. The eye far below follows your every move.`,
+ luta: { foes: [{ nome: 'Tide King', hab: 11, en: 16 }], win: 'vitoria_vidal' } },
+
+vitoria_vidal: { cena: 'lanterna', lugar: 'lanterna', som: 'splash', t:
+`You hear a long scream rising from the bottom of the sea. Then, silence. The black slime on the lens runs down the glass like melted wax, and the green light goes out.
+
+You break Anselmo’s chains with your sword. The old man can barely stand.
+
+“The lens,” he whispers. “Clean the lens and light it. Quickly.”`,
+ ch: [c('Fill the reservoir with the whale oil', 'acender', { req: 'Whale Oil' }), c('Go down to the storeroom and scrape up whatever oil is there', 'sem_oleo', { notItem: 'Whale Oil' })] },
+
+sem_oleo: { cena: 'torre', lugar: 'torre', fxA: { mare: 3 }, t:
+`You run down the two hundred steps, scrape the bottom of the cask in the storeroom with a tin and climb back up, legs burning and oil dripping through your fingers. It isn’t much, but it will have to do.
+
+You have lost precious time: the tide has risen 3 more.`,
+ ch: [c('Fill the reservoir', 'acender')] },
+
+acender: { cena: 'aceso', lugar: 'lanterna', som: 'acender', t:
+`You wipe off the last of the slime with your own shirt. Anselmo, his hands shaking, lights the wick.
+
+For a moment nothing happens. Then the flame catches, the mechanism creaks, the lens begins to turn, and a beam of white light tears through the night above the sea.`,
+ ch: [c('Look out over the bay', 'fim_vitoria', { aTempo: 1 }), c('Look out over the bay', 'fim_amargo', { tarde: 1 })] },
+
+fim_vitoria: { cena: 'aceso', lugar: 'lanterna', som: 'vitoria', fim: 'vitoria', titulo: 'The light returns', t:
+`Far below, the sails of the cod fleet turn away from the Teeth one by one, like birds remembering the way. In the village someone starts ringing the chapel bell, then someone else, and then the whole village is awake.
+
+When the sun rises, you are sitting on the lighthouse steps beside Anselmo, sharing hard bread and a swig of brandy.
+
+“Stay for lunch,” he says. “Rosário makes an octopus rice that would raise the dead. And after tonight, I think we’ve had enough of the dead.”
+
+Vila Negra has light again. You have won.`,
+ extra: { flag: 'almas', t: `In the afternoon, at the chapel, Benedita comes to find you. She says nothing. She takes your hands and holds them for a long time. You give her Joaquim’s message, word for word, and she smiles for the first time since the sea took him.` } },
+
+fim_amargo: { cena: 'naufragio', lugar: 'lanterna', som: 'sinogrande', fim: 'amargo', titulo: 'Light too late', t:
+`The beam sweeps the bay, and the sails of the fleet turn away from the Teeth. Almost all of them. Against the rocks, a small schooner already lies on her side, mast broken, and there are men in the water.
+
+The village fishermen spend the morning in their rowing boats. They save some. Others, they don’t.
+
+The lighthouse is lit again, and it is thanks to you. But the tide was faster. Next time, perhaps you’ll know where not to waste time.` },
+
+fim_mau: { cena: 'naufragio', lugar: 'lanterna', som: 'morte', fim: 'mau', titulo: 'The silver of Brazil', t:
+`You walk down the stairs without looking back. Behind you, you hear Vidal’s laughter and Anselmo’s chains rattling against the pillar.
+
+At dawn, the cod fleet sails blind into the bay. From the quay you hear the hulls breaking on the Teeth, one by one, and the screams, and then only the sea.
+
+The following week, a chest full of silver turns up at your door, crusted with salt. You are rich.
+
+You never again sleep through a whole night. And sometimes, in the fog, you hear someone say your name.` },
+};
+
+/* Island: map places (x, y, name, label position) and paths */
+const LUGARES = {
+ cais: [70, 372, 'Quay', 's'], praca: [84, 334, 'Square', 's'], taberna: [48, 304, 'Tavern', 'e'], capela: [138, 314, 'Chapel', 's'],
+ casa: [104, 270, "Keeper's House", 's'], cemiterio: [40, 250, 'Cemetery', 'b'], falesia: [126, 214, 'Cliff', 'e'], charneca: [168, 168, 'Moor', 's'],
+ ninhos: [140, 140, 'Nests', 'e'], farol: [196, 104, 'Lighthouse Door', 'e'], torre: [228, 82, 'Tower', 's'], lanterna: [228, 46, 'Lantern', 's'],
+ praia: [178, 254, 'Beach', 'e'], gruta: [238, 210, 'Drowned Cave', 'b'], galerias: [196, 300, 'Black Tunnels', 'b'], poco: [270, 274, 'Well', 'b'],
+ moira: [282, 236, 'Moira', 'a'], sino: [278, 170, 'Bell', 'a'], ossario: [248, 140, 'Ossuary', 's'] };
+const CAMINHOS = [['cais', 'praca'], ['praca', 'taberna'], ['praca', 'capela'], ['praca', 'casa'], ['praca', 'cemiterio'], ['casa', 'falesia'], ['praca', 'falesia'],
+ ['falesia', 'ninhos'], ['falesia', 'charneca'], ['charneca', 'farol'], ['ninhos', 'farol'], ['falesia', 'praia'], ['praia', 'gruta'], ['praia', 'galerias'],
+ ['gruta', 'moira'], ['gruta', 'sino'], ['gruta', 'poco'], ['gruta', 'ossario'], ['ossario', 'torre'], ['gruta', 'torre'], ['farol', 'torre'], ['torre', 'lanterna'], ['farol', 'lanterna'], ['farol', 'praia']];
+
+const api = { H, LUGARES, CAMINHOS };
+if (typeof module !== 'undefined') module.exports = api; else raiz.Historia = api;
+})(this);
+
+</script>
+<script>
+/* ================== DADOS ================== */
+const S = Historia.H;
+const ITENS = {
+ 'Whale Oil': 'Fuel for the lighthouse lamp.',
+ 'Hurricane Lantern': 'A light that never goes out. In the cave, you see everything.',
+ 'Shark Tooth': '+1 to your Attack Strength in combat.',
+ 'Hemp Rope': 'Twelve fathoms, with an iron hook.',
+ 'Throwing Knife': 'In combat: 2 sure damage. Once.',
+ 'Bag of Salt': 'The drowned cannot cross salt. Once.',
+ 'Black Pearl': 'Crack it between your teeth: restores all Stamina. Once.',
+ 'Lighthouse Key': 'Old iron, engraved with a raven.',
+ 'Conch Amulet': 'Protects against enchanted songs and voices.',
+ 'Bronze Clapper': 'From the Bell of Saint Barbara. It hums by itself.',
+};
+const POCOES = { habilidade: { nome: 'Potion of Skill', d: 'Restores your starting Skill.' }, forca: { nome: 'Potion of Strength', d: 'Restores your starting Stamina.' }, fortuna: { nome: 'Potion of Fortune', d: 'Starting Luck +1 and restores Luck.' } };
+const MODOS = {
+ aprendiz: { nome: 'Apprentice', d: '5 fingers in the book, 6 provisions, 10 coins. Weaker enemies and a slower tide.', dedos: 5, prov: 6, ouro: 10, inim: -1, limite: 16 },
+ normal: { nome: 'Sailor', d: 'Like the classic books: 3 fingers, 4 provisions, 8 coins. Tide of 14.', dedos: 3, prov: 4, ouro: 8, inim: 0, limite: 14 },
+ dificil: { nome: 'Sea Wolf', d: 'No finger in the book, 2 provisions, 5 coins. Stronger enemies and a tide of 12.', dedos: 0, prov: 2, ouro: 5, inim: 1, limite: 12 },
+};
+const FINAIS = { vitoria: 'The light returns', amargo: 'Light too late', mau: 'The silver of Brazil', morte: 'Death' };
+const AMB = { cais: 'porto', taberna: 'taberna', capela: 'capela', casa: 'casa', afogado: 'casa', cemiterio: 'cemiterio', falesia: 'falesia', avejao: 'charneca', ninhos: 'falesia', farol: 'falesia', praia: 'praia', gruta: 'gruta', galerias: 'galerias', moira: 'moira', sino: 'gruta', ossario: 'ossario', torre: 'torre', lanterna: 'tempestade', rei: 'tempestade', aceso: 'aceso', naufragio: 'tempestade' };
+const NUM = {}; (function () { const ids = Object.keys(S).filter(k => k !== 'start'); let s = 1987; const r = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648 }; const n = ids.map((_, i) => i + 2); for (let i = n.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [n[i], n[j]] = [n[j], n[i]] } NUM.start = 1; ids.forEach((id, i) => NUM[id] = n[i]); })();
+
+/* ================== ILUSTRAÇÃO: revelar a tinta ================== */
+Arte.usar((w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; });
+const Ilus = (() => {
+ const tela = document.getElementById('tela'), tx = tela.getContext('2d'); const cache = new Map(); let anim = null, atual = null;
+ const MW = 240, MH = 136, SC = 1200 / 240; const mask = document.createElement('canvas'); mask.width = MW; mask.height = MH; const mx = mask.getContext('2d');
+ const tmp = document.createElement('canvas'); tmp.width = 1200; tmp.height = 680; const tpx = tmp.getContext('2d');
+ const hash = s => { let h = 7; for (const ch of s) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
+ const PRE = {};
+ Object.keys(Arte.CENAS).forEach(k => { const im = new Image(); im.decoding = 'async'; im.onload = () => { PRE[k] = im; cache.delete(k); }; im.src = 'img/' + k + '.webp'; });
+ function imagem(k) { if (PRE[k]) return PRE[k]; if (!cache.has(k)) { const c = document.createElement('canvas'); c.width = 1200; c.height = 680; try { Arte.desenhar(k, c, hash(k)); } catch (e) { console.error(e); } cache.set(k, c); } return cache.get(k); }
+ function papel() { const g = tx.createRadialGradient(600, 300, 60, 600, 340, 760); g.addColorStop(0, '#ead6a8'); g.addColorStop(.7, '#d6b880'); g.addColorStop(1, '#b8945a'); tx.fillStyle = g; tx.fillRect(0, 0, 1200, 680); }
+ function contorno(r, n, var_) { let v = Array.from({ length: n }, () => 1 + (r() - .5) * 2 * var_); for (let k = 0; k < 2; k++) v = v.map((q, i) => (q * 2 + v[(i + 1) % n] + v[(i + n - 1) % n]) / 4); return v; }
+ function plano(rapido, seed) {
+  let s = seed % 2147483646 + 1; const r = () => { s = (s * 16807) % 2147483647; return s / 2147483647; }; const B = [], D = [];
+  const T = rapido ? 1.2 : 2.6, k = MW / 300;
+  [[150, 85, 120], [80, 70, 90], [220, 70, 90], [150, 40, 80], [150, 130, 80], [40, 110, 70], [260, 110, 70]].forEach(([x, y, rr], i) => B.push({ x: (x + (r() - .5) * 30) * k, y: (y + (r() - .5) * 20) * k, r: rr * k * (.9 + r() * .3), t0: .05 + i * T * .07 + r() * .1, d: T * .55, p: contorno(r, 36, .3) }));
+  for (let i = 0; i < 22; i++) B.push({ x: r() * MW, y: r() * MH, r: (16 + r() * 46) * k, t0: r() * T * .7, d: T * .35 + r() * .3, p: contorno(r, 28, .35) });
+  for (let i = 0; i < 30; i++) B.push({ x: r() * MW, y: r() * MH, r: (1 + r() * 4) * k, t0: r() * T * .3, d: .15, p: contorno(r, 10, .3) });
+  for (let i = 0; i < 18; i++) D.push({ x: 15 + r() * (MW - 30), y: 15 + r() * (MH * .6), w: (.8 + r() * 2.4) * k, L: (20 + r() * 90) * k, t0: .2 + r() * T * .6, d: .6 + r() * 1 });
+  return { B, D, T: T + .6 };
+ }
+ function forma(b, rr) { const n = b.p.length; const P = b.p.map((q, i) => { const a = i / n * 6.283; return [b.x + Math.cos(a) * rr * q, b.y + Math.sin(a) * rr * q]; });
+  mx.beginPath(); const m0 = [(P[0][0] + P[n - 1][0]) / 2, (P[0][1] + P[n - 1][1]) / 2]; mx.moveTo(m0[0], m0[1]);
+  for (let i = 0; i < n; i++) { const a = P[i], c = P[(i + 1) % n]; mx.quadraticCurveTo(a[0], a[1], (a[0] + c[0]) / 2, (a[1] + c[1]) / 2); } mx.closePath(); mx.fill(); }
+ function desenhaMascara(P, t, cresce) {
+  mx.clearRect(0, 0, MW, MH); mx.fillStyle = '#000';
+  for (const b of P.B) { const k = Math.min(1, Math.max(0, (t - b.t0) / b.d)); if (k <= 0) continue; const e = 1 - Math.pow(1 - k, 3); forma(b, b.r * e * cresce); }
+  for (const d of P.D) { const k = Math.min(1, Math.max(0, (t - d.t0) / d.d)); if (k <= 0) continue; const L = d.L * (1 - Math.pow(1 - k, 2)) * cresce; mx.fillRect(d.x - d.w / 2, d.y, d.w, L); mx.beginPath(); mx.arc(d.x, d.y + L, d.w * .9, 0, 7); mx.fill(); }
+ }
+ function camada(fonte, P, t, cresce, alfa) {
+  desenhaMascara(P, t, cresce); tpx.globalCompositeOperation = 'source-over'; tpx.clearRect(0, 0, 1200, 680); tpx.imageSmoothingEnabled = true; tpx.imageSmoothingQuality = 'high'; tpx.drawImage(mask, 0, 0, 1200, 680);
+  tpx.globalCompositeOperation = 'source-in'; if (typeof fonte === 'string') { tpx.fillStyle = fonte; tpx.fillRect(0, 0, 1200, 680); } else tpx.drawImage(fonte, 0, 0);
+  tpx.globalCompositeOperation = 'source-over'; tx.save(); tx.globalAlpha = alfa; tx.drawImage(tmp, 0, 0); tx.restore();
+ }
+ function compor(img, t, P) { papel(); camada('rgba(26,16,6,1)', P, t + .1, 1.05, .62); camada(img, P, t, 1, 1); }
+ function mostrar(k, animar, rapido) {
+  if (anim) { cancelAnimationFrame(anim.id); anim = null; }
+  const img = imagem(k); atual = k; const box = document.getElementById('ilus'); const sp = box.querySelector('.salta'); if (sp) sp.remove();
+  if (!animar || matchMedia('(prefers-reduced-motion: reduce)').matches) { tx.drawImage(img, 0, 0); return; }
+  const P = plano(rapido, hash(k) + Math.floor(Math.random() * 1000) + 1); const t0 = performance.now();
+  const s = document.createElement('span'); s.className = 'salta'; s.textContent = 'tap to finish'; if (!rapido) box.appendChild(s);
+  Som.fx('tinta');
+  const passo = now => { const t = (now - t0) / 1000; if (t >= P.T) { tx.drawImage(img, 0, 0); anim = null; s.remove(); return; } compor(img, t, P); anim.id = requestAnimationFrame(passo); };
+  anim = { id: requestAnimationFrame(passo) };
+ }
+ function acabar() { if (!anim || !atual) return; cancelAnimationFrame(anim.id); anim = null; tx.drawImage(imagem(atual), 0, 0); const sp = document.querySelector('#ilus .salta'); if (sp) sp.remove(); }
+ function aquecer(keys) { const fila = keys.filter(k => !cache.has(k) && !PRE[k]); const um = () => { const k = fila.shift(); if (!k) return; imagem(k); setTimeout(um, 60); }; setTimeout(um, 2500); }
+ return { mostrar, acabar, aquecer, get atual() { return atual; } };
+})();
+
+/* ================== SOM ================== */
+const Som = (() => {
+ let ctx = null, master, mus, amb, sfx, nivel = 1, musicaOn = true, curAmb = null, curMus = null, bat = null; const bufs = new Map(), aLoad = new Map();
+ const NIVEIS = [0, .3, .6, 1];
+ try { const o = JSON.parse(localStorage.getItem('farol-opcoes3') || '{}'); if (o.nivel != null) nivel = o.nivel; if (o.musica != null) musicaOn = o.musica; } catch (e) { }
+ const guarda = () => { try { const o = JSON.parse(localStorage.getItem('farol-opcoes3') || '{}'); o.nivel = nivel; o.musica = musicaOn; localStorage.setItem('farol-opcoes3', JSON.stringify(o)); } catch (e) { } };
+ function init() { if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return true; } const C = window.AudioContext || window.webkitAudioContext; if (!C) return false; try { ctx = new C(); } catch (e) { return false; }
+  master = ctx.createGain(); master.gain.value = NIVEIS[nivel]; master.connect(ctx.destination); mus = ctx.createGain(); mus.gain.value = musicaOn ? .42 : 0; mus.connect(master); amb = ctx.createGain(); amb.gain.value = .85; amb.connect(master); sfx = ctx.createGain(); sfx.connect(master);
+  ['dados', 'espada', 'ferida', 'pagina', 'tinta', 'sorte', 'falha', 'derrota', 'coracao'].forEach(n => carregar('fx_' + n)); return true; }
+ function carregar(n) { if (bufs.has(n)) return Promise.resolve(bufs.get(n)); if (aLoad.has(n)) return aLoad.get(n);
+  const p = fetch('som/' + n + '.mp3').then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }).then(a => new Promise((ok, ko) => ctx.decodeAudioData(a, ok, ko))).then(b => { bufs.set(n, b); return b; }).catch(e => { console.warn('som', n, e); return null; });
+  aLoad.set(n, p); return p; }
+ function laco(bus, nome, atualRef, setRef, vol = 1) {
+  if (atualRef && atualRef.nome === nome) return;
+  if (atualRef) { const a = atualRef; const t = ctx.currentTime; a.g.gain.cancelScheduledValues(t); a.g.gain.setValueAtTime(a.g.gain.value, t); a.g.gain.linearRampToValueAtTime(0, t + 2); setTimeout(() => { try { a.s.stop(); } catch (e) { } }, 2300); }
+  if (!nome) { setRef(null); return; }
+  const ref = { nome, g: ctx.createGain(), s: null }; ref.g.gain.value = 0; ref.g.connect(bus); setRef(ref);
+  carregar(nome).then(b => { if (!b || ref.parado) return; const s = ctx.createBufferSource(); s.buffer = b; s.loop = true; s.connect(ref.g); s.start(0, Math.random() * b.duration); ref.s = s; const t = ctx.currentTime; ref.g.gain.setValueAtTime(0, t); ref.g.gain.linearRampToValueAtTime(vol, t + 2.2); });
+ }
+ return {
+  get nivel() { return nivel; }, get musica() { return musicaOn; }, get ativo() { return !!ctx && nivel > 0; },
+  desbloquear() { if (nivel > 0) init(); },
+  ciclo() { nivel = (nivel + 1) % 4; guarda(); if (nivel > 0) init(); if (master) master.gain.setTargetAtTime(NIVEIS[nivel], ctx.currentTime, .05); return nivel; },
+  setMusica(v) { musicaOn = v; guarda(); if (mus) mus.gain.setTargetAtTime(v ? .42 : 0, ctx.currentTime, .3); },
+  cena(ambNome, musNome) { if (!ctx || nivel === 0) return; laco(amb, ambNome ? 'amb_' + ambNome : null, curAmb, r => curAmb = r, 1); laco(mus, musNome ? 'mus_' + musNome : null, curMus, r => curMus = r, 1); },
+  fx(n, vol = 1, atraso = 0) { if (!ctx || nivel === 0 || !n) return; carregar('fx_' + n).then(b => { if (!b) return; const s = ctx.createBufferSource(); s.buffer = b; const g = ctx.createGain(); g.gain.value = vol; s.connect(g).connect(sfx); s.start(ctx.currentTime + atraso); }); },
+  coracao(on) { if (on && !bat && ctx && nivel > 0) bat = setInterval(() => this.fx('coracao', .9), 1100); if ((!on || nivel === 0) && bat) { clearInterval(bat); bat = null; } },
+  abafa(v) { if (amb) amb.gain.setTargetAtTime(v ? .3 : .85, ctx.currentTime, .3); if (mus) mus.gain.setTargetAtTime(musicaOn ? (v ? .15 : .42) : 0, ctx.currentTime, .3); },
+ };
+})();
+const Voz = (() => { let on = false, voz = null; const ok = 'speechSynthesis' in window;
+ try { on = !!JSON.parse(localStorage.getItem('farol-opcoes3') || '{}').voz; } catch (e) { }
+ function escolher() { if (!ok) return; const v = speechSynthesis.getVoices(); voz = v.find(x => /en[-_]GB/i.test(x.lang)) || v.find(x => /^en/i.test(x.lang)) || null; }
+ if (ok) { escolher(); speechSynthesis.onvoiceschanged = escolher; }
+ return { ok, get on() { return on; }, set(v) { on = v; try { const o = JSON.parse(localStorage.getItem('farol-opcoes3') || '{}'); o.voz = v; localStorage.setItem('farol-opcoes3', JSON.stringify(o)); } catch (e) { } if (!v && ok) speechSynthesis.cancel(); },
+  ler(txt) { if (!on || !ok) return; speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(txt.replace(/—/g, ',').replace(/[«»"“”]/g, '')); u.lang = 'en-GB'; if (voz) u.voice = voz; u.rate = .95; Som.abafa(true); u.onend = u.onerror = () => Som.abafa(false); speechSynthesis.speak(u); },
+  parar() { if (ok) speechSynthesis.cancel(); Som.abafa(false); } }; })();
+
+/* ================== MOTOR ================== */
+let st = null, cr = null; const Novo = { loc: null };
+const $ = s => document.querySelector(s);
+const d6 = () => 1 + Math.floor(Math.random() * 6), rol = n => Array.from({ length: n }, d6), soma = a => a.reduce((x, y) => x + y, 0);
+const tem = i => st.itens.includes(i);
+const temLanterna = () => tem('Hurricane Lantern');
+const PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
+const dado = (v, inim) => `<div class="dado${inim ? ' inim' : ''}" aria-label="${v}">${Array.from({ length: 9 }, (_, i) => `<i class="${PIPS[v].includes(i) ? 'on' : ''}"></i>`).join('')}</div>`;
+const dados = (a, inim) => `<span class="dados">${a.map(v => dado(v, inim)).join('')}</span>`;
+function guardar() { try { localStorage.setItem('farol-en-jogo3', JSON.stringify(st)); } catch (e) { } }
+function carregarJogo() { try { const j = localStorage.getItem('farol-en-jogo3'); return j ? JSON.parse(j) : null; } catch (e) { return null; } }
+function finais() { try { return JSON.parse(localStorage.getItem('farol-en-finais3') || '{}'); } catch (e) { return {}; } }
+function marcaFinal(f) { try { const o = finais(); o[f] = 1; localStorage.setItem('farol-en-finais3', JSON.stringify(o)); } catch (e) { } }
+
+function fx(f) { if (!f) return;
+ if (f.en) st.en = Math.min(st.enI, st.en + f.en); if (f.hab) st.hab = Math.min(st.habI, st.hab + f.hab); if (f.sorte) st.sorte = Math.min(st.sorteI, st.sorte + f.sorte);
+ if (f.sorteMax) st.sorte = st.sorteI; if (f.ouro) st.ouro = Math.max(0, st.ouro + f.ouro); if (f.prov) st.prov += f.prov; if (f.mare) st.mare += f.mare;
+ if (f.archote) st.archote = f.archote; if (f.item && !tem(f.item)) st.itens.push(f.item); if (f.drop) st.itens = st.itens.filter(i => i !== f.drop); if (f.flag) st.flags[f.flag] = 1; }
+function ir(id) {
+ if (st.undo.length >= 25) st.undo.shift(); st.undo.push(JSON.stringify({ ...st, undo: [] }));
+ let s = S[id];
+ if (s.escuro && !temLanterna()) { if (st.archote > 0) { st.archote--; } else { id = 'apagou'; s = S[id]; } }
+ const cenaAntes = st.sec ? S[st.sec].cena : null;
+ st.sec = id; st.res = null; const prim = !st.visto[id]; st.visto[id] = 1;
+ if (prim) { fx(s.fx); fx(s.fx2); } fx(s.fxA);
+ st.rasto.push(NUM[id]);
+ const loc = s.lugar; Novo.loc = null; if (loc) { if (!st.locs[loc]) { st.locs[loc] = 1; Novo.loc = loc; } if (st.caminho[st.caminho.length - 1] !== loc) st.caminho.push(loc); if (st.caminho.length > 40) st.caminho.shift(); }
+ st.luta = s.luta ? { i: 0, ronda: 0, cego: !!s.luta.ceguinho, foes: s.luta.foes.map(f => ({ ...f, hab: Math.max(4, f.hab + st.inim), enI: f.en })), ult: null, sorteOk: false, ganhou: false } : null;
+ if (s.fim) { st.fim = s.fim; marcaFinal(s.fim); }
+ if (st.en <= 0) morrer();
+ guardar(); Voz.parar();
+ Som.fx('pagina', .8); if (s.som) Som.fx(s.som, 1, .45);
+ render(true, false, s.cena !== cenaAntes);
+}
+function morrer() { st.en = 0; st.morto = true; marcaFinal('morte'); Som.fx('morte', 1, .2); }
+function dedo() { if (st.dedos <= 0 || !st.undo.length) return; const u = st.undo; const prev = JSON.parse(u.pop()); const d = st.dedos - 1; st = prev; st.undo = u; st.dedos = d; Novo.loc = null; guardar(); Som.fx('pagina'); render(true, false, true); }
+function cond(c) {
+ if (c.flag && !st.flags[c.flag]) return 'oculto'; if (c.notFlag && st.flags[c.notFlag]) return 'oculto'; if (c.notItem && tem(c.notItem)) return 'oculto';
+ if (c.aTempo && st.mare >= st.limite) return 'oculto'; if (c.tarde && st.mare < st.limite) return 'oculto';
+ if (c.luzArchote && !(st.archote > 0)) return 'oculto'; if (c.semLuz && (temLanterna() || st.archote > 0)) return 'oculto'; if (c.luz && !(temLanterna() || st.archote > 0)) return 'oculto';
+ if (c.req && !tem(c.req)) return 'You need: ' + c.req; if (c.ouro && st.ouro < c.ouro) return 'You need ' + c.ouro + ' coins';
+ return null; }
+function testar() { const t = S[st.sec].teste; const r = rol(2); let ok; if (t.tipo === 'sorte') { ok = soma(r) <= st.sorte; st.sorte = Math.max(0, st.sorte - 1); } else ok = soma(r) <= st.hab;
+ st.res = { r, ok, to: ok ? t.ok : t.ko }; guardar(); Som.fx('dados'); Som.fx(ok ? 'sorte' : 'falha', .8, .55); render(false, true); }
+function duelar() { const a = rol(2), b = rol(2), sa = soma(a), sb = soma(b); st.res = { a, b, emp: sa === sb, ganha: sa > sb, to: sa > sb ? S[st.sec].duelo.win : S[st.sec].duelo.lose }; guardar(); Som.fx('dados'); if (sa !== sb) Som.fx(sa > sb ? 'sorte' : 'falha', .8, .55); render(false, true); }
+function inimigo() { return st.luta.foes[st.luta.i]; }
+function fimInimigo() { const L = st.luta, f = inimigo(); if (f.en <= 0) { f.en = 0; L.i++; L.sorteOk = false; Som.fx('derrota', 1, .7); if (L.i >= L.foes.length) { L.ganhou = true; Som.cena(AMB[S[st.sec].cena], 'explorar'); } } }
+function atacar() { const L = st.luta, f = inimigo(); const pd = rol(2), fd = rol(2); const bon = (tem('Shark Tooth') ? 1 : 0) - (L.cego ? 2 : 0);
+ const pa = soma(pd) + st.hab + bon, fa = soma(fd) + f.hab; L.ronda++; let res;
+ if (pa > fa) { f.en -= 2; res = 'feres'; } else if (fa > pa) { st.en -= 2; res = 'feridos'; } else res = 'empate';
+ L.ult = { pd, fd, pa, fa, res, nome: f.nome, sorte: null, bon }; L.sorteOk = res !== 'empate';
+ Som.fx('dados', .7); Som.fx(res === 'feridos' ? 'ferida' : 'espada', 1, .4);
+ if (st.en <= 0) morrer(); else fimInimigo(); guardar(); render(false, true); }
+function sorteLuta() { const L = st.luta; if (!L.sorteOk) return; const f = L.foes[L.i]; const r = rol(2); const sorte = soma(r) <= st.sorte; st.sorte = Math.max(0, st.sorte - 1);
+ if (L.ult.res === 'feres') f.en += sorte ? -2 : 1; else st.en += sorte ? 1 : -1; L.ult.sorte = { r, sorte }; L.sorteOk = false; Som.fx('dados', .7); Som.fx(sorte ? 'sorte' : 'falha', .8, .5);
+ if (st.en <= 0) morrer(); else fimInimigo(); guardar(); render(false, true); }
+function faca() { const L = st.luta, f = inimigo(); st.itens = st.itens.filter(i => i !== 'Throwing Knife'); f.en -= 2; L.ult = { faca: true, nome: f.nome }; L.sorteOk = false; Som.fx('espada'); fimInimigo(); guardar(); render(false, true); }
+function fugir() { const s = S[st.sec].luta; st.en -= 2; Som.fx('ferida'); if (st.en <= 0) { morrer(); guardar(); render(); return; } st.luta = null; ir(s.fuga); }
+function comer() { if (st.prov <= 0 || st.en >= st.enI || st.luta && !st.luta.ganhou) return; st.prov--; st.en = Math.min(st.enI, st.en + 4); Som.fx('comer'); guardar(); render(); }
+function beber() { const p = st.pocao; if (!p || p.doses <= 0) return; p.doses--; if (p.tipo === 'habilidade') st.hab = st.habI; if (p.tipo === 'forca') st.en = st.enI; if (p.tipo === 'fortuna') { st.sorteI++; st.sorte = st.sorteI; } Som.fx('beber'); guardar(); render(); }
+function perola() { if (!tem('Black Pearl')) return; st.itens = st.itens.filter(i => i !== 'Black Pearl'); st.en = st.enI; Som.fx('sorte'); guardar(); render(); }
+function comprar(k) { const it = S.loja.loja[k]; if (st.ouro < it.preco || (it.item && tem(it.item))) return; st.ouro -= it.preco; if (it.prov) st.prov += it.prov; if (it.item) st.itens.push(it.item); Som.fx('chave'); guardar(); render(); }
+
+/* ================== RENDER ================== */
+const paras = t => t.split('\n\n').map(p => /^[A-ZÁÉÍÓÚÂÊÔÃÕÇ0-9 «»]{6,}$/.test(p.split('\n')[0]) && p.includes('\n') ? `<p class="inscr">${p}</p>` : `<p>${p}</p>`).join('');
+const barra = (v, m) => `<div class="barra"><span style="width:${Math.max(0, Math.min(100, v / m * 100))}%"></span></div>`;
+function render(novo, anim, novaCena) {
+ if (!st) { $('#folha').hidden = true; barHTML(); if (cr) criar(); else capa(novo); return; }
+ $('#folha').hidden = false; const s = S[st.sec];
+ $('#topo').innerHTML = `${s.cap ? `<p class="cap">Chapter ${s.cap}</p>` : ''}<div class="numero">${NUM[st.sec]}</div>`;
+ if (novo) Ilus.mostrar(s.cena, true, !novaCena); else if (Ilus.atual !== s.cena) Ilus.mostrar(s.cena, false);
+ const emLuta = st.luta && !st.luta.ganhou && !st.morto;
+ Som.cena(AMB[s.cena], emLuta ? 'combate' : (s.fim || st.morto ? null : 'explorar')); Som.coracao(!st.morto && !s.fim && st.en > 0 && st.en <= 4);
+ let h = `<div class="${novo ? 'fade' : ''}"><div class="texto">${paras(s.t)}${s.fim && s.extra && st.flags[s.extra.flag] ? `<p>${s.extra.t}</p>` : ''}</div>`;
+ if (st.morto) h += `<div class="fim morte"><h2>Your adventure ends here</h2><p class="nota">Your Stamina reached zero in section ${NUM[st.sec]}.</p><div class="acoes">${st.dedos > 0 && st.undo.length ? `<button class="b prim" data-a="dedo">Use your finger in the book and go back (${st.dedos})</button>` : ''}<button class="b" data-a="nova">New adventure</button></div></div>`;
+ else if (s.fim) { const f = finais(); h += `<div class="fim"><h2>${s.titulo}</h2><p class="nota">${MODOS[st.modo].nome} mode. Final tide: ${st.mare} of ${st.limite}. Endings found: ${Object.keys(FINAIS).filter(k => f[k]).length} of ${Object.keys(FINAIS).length}.</p><div class="acoes"><button class="b prim" data-a="nova">Play again</button></div></div>`; }
+ else if (s.teste) h += testeHTML(s.teste, anim); else if (s.duelo) h += dueloHTML(anim); else if (s.luta) h += lutaHTML(s, anim);
+ else { if (s.loja) h += lojaHTML(s.loja); h += escolhasHTML(s.ch); }
+ $('#corpo').innerHTML = h + '</div>'; barHTML(); folhaHTML();
+ if (novo) { window.scrollTo(0, 0); Voz.ler(s.t); }
+}
+function escolhasHTML(ch) { return `<div class="escolhas">${(ch || []).map(c => { const r = cond(c); if (r === 'oculto') return ''; return `<button class="esc" ${r ? 'disabled' : ''} data-ir="${c.to}"><span class="t">${c.t}${r ? `<span class="req">${r}</span>` : ''}</span><span class="pont"></span><span class="vai"><small>turn to</small>${NUM[c.to]}</span></button>`; }).join('')}</div>`; }
+const contHTML = to => `<div class="escolhas"><button class="esc" data-ir="${to}"><span class="t">Continue</span><span class="pont"></span><span class="vai"><small>turn to</small>${NUM[to]}</span></button></div>`;
+function testeHTML(t, anim) { const nome = t.tipo === 'sorte' ? 'Test your Luck' : 'Test your Skill', alvo = t.tipo === 'sorte' ? st.sorte : st.hab;
+ if (!st.res) return `<div class="caixa"><h3>${nome}</h3><p class="nota" style="margin:0">Roll two dice. If the total is equal to or less than your ${t.tipo === 'sorte' ? 'Luck' : 'Skill'} (${alvo}), you succeed.${t.tipo === 'sorte' ? ' Each test costs 1 point of Luck.' : ''}</p><div class="acoes"><button class="b prim" data-a="testar">Roll the dice</button></div></div>`;
+ const R = st.res; return `<div class="caixa ${anim ? 'rola' : ''}"><h3>${nome}</h3><div class="linha2" style="justify-content:flex-start;gap:14px">${dados(R.r)}<span style="font-family:var(--f-num);font-size:1.4rem">= ${soma(R.r)}</span></div><p class="${R.ok ? 'ok' : 'mau'}" style="margin:8px 0 0">${R.ok ? (t.tipo === 'sorte' ? 'You were lucky!' : 'You did it!') : (t.tipo === 'sorte' ? 'You were unlucky.' : 'You failed.')}</p></div>` + contHTML(R.to); }
+function dueloHTML(anim) { const q = S[st.sec].duelo.quem; if (!st.res) return `<div class="caixa"><h3>Game of bones</h3><p class="nota" style="margin:0">You and ${q} roll two dice each. Highest total wins.</p><div class="acoes"><button class="b prim" data-a="duelo">Roll the dice</button></div></div>`;
+ const R = st.res; return `<div class="caixa ${anim ? 'rola' : ''}"><h3>Game of bones</h3><div class="linha2"><span>You</span>${dados(R.a)}<span style="font-family:var(--f-num);font-size:1.3rem">${soma(R.a)}</span></div><div class="linha2"><span>${q}</span>${dados(R.b, 1)}<span style="font-family:var(--f-num);font-size:1.3rem">${soma(R.b)}</span></div>${R.emp ? `<p class="nota">A draw. Roll again.</p><div class="acoes"><button class="b prim" data-a="duelo">Roll again</button></div>` : `<p class="${R.ganha ? 'ok' : 'mau'}">${R.ganha ? 'You won!' : 'You lost.'}</p>`}</div>` + (R.emp ? '' : contHTML(R.to)); }
+function lojaHTML(l) { return `<div class="caixa"><h3>Dona Rosário's pantry</h3><p class="nota" style="margin:0">You have ${st.ouro} coins.</p><ul class="itens" style="margin-top:8px">${l.map((it, k) => { const j = it.item && tem(it.item); return `<li class="linha2"><span>${it.nome} · ${it.preco} coins<small>${it.d}</small></span><button class="mini" data-compra="${k}" ${st.ouro < it.preco || j ? 'disabled' : ''}>${j ? 'You have it' : 'Buy'}</button></li>`; }).join('')}</ul></div>`; }
+function lutaHTML(s, anim) { const l = s.luta, L = st.luta; if (!L) return ''; const f = L.foes[Math.min(L.i, L.foes.length - 1)], U = L.ult;
+ let h = `<div class="caixa ${anim ? 'rola' : ''}"><h3>Combat</h3>`;
+ if (L.foes.length > 1) h += `<p class="nota" style="margin:0 0 8px">${L.foes.map(x => `<span class="${x.en <= 0 ? 'morto' : ''}">${x.nome}</span>`).join(' · ')}</p>`;
+ if (L.cego) h += `<p class="nota" style="margin:0 0 8px">In the dark: −2 to your Attack Strength.</p>`;
+ h += `<div class="luta"><div class="lutador"><div class="n">You</div><div class="s">Skill ${st.hab}${tem('Shark Tooth') ? ' +1' : ''} · Stam ${st.en}/${st.enI}</div>${barra(st.en, st.enI)}${U && U.pd ? `<div class="fa">${dados(U.pd)} = ${U.pa}</div>` : ''}</div>
+ <div class="lutador inim"><div class="n">${L.ganhou && U ? U.nome : f.nome}</div><div class="s">Skill ${f.hab} · Stam ${Math.max(0, f.en)}/${f.enI}</div>${barra(f.en, f.enI)}${U && U.fd && U.nome === f.nome ? `<div class="fa">${dados(U.fd, 1)} = ${U.fa}</div>` : ''}</div></div>`;
+ if (U) { let t = U.faca ? `You throw the knife: a direct hit. ${U.nome} loses 2 Stamina.` : U.res === 'feres' ? `<span class="ok">You wound ${U.nome}!</span> 2 Stamina damage.` : U.res === 'feridos' ? `<span class="mau">${U.nome} wounds you.</span> You lose 2 Stamina.` : 'The blows cancel out. Nobody is hurt.';
+  if (U.sorte) t += ` You tested your Luck (${soma(U.sorte.r)}): ${U.sorte.sorte ? '<span class="ok">lucky</span>' : '<span class="mau">unlucky</span>'}, ${U.res === 'feres' ? (U.sorte.sorte ? 'a deep wound, 2 more damage.' : 'only a scratch, it regains 1.') : (U.sorte.sorte ? 'you avoided the worst, regain 1.' : 'the blow went deeper, lose 1 more.')}`;
+  if (!L.ganhou && U.nome !== f.nome) t += ` ${U.nome} falls. Next comes ${f.nome}.`; h += `<p class="relato">${t}</p>`; }
+ if (st.morto) return h + '</div>';
+ if (L.ganhou) return h + `<p class="ok" style="margin-top:10px">You have won the fight.</p></div>` + contHTML(l.win);
+ const podeFugir = l.fuga && L.ronda >= (l.fugaApos || 0);
+ const extra = L.ronda === 0 && s.ch_extra ? s.ch_extra.filter(c => cond(c) === null).map(c => `<button class="b" data-ir="${c.to}">${c.t}</button>`).join('') : '';
+ h += `<div class="acoes"><button class="b prim" data-a="atacar">Attack</button>${extra}${L.sorteOk ? `<button class="b" data-a="sorteluta">Test your Luck on this blow</button>` : ''}${tem('Throwing Knife') ? `<button class="b" data-a="faca">Throw the knife</button>` : ''}${l.fuga ? `<button class="b" data-a="fugir" ${podeFugir ? '' : 'disabled'}>Escape (−2 Stam)${podeFugir ? '' : ` after ${l.fugaApos} ${l.fugaApos === 1 ? 'round' : 'rounds'}`}</button>` : ''}</div>`;
+ return h + `<p class="nota" style="margin:10px 0 0">Each round, both sides roll two dice and add their Skill. The higher total hits and deals 2 Stamina damage.</p></div>`; }
+
+const VOL_TXT = ['Sound off', 'Low volume', 'Medium volume', 'High volume'];
+function volIcone(n) { const ondas = [n >= 1 ? '<path d="M15 9.5a3.5 3.5 0 0 1 0 5"/>' : '', n >= 2 ? '<path d="M17.5 7a7 7 0 0 1 0 10"/>' : '', n >= 3 ? '<path d="M20 4.5a10.5 10.5 0 0 1 0 15"/>' : ''].join('');
+ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3l4.5-4v13L7 14.5H4z" fill="currentColor"/>${ondas}${n === 0 ? '<path d="M15.5 9.5l5 5M20.5 9.5l-5 5"/>' : ''}</svg>`; }
+const volBtn = () => `<button class="tb vol" data-a="vol" aria-label="${VOL_TXT[Som.nivel]}. Tap to change" title="${VOL_TXT[Som.nivel]}">${volIcone(Som.nivel)}</button>`;
+function barHTML() { $('#bar').innerHTML = st ? `<span class="nome">The Raven Lighthouse</span><div class="strip"><span><b>Skl</b>${st.hab}</span><span><b>Stm</b>${st.en}</span><span><b>Lck</b>${st.sorte}</span><span class="mr"><b>Tide</b>${st.mare}/${st.limite}</span></div><div class="dir">${volBtn()}<button class="tb so-movel" data-a="folha">Sheet</button><button class="tb" data-a="menu">Menu</button></div>` : `<span class="nome">The Raven Lighthouse</span><div class="dir">${volBtn()}</div>`; }
+function folhaHTML() { const emLuta = st.luta && !st.luta.ganhou && !st.morto, P = st.pocao;
+ $('#folha').innerHTML = `<div class="ficha"><div class="folha-tit"><span>Adventure Sheet</span><button class="fechar" data-a="fechar" aria-label="Close">×</button></div>
+ <div class="trio"><div class="cx"><div class="lab">Skill</div><div class="val">${st.hab}</div><div class="ini">initial ${st.habI}</div></div><div class="cx"><div class="lab">Stamina</div><div class="val" style="${st.en <= 4 ? 'color:var(--sangue)' : ''}">${st.en}</div><div class="ini">initial ${st.enI}</div></div><div class="cx"><div class="lab">Luck</div><div class="val">${st.sorte}</div><div class="ini">initial ${st.sorteI}</div></div></div>
+ <div class="sec"><h4>Tide · ${st.mare} of ${st.limite}</h4><div class="mare" style="grid-template-columns:repeat(${st.limite},1fr)">${Array.from({ length: st.limite }, (_, i) => `<i class="${i < st.mare ? 'on' : ''} ${i >= st.limite - 3 ? 'alto' : ''}"></i>`).join('')}</div><p class="nota" style="margin:0">The fleet comes in when the tide is full. Every detour costs time.</p></div>
+ <div class="sec"><div class="linha2"><span>Gold: <b style="font-family:var(--f-num);font-size:1.15rem">${st.ouro}</b> coins</span></div>
+ <div class="linha2"><span>Provisions: <b style="font-family:var(--f-num);font-size:1.15rem">${st.prov}</b></span><button class="mini" data-a="comer" ${st.prov <= 0 || st.en >= st.enI || emLuta || st.morto ? 'disabled' : ''}>Eat (+4 Stam)</button></div>
+ ${P ? `<div class="linha2"><span>${POCOES[P.tipo].nome}<small style="display:block;color:var(--tinta2);font-size:.78rem;font-style:italic">${P.doses} ${P.doses === 1 ? 'dose' : 'doses'} · ${POCOES[P.tipo].d}</small></span><button class="mini" data-a="beber" ${P.doses <= 0 || st.morto ? 'disabled' : ''}>Drink</button></div>` : ''}
+ ${st.archote > 0 && !temLanterna() ? `<div class="linha2"><span>Lit torch <span class="chama">${Array.from({ length: 6 }, (_, k) => `<i class="${k < st.archote ? '' : 'gasta'}"></i>`).join('')}</span></span></div>` : ''}</div>
+ <div class="sec"><h4>Equipment</h4><ul class="itens"><li>Sword and leather armour</li>${st.itens.map(i => `<li class="linha2"><span>${i}<small>${ITENS[i] || ''}</small></span>${i === 'Black Pearl' ? `<button class="mini" data-a="perola" ${st.morto ? 'disabled' : ''}>Use</button>` : ''}</li>`).join('')}</ul></div>
+ ${st.dedosI > 0 ? `<div class="sec"><h4>Finger in the book</h4><div class="linha2"><span class="dedos">${Array.from({ length: st.dedosI }, (_, k) => `<i class="${k < st.dedos ? '' : 'gasto'}"></i>`).join('')}</span><button class="mini" data-a="dedo" ${st.dedos <= 0 || !st.undo.length ? 'disabled' : ''}>Go back</button></div></div>` : ''}
+ <div class="sec"><h4>Trail</h4><div class="rasto">${st.rasto.slice(-40).map(n => `<span>${n}</span>`).join('')}</div></div></div>
+ <div class="ficha mapa"><div class="tit"><h4>Island map</h4><button class="mini" data-a="mapa">Enlarge</button></div>${mapaSVG(false)}</div>
+ <div class="ficha"><div class="opc"><h4 style="margin:0 0 4px;font-family:var(--f-tit);font-weight:400;font-size:1.1rem">Sound and voice</h4>
+ <label for="o-vol-txt">Volume: ${VOL_TXT[Som.nivel]}<button class="mini" id="o-vol-txt" data-a="vol">Change</button></label>
+ <label for="o-mus">Background music<input type="checkbox" id="o-mus" ${Som.musica ? 'checked' : ''}></label>
+ ${Voz.ok ? `<label for="o-voz">Narrator reads the pages<input type="checkbox" id="o-voz" ${Voz.on ? 'checked' : ''}></label>` : ''}
+ <p class="nota" style="margin:2px 0 0">Best with headphones. The narrator's voice depends on your device.</p></div></div>`; }
+
+function mapaSVG(grande) { const vis = st.locs || {}, atual = S[st.sec].lugar, LG = Historia.LUGARES;
+ let h = `<svg viewBox="0 0 310 400" role="img" aria-label="Map of Raven Island"><defs><filter id="tm"><feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="9"/><feDisplacementMap in="SourceGraphic" scale="2.2" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+ <rect x="2" y="2" width="306" height="396" fill="none" stroke="#160f07" stroke-width="1.5"/><rect x="6" y="6" width="298" height="388" fill="none" stroke="#160f07" stroke-width=".6"/><g filter="url(#tm)" fill="none" stroke="#160f07">
+ <path d="M60 395 Q45 340 22 300 Q8 262 24 236 Q60 204 90 160 Q110 110 150 80 Q180 42 215 22 Q252 12 270 40 Q306 80 304 140 Q300 200 304 250 Q306 300 292 340 Q272 384 250 395" stroke-width="1.8"/>
+ ${[[20, 120], [40, 170], [30, 70], [110, 40], [150, 24], [296, 330], [284, 380], [200, 392], [105, 392]].map(([x, y]) => `<path d="M${x} ${y} q4 -4 8 0 q4 4 8 0" stroke-width=".9"/>`).join('')}
+ <circle cx="36" cy="362" r="14" stroke-width=".8"/><path d="M36 343 L40 362 L36 381 L32 362 Z M17 362 L36 358 L55 362 L36 366 Z" fill="#160f07" stroke-width=".6"/></g>
+ <text x="36" y="340" text-anchor="middle" font-family="IM Fell English SC, serif" font-size="10" fill="#160f07">N</text>
+ <text x="14" y="32" font-family="IM Fell English SC, serif" font-size="17" fill="#160f07">Raven Island</text><text x="14" y="47" font-family="IM Fell English, serif" font-style="italic" font-size="9.5" fill="#4f3c22">the stranger's map</text>`;
+ Historia.CAMINHOS.forEach(([a, b]) => { if (vis[a] && vis[b]) { const A = LG[a], B = LG[b]; h += `<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="#4f3c22" stroke-width=".8" stroke-dasharray="1.5 4" stroke-linecap="round"/>`; } });
+ const cam = (st.caminho || []).slice(-14); for (let i = 1; i < cam.length; i++) { const A = LG[cam[i - 1]], B = LG[cam[i]]; if (!A || !B) continue; const dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1, ang = Math.atan2(dy, dx) * 180 / Math.PI + 90, nx = -dy / len, ny = dx / len, op = (.25 + .75 * i / (cam.length - 1)).toFixed(2);
+  for (let s = 10, k = 0; s < len - 8; s += 9, k++) { const sd = k % 2 ? 2.4 : -2.4, x = A[0] + dx * s / len + nx * sd, y = A[1] + dy * s / len + ny * sd; h += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="1.3" ry="2.3" transform="rotate(${ang.toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="#160f07" opacity="${op}"/>`; } }
+ Object.entries(LG).forEach(([k, [x, y, nome, an]]) => { if (!vis[k]) return; const nv = Novo.loc === k && !grande ? ' loc-novo' : ''; let tx = x + 8, ty = y + 3.5, ta = 'start'; if (an === 'e') { tx = x - 8; ta = 'end'; } if (an === 'b') { tx = x; ty = y + 15; ta = 'middle'; } if (an === 'a') { tx = x; ty = y - 8; ta = 'middle'; }
+  h += `<g class="${nv}"><circle cx="${x}" cy="${y}" r="3.4" fill="#160f07"/><circle cx="${x}" cy="${y}" r="6" fill="none" stroke="#160f07" stroke-width=".7"/><text x="${tx}" y="${ty}" text-anchor="${ta}" font-family="IM Fell English, serif" font-size="10.5" fill="#160f07">${nome}</text></g>`; });
+ if (atual && LG[atual]) { const [x, y] = LG[atual]; h += `<circle class="aqui" cx="${x}" cy="${y}" r="8" fill="#8b2716" opacity=".85"/><circle cx="${x}" cy="${y}" r="3" fill="#e2cb98"/>`; }
+ return h + '</svg>'; }
+function abrirMapa(v) { const m = $('#mapaGrande'); if (!v) { m.hidden = true; m.innerHTML = ''; return; } m.innerHTML = `<div class="folhamapa"><div class="linha2"><span style="font-family:var(--f-tit);font-size:1.3rem">Island map</span><button class="mini" data-a="fecharmapa">Close</button></div>${mapaSVG(true)}<p class="nota" style="margin:6px 0 0">Places appear in ink as you discover them. The footprints show your most recent path.</p></div>`; m.hidden = false; }
+
+function capa(novo) { const sv = carregarJogo(), f = finais(), n = Object.keys(FINAIS).filter(k => f[k]).length;
+ $('#topo').innerHTML = ''; Ilus.mostrar('farol', novo !== false);
+ $('#corpo').innerHTML = `<div class="capa fade"><h1>The Raven Lighthouse</h1><p class="sub">A gamebook in which you are the hero. One night, one island, one rising tide.</p>
+ <div class="acoes">${sv && !sv.fim && !sv.morto ? `<button class="b prim" data-a="continuar">Continue at section ${NUM[sv.sec]}</button>` : ''}<button class="b ${sv && !sv.fim && !sv.morto ? '' : 'prim'}" data-a="criar">New adventure</button></div>
+ <p class="nota" style="margin-top:14px">Endings found: ${n} of ${Object.keys(FINAIS).length}</p><p class="nota"><a href="index.html" style="color:inherit">Jogar em português</a></p>
+ <p class="aviso-som">Play with sound on. The speaker button at the top changes the volume.</p>
+ <details class="regras"><summary>How to play</summary>
+ <p>Read a section and choose what to do. Each choice sends you to another numbered section, like the gamebooks of old. The game takes care of the page-turning, the dice and the Adventure Sheet.</p>
+ <ul><li><b>Skill</b>: your mastery of the sword.</li><li><b>Stamina</b>: your life. If it reaches zero, you die.</li><li><b>Luck</b>: roll two dice and you need equal to or less. Each test costs 1 point.</li><li><b>Tide</b>: you have until the tide is full to light the lighthouse. Wasting time has consequences.</li><li><b>Light</b>: some places can't be navigated without light. A torch burns out quickly.</li><li><b>Finger in the book</b>: you can go back a few times, like keeping a finger on the previous page.</li></ul>
+ <p>The objects and clues you find open new paths. Without them, you'll be lost. There is only one way to the best ending.</p></details></div>`; }
+function rolarCr() { const h = rol(1), e = rol(2), s = rol(1); Object.assign(cr, { h, e, s, hab: 6 + h[0], en: 12 + soma(e), sorte: 6 + s[0] }); Som.fx('dados'); }
+function criar() { if (!cr.h) rolarCr(); if (!cr.modo) cr.modo = 'normal'; $('#topo').innerHTML = '';
+ $('#corpo').innerHTML = `<div class="fade"><h2 class="titulo2" style="font-size:2rem;text-align:center;margin-top:0">Your character</h2><p style="text-align:center">The dice decide who you are. If you don't like it, roll again.</p>
+ <div class="criar rola"><div class="cx"><div class="lab">Skill</div><div class="val">${cr.hab}</div>${dados(cr.h)}<div class="ini">1 die + 6</div></div><div class="cx"><div class="lab">Stamina</div><div class="val">${cr.en}</div>${dados(cr.e)}<div class="ini">2 dice + 12</div></div><div class="cx"><div class="lab">Luck</div><div class="val">${cr.sorte}</div>${dados(cr.s)}<div class="ini">1 die + 6</div></div></div>
+ <div class="acoes" style="justify-content:center"><button class="b" data-a="relancar">Roll again</button></div>
+ <h3 class="titulo2">Game mode</h3><div class="grelha3">${Object.entries(MODOS).map(([k, m]) => `<button class="opcao ${cr.modo === k ? 'sel' : ''}" data-modo="${k}" aria-pressed="${cr.modo === k}"><b>${m.nome}</b><small>${m.d}</small></button>`).join('')}</div>
+ <h3 class="titulo2">Choose a potion (2 doses)</h3><div class="grelha3">${Object.entries(POCOES).map(([k, p]) => `<button class="opcao ${cr.pocao === k ? 'sel' : ''}" data-pocao="${k}" aria-pressed="${cr.pocao === k}"><b>${p.nome}</b><small>${p.d}</small></button>`).join('')}</div>
+ <div class="acoes" style="margin-top:20px"><button class="b prim" data-a="comecar" ${cr.pocao ? '' : 'disabled'}>${cr.pocao ? 'Begin the adventure' : 'Choose a potion to begin'}</button><button class="b" data-a="capa">Back</button></div></div>`; }
+function comecar() { const M = MODOS[cr.modo]; st = { modo: cr.modo, limite: M.limite, inim: M.inim, habI: cr.hab, hab: cr.hab, enI: cr.en, en: cr.en, sorteI: cr.sorte, sorte: cr.sorte, ouro: M.ouro, prov: M.prov, pocao: { tipo: cr.pocao, doses: 2 }, itens: [], flags: {}, visto: { start: 1 }, mare: 0, rasto: [1], dedos: M.dedos, dedosI: M.dedos, undo: [], sec: 'start', luta: null, res: null, morto: false, fim: null, locs: { cais: 1 }, caminho: ['cais'], archote: 0 };
+ cr = null; Novo.loc = 'cais'; guardar(); Som.desbloquear(); Som.fx('pagina'); render(true, false, true);
+ Ilus.aquecer(['taberna', 'capela', 'casa', 'cemiterio', 'falesia', 'afogado', 'praia', 'gruta', 'galerias', 'ninhos', 'farol', 'avejao', 'moira', 'sino', 'ossario', 'torre', 'lanterna', 'rei', 'aceso', 'naufragio']); }
+
+function abrirFolha(v) { $('#folha').classList.toggle('aberta', v); $('#veu').hidden = !v; }
+document.addEventListener('click', e => {
+ if (e.target.closest('#ilus')) { Ilus.acabar(); return; }
+ if (e.target.id === 'mapaGrande') { abrirMapa(false); return; }
+ const b = e.target.closest('button'); if (!b || b.disabled) return;
+ Som.desbloquear();
+ if (b.dataset.ir) { abrirFolha(false); ir(b.dataset.ir); return; }
+ if (b.dataset.compra != null) { comprar(+b.dataset.compra); return; }
+ if (b.dataset.pocao) { cr.pocao = b.dataset.pocao; criar(); return; }
+ if (b.dataset.modo) { cr.modo = b.dataset.modo; criar(); return; }
+ ({ testar, duelo: duelar, atacar, sorteluta: sorteLuta, faca, fugir, comer, beber, perola, dedo, comecar,
+  folha: () => abrirFolha(true), fechar: () => abrirFolha(false), mapa: () => abrirMapa(true), fecharmapa: () => abrirMapa(false),
+  vol: () => { Som.ciclo(); if (st) { barHTML(); folhaHTML(); render(); } else { barHTML(); Som.cena('falesia', 'explorar'); } Som.fx('pagina'); },
+  menu: () => { guardar(); Voz.parar(); st = null; cr = null; abrirFolha(false); Som.coracao(false); Som.cena('falesia', 'explorar'); render(false); },
+  capa: () => { cr = null; render(false); },
+  continuar: () => { st = carregarJogo(); Novo.loc = null; render(true, false, true); },
+  criar: () => { cr = {}; Som.cena('porto', 'explorar'); render(false); },
+  relancar: () => { rolarCr(); criar(); },
+  nova: () => { st = null; cr = {}; abrirFolha(false); Voz.parar(); Som.coracao(false); render(false); },
+ }[b.dataset.a] || (() => { }))();
+});
+document.addEventListener('change', e => { if (e.target.id === 'o-mus') Som.setMusica(e.target.checked); if (e.target.id === 'o-voz') { Voz.set(e.target.checked); if (e.target.checked && st) Voz.ler(S[st.sec].t); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { abrirMapa(false); abrirFolha(false); } });
+$('#veu').addEventListener('click', () => abrirFolha(false));
+render(true);
+if ('serviceWorker' in navigator && !/claude|anthropic/.test(location.hostname)) { try { navigator.serviceWorker.register('sw.js').catch(() => { }); } catch (e) { } }
+</script>
+
+</body></html>

@@ -1,0 +1,14 @@
+{
+  "name": "O Farol do Corvo · The Raven Lighthouse",
+  "short_name": "Farol do Corvo",
+  "description": "Um livro-jogo em que tu és o herói · A gamebook in which you are the hero",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#120b04",
+  "theme_color": "#120b04",
+  "icons": [
+    { "src": "img/icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icone-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
