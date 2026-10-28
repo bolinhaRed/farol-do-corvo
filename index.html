@@ -1,4 +1,4 @@
-<!doctype html><html lang="pt-PT"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>O Farol do Corvo</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="manifest" href="manifest.json">
@@ -54,8 +54,6 @@ main{min-width:0;max-width:760px;width:100%;margin:0 auto}
   aside#folha.aberta{transform:none}
   .veu{position:fixed;inset:0;background:rgba(10,6,2,.6);z-index:35}}
 @media (max-width:460px){.strip .mr{display:none}.bar .nome{font-size:1rem}.strip{gap:7px}}
-.bar .nome{min-width:0;overflow:hidden;text-overflow:ellipsis}.strip,.bar .dir{flex-shrink:0}
-@media (max-width:520px){.bar .nome:has(+ .strip){display:none}.bar .strip{margin-left:0}.tb{padding:6px 8px}}
 
 .cap{text-align:center;font-family:var(--f-it);font-style:italic;color:var(--tinta2);font-size:1rem;margin:0 0 2px;letter-spacing:.04em}
 .numero{font-family:var(--f-num);font-size:clamp(3rem,9vw,4.6rem);line-height:1;margin:0 0 12px;text-align:center}
@@ -137,6 +135,17 @@ aside#folha{min-width:0}
 .fim{text-align:center;padding:18px;margin-top:20px;border:2px solid var(--tinta);outline:1px solid var(--tinta);outline-offset:3px}
 .fim h2{font-family:var(--f-tit);font-weight:400;font-size:1.9rem;margin:0 0 6px}.fim.morte h2{color:var(--sangue)}.fim .acoes{justify-content:center}
 .fade{animation:entra .7s ease .15s both}@keyframes entra{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+.esc .custo{display:block;font-size:.74rem;color:var(--tinta2);font-family:var(--f-it);font-style:italic;letter-spacing:.02em}
+.relogio{height:6px;margin:22px 0 -14px;border:1px solid var(--tinta);background:rgba(255,248,225,.25);overflow:hidden}
+.relogio i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--sangue),#3a1208)}
+.folha-livro.aflito{animation:pulsar 1.1s ease-in-out infinite}
+@keyframes pulsar{50%{box-shadow:0 18px 50px rgba(0,0,0,.55),inset 0 0 140px rgba(110,20,6,.55),inset 0 0 18px rgba(60,38,12,.5)}}
+.folha-livro.treme{animation:treme .45s cubic-bezier(.36,.07,.19,.97)}
+@keyframes treme{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
+.olhos{display:inline-flex;gap:4px;flex-wrap:wrap}.olhos i{width:16px;height:9px;border-radius:50%;border:1.3px solid var(--tinta);position:relative}.olhos i.on{background:var(--sangue);border-color:var(--sangue)}
+.strip .perigo{color:#ff8a6a}.mare.perigo i.on{animation:pisca 1s ease-in-out infinite}@keyframes pisca{50%{opacity:.4}}
+@media (prefers-reduced-motion:reduce){.folha-livro.aflito,.folha-livro.treme,.mare.perigo i.on{animation:none}}
 .aviso-som{font-family:var(--f-it);font-style:italic;font-size:.9rem;color:var(--tinta2);text-align:center;margin-top:10px}
 @media (prefers-reduced-motion:reduce){.fade,.rola .dado,.loc-novo,.aqui{animation:none}aside#folha{transition:none}}
 </style>
@@ -663,6 +672,66 @@ naufragio(x, r) {
   bando(c, r, 640, 200, 260, 80, 11, 12, 26);
   compoe(x, C);
 },
+recolhedor(x, r) {
+  fundo(x, r, { lx: 640, ly: 300, lr: 300, topo: '#8a6a3a', base: '#5a4020', nuvens: .7 });
+  nevoa(x, 380, 160, .55);
+  const F = camada(); const f = F.x;
+  casa(f, r, -40, 600, 240, 330, { cor: NE }); casa(f, r, 980, 600, 260, 300, { cor: NE });
+  casa(f, r, 230, 520, 120, 150, { cor: LONGE, janelas: [[.4, .3]] }); casa(f, r, 860, 520, 110, 140, { cor: LONGE });
+  aguada(F, r, .35); compoe(x, F, { alfa: .85, blur: 1.2 });
+  nevoa(x, 520, 80, .5);
+  const G = camada(); const g = G.x;
+  figura(g, r, 640, 600, 470, { chapeu: 1, vento: .5, cor: '#120b04', bracos: 'pendentes' });
+  traco(g, [[690, 360], [712, 440], [716, 520]], 9, 7, '#120b04');
+  g.strokeStyle = '#120b04'; g.lineWidth = 6; g.beginPath(); g.arc(732, 532, 22, Math.PI * .9, Math.PI * 2.3); g.stroke();
+  traco(g, [[592, 360], [572, 420], [566, 470]], 9, 7, '#120b04'); g.fillRect(564, 470, 3, 26);
+  g.fillRect(546, 494, 40, 54); 
+  for (let i = 0; i < 3; i++) { const pts = []; for (let k = 0; k <= 30; k++) pts.push([600 - k * 9 - i * 30, 600 + Math.sin(k * .9 + i) * 3 + i * 4]); for (let k = 0; k < pts.length; k += 2) { g.beginPath(); g.ellipse(pts[k][0], pts[k][1], 6, 3.4, 0, 0, 7); g.lineWidth = 2.4; g.stroke(); } }
+  aguada(G, r, .2, 30); compoe(x, G, { blur: 1.1 });
+  brilho(x, 566, 520, 160, .9, 'rgba(170,230,150,.75)'); brilho(x, 566, 520, 50, 1, 'rgba(230,255,210,.9)');
+  x.save(); x.fillStyle = 'rgba(200,250,190,.85)'; for (let i = 0; i < 5; i++) { x.beginPath(); x.arc(554 + r() * 24, 505 + r() * 34, 2 + r() * 2, 0, 7); x.fill(); } x.restore();
+  olhos(x, 650, 140, 5, .9);
+  const C = camada(); const c = C.x; chao(c, r, X => 640 + Math.sin(X / 40) * 3, TINTA, 2);
+  for (const [bx, by, w, h] of [[150, 650, 120, 120], [250, 650, 90, 90], [1040, 650, 110, 140]]) { c.beginPath(); c.ellipse(bx, by - h / 2, w / 2, h / 2, 0, 0, 7); c.fill(); c.fillRect(bx - w / 2, by - h / 2, w, h / 2); }
+  figura(c, r, 300, 652, 110, { capuz: 1, vento: .2, dir: -1 });
+  compoe(x, C);
+},
+cerco(x, r) {
+  fundo(x, r, { lx: 860, ly: 230, lr: 340, nuvens: .7 }); astro(x, 860, 230, 46, .9); nuvens(x, r, 60, 260, 6, .5);
+  const M = camada(); mar(M.x, r, 470, '#2a1d0e', { brilho: 'rgba(255,236,190,1)', lx: 860 }); compoe(x, M, { alfa: .9 }); nevoa(x, 470, 40, .5);
+  const F = camada(); const f = F.x;
+  for (let i = 0; i < 14; i++) { const X = 560 + r() * 600, Y = 480 + r() * 40, h = 60 + r() * 30; figura(f, r, X, Y, h, { bracos: 'frente', vento: .1, cor: NE, dir: -1, curv: .2 }); }
+  aguada(F, r, .55, 16); compoe(x, F, { alfa: .75, blur: 1.6 });
+  nevoa(x, 520, 50, .4);
+  const C = camada(); const c = C.x; const fy = X => X < 620 ? 560 - Math.pow(X / 620, 2) * 10 : 550 + (X - 620) * .4;
+  chao(c, r, fy, TINTA, 2);
+  casa(c, r, 20, 566, 130, 150, { janelas: [[.2, .3], [.62, .3]] }); casa(c, r, 170, 566, 150, 190, { janelas: [[.4, .25]] }); casa(c, r, 340, 566, 110, 130, { janelas: [[.3, .35]] });
+  poli(c, [[470, 566], [470, 400], [492, 372], [514, 400], [514, 566]]); cruz(c, 492, 374, 40, 0);
+  for (const [X, h, d] of [[640, 220, -1], [760, 200, -1], [900, 240, -1], [560, 190, -1]]) figura(c, r, X, fy(X) + 4, h, { bracos: 'frente', cabelo: 1, algas: 1, vento: .2, dir: d, curv: .25 });
+  erva(c, r, 0, 620, 0, 26, 1, TINTA, fy);
+  compoe(x, C);
+  for (const [X, h] of [[640, 220], [760, 200], [900, 240], [560, 190]]) olhos(x, X - h * .015, fy(X) + 4 - h * .91, h * .018, .7);
+},
+corpo(x, r) {
+  fundo(x, r, { lx: 600, ly: 320, lr: 220, topo: '#3a2810', base: '#2a1c0a', nuvens: .2, luz: .9 });
+  const F = camada(); estalactites(F.x, r, NE, 30, 260); F.x.fillRect(0, 0, 120, H); F.x.fillRect(W - 120, 0, 120, H); aguada(F, r, .4); compoe(x, F, { alfa: .85, blur: 1.2 });
+  brilho(x, 470, 520, 300, .65);
+  const C = camada(); const c = C.x;
+  traco(c, [[640, 120], [636, 400], [632, 700]], 22, 18, TINTA);
+  // corpo a boiar de bruços, atado à estaca, com um braço erguido para fora de água
+  c.beginPath(); c.moveTo(470, 592); c.quadraticCurveTo(520, 560, 600, 566); c.quadraticCurveTo(660, 560, 700, 584); c.lineTo(700, 596); c.lineTo(470, 596); c.closePath(); c.fill();
+  c.beginPath(); c.ellipse(735, 588, 30, 18, -.2, 0, 7); c.fill();
+  for (let i = 0; i < 14; i++) traco(c, [[750, 580 + r() * 10], [780 + i * 4, 590 + Math.sin(i) * 4], [810 + i * 7, 594 + Math.sin(i * 1.7) * 6]], 2.4, .3, TINTA);
+  traco(c, [[540, 590], [528, 520], [536, 450]], 13, 9, TINTA);
+  for (let i = 0; i < 5; i++) { const a0 = -.5 + i * .25; traco(c, [[536, 452], [536 + Math.sin(a0) * 14, 452 - Math.cos(a0) * 18], [536 + Math.sin(a0 * 1.3) * 20, 452 - Math.cos(a0) * 30 - (i === 2 ? 6 : 0)]], 4.2, 1.4, TINTA); }
+  c.strokeStyle = TINTA; c.lineWidth = 4; c.beginPath(); c.moveTo(610, 572); c.quadraticCurveTo(622, 556, 636, 560); c.stroke(); c.beginPath(); c.moveTo(610, 590); c.quadraticCurveTo(624, 600, 636, 588); c.stroke();
+  mar(c, r, 590, TINTA, {});
+  figura(c, r, 330, 600, 150, { lanterna: 1, capuz: 1, dir: 1, vento: .2 });
+  compoe(x, C);
+  const A = camada(); mar(A.x, r, 590, 'rgba(0,0,0,0)', { brilho: 'rgba(255,230,170,1)', lx: 420 }); compoe(x, A, { alfa: .7 });
+  const K = camada(); for (let i = 0; i < 6; i++) { K.x.save(); K.x.translate(500 + r() * 200, 560 + r() * 24); K.x.fillStyle = TINTA; K.x.beginPath(); K.x.ellipse(0, 0, 9, 6, 0, 0, 7); K.x.fill(); for (const d of [-1, 1]) for (let k = 0; k < 3; k++) traco(K.x, [[d * 6, -2 + k * 2], [d * 14, -8 + k * 4], [d * 18, 2 + k * 3]], 2, .5, TINTA); K.x.restore(); } compoe(x, K);
+}
+
 };
 
 function desenhar(chave, canvas, semente) { const x = canvas.getContext('2d'); const r = rng(semente || 7); (CENAS[chave] || CENAS.cais)(x, r); vinheta(x, 1); grao(x, r, .2); }
@@ -672,58 +741,92 @@ if (typeof module !== 'undefined') module.exports = api; else raiz.Arte = api;
 
 </script>
 <script>
-/* O Farol do Corvo: história original.
-   Cada secção: t (texto), cena (ilustração), lugar (mapa), ch (escolhas), e opcionalmente
-   fx (efeitos na 1.ª visita), fxA (sempre), teste, duelo, luta, loja, escuro (gasta archote), som, fim. */
+/* O Farol do Corvo: história original (versão 2, com terror e perseguição).
+   Campos de cada secção:
+   t texto · cena ilustração · lugar ponto do mapa · zona (aldeia/falesia/gruta/torre: ativa eventos) · cap capítulo
+   ch escolhas c(texto, destino, {condições, mare: custo}) · fx efeitos na 1.ª visita · fxA efeitos sempre
+   teste / duelo / luta / loja · escuro (precisa de luz) · tempo + esgotou (escolha com relógio)
+   morte (morte súbita) · susto · som · alt [{cond, t}] texto alternativo · extras [{cond, t}] parágrafos finais · fim
+   '@volta' = regressar ao destino que um evento interrompeu. */
 (function (raiz) {
 const c = (t, to, cond) => Object.assign({ t, to }, cond || {});
 const H = {
 
-/* ===================== CAPÍTULO I · VILA NEGRA ===================== */
+/* ======================= I · VILA NEGRA ======================= */
 start: { cap: 'I · Vila Negra', cena: 'cais', lugar: 'cais', t:
 `O barco do correio larga-te no cais de Vila Negra quando o sol já se afoga no mar. Ninguém te espera. As redes estão estendidas mas não há pescadores, e as janelas da aldeia estão todas fechadas, apesar de ainda não ser noite.
 
-Lá em cima, na ponta da ilha, o Farol do Corvo está apagado há três noites. Nesse tempo, quatro barcos partiram-se nos Dentes, os rochedos que fecham a baía. A Câmara de Porto Alto pagou-te para descobrir o que aconteceu ao faroleiro, Mestre Anselmo, e voltar a acender a luz.
+Lá em cima, na ponta da ilha, o Farol do Corvo está apagado há três noites. Nesse tempo, quatro barcos partiram-se nos Dentes, os rochedos que fecham a baía. A Câmara de Porto Alto pagou-te para descobrir o que aconteceu ao faroleiro, Mestre Anselmo, e voltar a acender a luz antes da maré grande desta noite.
 
-O barqueiro já está a desatar o cabo, com pressa de se ir embora.
+O barqueiro não te ajudou a sair do barco. Agora estende-te uma moeda. Tem as unhas azuladas, e a mão, quando lhe tocas sem querer, está fria como um peixe.
 
-— Esta noite é maré viva — diz, sem olhar para ti. — A frota do bacalhau entra de madrugada. Se o farol não acender até a maré encher, não sobra um barco.`,
- ch: [c('Perguntar ao barqueiro porque tem tanta pressa', 'barqueiro'), c('Subir à praça da aldeia', 'praca')] },
+— O teu troco — diz. — O senhor que te pagou a viagem pagou a mais.
 
-barqueiro: { cena: 'cais', lugar: 'cais', fx: { flag: 'aviso' }, t:
-`O barqueiro pára de mexer no cabo. Olha para a falésia, depois para ti, e baixa a voz.
+A moeda está coberta de uma crosta de sal que não sai com o dedo.`,
+ ch: [c('Aceitar a moeda', 'moeda_aceita'), c('Recusar a moeda', 'moeda_recusa')] },
 
-— Há três noites que se vêem luzes verdes no alto do farol. E há três noites que os afogados não ficam no fundo do mar. A minha irmã viu um a bater-lhe à porta, com a cara do marido.
+moeda_aceita: { cena: 'cais', lugar: 'cais', fx: { item: 'Moeda Salgada' }, t:
+`Guardas a moeda no bolso. Pesa mais do que devia.
 
-Cospe para a água.
+O barqueiro sorri sem mostrar os dentes.
 
-— Ouve o que te digo, que é de graça. Se ouvires o teu nome no nevoeiro, não respondas. Seja a voz de quem for.
+— Um conselho, que é de graça. Esta noite, se ouvires o teu nome no nevoeiro, não respondas. Seja a voz de quem for.
 
-Empurra o barco com o remo e afasta-se sem dizer adeus. Ficas sozinho no cais, a ouvir as ondas.`,
- ch: [c('Subir à praça', 'praca')] },
+Empurra o barco com o remo e afasta-se sem fazer barulho nenhum. Nem o remo a entrar na água. Quando olhas outra vez, o barco já não está lá. O mar está liso até ao horizonte.`,
+ ch: [c('Subir à praça da aldeia', 'praca')] },
 
-praca: { cena: 'cais', lugar: 'praca', t:
-`A praça de Vila Negra é um largo de terra batida à volta de um cruzeiro de pedra. Reparas numa coisa estranha: em todas as soleiras há uma linha de sal grosso, branca, como se os moradores quisessem impedir alguma coisa de entrar.
+moeda_recusa: { cena: 'cais', lugar: 'cais', t:
+`— Fica com ela — dizes.
 
-Da taberna sai fumo e um murmúrio de vozes. A capela, num rochedo mais acima, tem as velas acesas. A casa do faroleiro fica no começo do caminho da falésia, de porta escancarada. Para lá do muro baixo, entre as cruzes tortas, fica o cemitério.`,
- ch: [c('Entrar na Taberna do Bacalhau Seco', 'taberna'), c('Subir à capela', 'capela'), c('Ir à casa do faroleiro', 'casa'), c('Entrar no cemitério', 'cemiterio', { notFlag: 'cemiterio' }), c('Seguir pelo caminho da falésia', 'falesia1')] },
+O barqueiro olha para ti muito tempo. Depois atira a moeda à água, e a água chia onde ela cai, como se fosse ferro em brasa.
 
-taberna: { cena: 'taberna', lugar: 'taberna', fx: { mare: 1 }, t:
+— Ninguém recusa — diz, baixinho. — Um conselho, então. Esta noite, se ouvires o teu nome no nevoeiro, não respondas. Seja a voz de quem for.
+
+Empurra o barco e afasta-se sem fazer barulho nenhum. Nem o remo a entrar na água. Quando olhas outra vez, o barco já não está lá.`,
+ fx: { flag: 'recusou' },
+ ch: [c('Subir à praça da aldeia', 'praca')] },
+
+praca: { cena: 'cais', lugar: 'praca', zona: 'aldeia', t:
+`A praça de Vila Negra é um largo de terra batida à volta de um cruzeiro de pedra. Em todas as soleiras há uma linha de sal grosso, branca, como se os moradores quisessem impedir alguma coisa de entrar.
+
+Da taberna sai fumo e um murmúrio de vozes. A capela, num rochedo mais acima, tem as velas acesas. A casa do faroleiro fica no começo do caminho da falésia, de porta escancarada. Para lá do muro baixo, entre as cruzes tortas, fica o cemitério.
+
+A maré está a subir. Cada sítio onde vais custa tempo.`,
+ alt: [{ flag: 'cerco', t:
+`A praça está irreconhecível. As linhas de sal das soleiras foram pisadas e espalhadas. Há pegadas molhadas por todo o lado, descalças, todas a ir e a vir do mar. Uma porta arrancada está caída junto ao cruzeiro.
+
+Ninguém se atreve a sair de casa. Da taberna sai uma luz fraca entre as tábuas pregadas nas janelas. Da capela, nenhuma.
+
+A maré continua a subir.` }],
+ ch: [c('Entrar na Taberna do Bacalhau Seco', 'taberna', { mare: 1 }), c('Subir à capela', 'capela', { mare: 1 }), c('Ir à casa do faroleiro', 'casa', { mare: 1 }), c('Entrar no cemitério', 'cemiterio', { mare: 1, notFlag: 'cemiterio' }),
+  c('Descer ao cais e atirar a moeda salgada ao mar', 'deitar_moeda', { tem: 'Moeda Salgada', flag: 'sabeMoeda' }), c('Seguir pelo caminho da falésia', 'falesia1', { mare: 1 })] },
+
+deitar_moeda: { cena: 'cais', lugar: 'cais', zona: 'aldeia', fx: { drop: 'Moeda Salgada', atencao: 1 }, som: 'splash', t:
+`Atiras a moeda o mais longe que consegues. Quando bate na água, o mar ferve num círculo perfeito, branco de espuma, e depois acalma.
+
+Lá no alto da falésia, a luz verde do farol apaga-se um instante, como um olho que pisca. Alguém sentiu a perda. Mas agora já não te consegue seguir tão facilmente.`,
+ ch: [c('Voltar à praça', 'praca')] },
+
+taberna: { cena: 'taberna', lugar: 'taberna', zona: 'aldeia', t:
 `A Taberna do Bacalhau Seco é baixa e escura e cheira a vinho azedo. Três pescadores bebem calados à mesa do meio. Quando entras, param de falar e ficam a olhar para a porta atrás de ti, até a fechares.
 
 Atrás do balcão, uma mulher de braços cruzados mede-te de cima a baixo: é Dona Rosário. Ao canto, junto à lareira, um velho de chapéu de oleado fuma um cachimbo e sorri como se te estivesse à espera há muito tempo.`,
- ch: [c('Falar com Dona Rosário', 'rosario', { notFlag: 'rosario' }), c('Sentar-te com o velho da lareira', 'velho', { notFlag: 'velho' }), c('Tirar um archote do monte de lenha junto à lareira', 'archote', { notFlag: 'archote' }), c('Comprar mantimentos', 'loja'), c('Sair para a praça', 'praca')] },
+ alt: [{ flag: 'cerco', t:
+`A taberna parece um barco depois de uma tempestade. Mesas viradas contra as janelas, tábuas pregadas à pressa, cacos de vidro no chão. Cheira a fumo e a água do mar. Os pescadores dormem sentados, de facas na mão.
+
+Dona Rosário está atrás do balcão, como se nada fosse, a limpar um copo que já está limpo.` }],
+ ch: [c('Falar com Dona Rosário', 'rosario', { notFlag: 'rosario' }), c('Sentar-te com o velho da lareira', 'velho', { notFlag: 'velho', notFlag2: 'tomeMorto' }), c('Tirar um archote do monte de lenha', 'archote', { notFlag: 'archote' }), c('Comprar mantimentos', 'loja'), c('Sair para a praça', 'praca')] },
 
 rosario: { cena: 'taberna', lugar: 'taberna', fx: { flag: 'rosario', item: 'Óleo de Baleia' }, t:
 `— Vens por causa do farol — diz ela, antes de abrires a boca. — Há quatro noites apareceu aqui um homem que eu nunca tinha visto. Alto, de capa verde-escura a brilhar como pele de enguia. Pagou com moedas cobertas de sal e disse que se chamava Dom Vidal. Na noite seguinte, o farol apagou-se.
 
 Tira de debaixo do balcão uma bilha de barro selada com cera.
 
-— Óleo de baleia. O Anselmo veio cá buscá-lo e já não voltou para o levar. Sem isto, aquela lâmpada não acende nem com reza.
+— Óleo de baleia. O Anselmo veio cá buscá-lo e já não voltou. Sem isto, aquela lâmpada não acende nem com reza.
 
-Depois, mais baixo:
+Baixa a voz.
 
-— O Anselmo nunca entrava na gruta sem a lanterna de furacão dele. Dizia que lá em baixo um homem sem luz é um homem morto.`,
+— E outra coisa. O Anselmo nunca entrava na gruta sem a lanterna de furacão dele. Dizia que lá em baixo um homem sem luz é um homem morto. O meu Bento também dizia isso. O mar levou-o há dois invernos.`,
  ch: [c('Guardar o óleo e voltar ao balcão', 'taberna')] },
 
 velho: { cena: 'taberna', lugar: 'taberna', fx: { flag: 'velho', mare: 1 }, t:
@@ -733,11 +836,11 @@ velho: { cena: 'taberna', lugar: 'taberna', fx: { flag: 'velho', mare: 1 }, t:
 
 Bate com o cachimbo na mesa.
 
-— Duas coisas o fazem tremer. O Sino de Santa Bárbara, que caiu da igreja velha para o mar e está na Gruta Afogada. E o nome verdadeiro dele, que ninguém sabe. Dizem que está escrito numa pedra, mas ninguém se lembra de qual.
+— Tem um criado. Alto como uma porta, de chapéu largo, com um gancho numa mão e uma lanterna verde na outra. Chamam-lhe o Recolhedor. Anda pelo nevoeiro a arrastar correntes e vai buscar quem faz barulho. Se ouvires correntes, esconde-te. Não lutes. Ninguém lhe ganha.
 
-Depois volta a sorrir e tira dois dados de osso da algibeira.
+Depois volta a sorrir.
 
-— E agora jogas uma partida com um velho? Três moedas.`,
+— Duas coisas fazem o Vidal tremer. O Sino de Santa Bárbara, que está na Gruta Afogada. E o nome verdadeiro dele, que dizem estar escrito numa pedra. E agora, jogas uma partida de ossos com um velho? Três moedas.`,
  ch: [c('Aceitar a partida de ossos (3 moedas)', 'jogo', { ouro: 3 }), c('Recusar e voltar ao balcão', 'taberna')] },
 
 jogo: { cena: 'taberna', lugar: 'taberna', t: `Tomé sopra os dados para lhes dar sorte. Cada um lança os seus. Quem tirar mais, fica com as moedas.`,
@@ -749,34 +852,35 @@ jogo_ganha: { cena: 'taberna', lugar: 'taberna', som: 'sorte', fx: { item: 'Dent
 — Aposta é aposta, e moedas não tenho. Isto deu-me sorte cinquenta anos no mar. Usa-o ao pescoço e a tua mão não treme.`,
  ch: [c('Pendurar o dente ao pescoço e voltar ao balcão', 'taberna')] },
 
-jogo_perde: { cena: 'taberna', lugar: 'taberna', fx: { ouro: -3 }, t:
-`— Os ossos gostam de mim — diz Tomé, enfiando as tuas moedas na algibeira. — Não leves a mal. Toma lá um conselho de borla: na gruta, segue o corvo. O Anselmo marcava tudo com um corvo.`,
- fx2: { flag: 'dica_corvo' },
+jogo_perde: { cena: 'taberna', lugar: 'taberna', fx: { ouro: -3, flag: 'dica_corvo' }, t:
+`— Os ossos gostam de mim — diz Tomé, enfiando as tuas moedas na algibeira. — Não leves a mal. Toma lá um conselho de borla: na gruta, segue o corvo. O Anselmo marcava tudo com um corvo. E onde o corvo tem uma cruz por cima, não entres.`,
  ch: [c('Voltar ao balcão', 'taberna')] },
 
-archote: { cena: 'taberna', lugar: 'taberna', fx: { flag: 'archote', archote: 6 }, t:
+archote: { cena: 'taberna', lugar: 'taberna', fx: { flag: 'archote', archote: 5 }, t:
 `Escolhes um pau de pinho com a ponta embebida em resina e acendes-lo nas brasas. Dona Rosário vê-te, mas não diz nada.
 
 Um dos pescadores fala pela primeira vez, sem levantar os olhos do copo:
 
-— Isso não dura muito. Lá em baixo, quando se apaga, apaga-se de vez.
-
-Um archote ilumina pouco tempo. Na Folha de Aventuras vês quanto resta.`,
+— Isso não dura muito. Lá em baixo, quando se apaga, apaga-se de vez.`,
  ch: [c('Voltar ao balcão', 'taberna')] },
 
 loja: { cena: 'taberna', lugar: 'taberna', t: `Dona Rosário abre a despensa e mostra o que tem. Não faz descontos, mas também não engana ninguém.`,
  loja: [
   { nome: 'Provisões', preco: 2, prov: 1, d: 'Pão, queijo e chouriço. Repõem 4 de Energia.' },
-  { nome: 'Saco de Sal', preco: 2, item: 'Saco de Sal', d: 'Os afogados não atravessam o sal.' },
+  { nome: 'Saco de Sal', preco: 3, item: 'Saco de Sal', d: 'Os afogados não atravessam o sal. Uma vez.' },
   { nome: 'Corda de Cânhamo', preco: 3, item: 'Corda de Cânhamo', d: 'Doze braças, com gancho de ferro.' },
   { nome: 'Faca de Arremesso', preco: 4, item: 'Faca de Arremesso', d: 'Em combate, 2 de dano certeiro. Só uma vez.' }],
  ch: [c('Voltar ao balcão', 'taberna')] },
 
-capela: { cena: 'capela', lugar: 'capela', fx: { mare: 1 }, t:
+capela: { cena: 'capela', lugar: 'capela', zona: 'aldeia', t:
 `A Capela de São Pedro dos Náufragos é pequena e fria. A luz da lua entra pela janela alta e cai sobre o altar. Das traves pendem dezenas de barquinhos de madeira, oferecidos por quem voltou do mar. Nas paredes há retratos de quem não voltou.
 
-Uma mulher vestida de negro reza ajoelhada diante do altar. Não se vira quando entras, mas pára de rezar.`,
- ch: [c('Ajoelhar-te e rezar', 'rezar', { notFlag: 'rezou' }), c('Falar com a mulher de negro', 'beata', { notFlag: 'beata' }), c('Ler os papéis presos aos ex-votos', 'exvotos', { notFlag: 'exvotos' }), c('Voltar à praça', 'praca')] },
+Uma mulher vestida de negro reza ajoelhada diante do altar. Ao lado da sacristia, uma porta baixa, de ferro, dá para a cripta. Está entreaberta.`,
+ alt: [{ flag: 'cerco', t:
+`As velas da capela apagaram-se todas. Os barquinhos de madeira das traves estão encharcados e pingam, como se tivessem estado no mar. Há algas no altar.
+
+A mulher de negro continua ajoelhada, no mesmo sítio, a rezar muito depressa.` }],
+ ch: [c('Ajoelhar-te e rezar', 'rezar', { notFlag: 'rezou' }), c('Falar com a mulher de negro', 'beata', { notFlag: 'beata' }), c('Ler os papéis presos aos ex-votos', 'exvotos', { notFlag: 'exvotos' }), c('Descer à cripta', 'cripta', { notFlag: 'cripta' }), c('Voltar à praça', 'praca')] },
 
 rezar: { cena: 'capela', lugar: 'capela', som: 'sorte', fx: { flag: 'rezou', sorte: 2 }, t:
 `Ajoelhas-te na pedra fria e fechas os olhos. Não sabes bem a quem pedes, mas pedes. Quando te levantas, a chama da vela mais próxima endireita-se, como se alguém tivesse fechado uma janela que não existe.
@@ -794,17 +898,55 @@ Tira do bolso um búzio pequeno, furado, preso num cordão.
 — O Joaquim usava isto contra o canto das moiras. Nessa manhã esqueceu-se dele. Leva-o tu. E se o encontrares lá em baixo, diz-lhe que a mãe não está zangada.`,
  ch: [c('Prometer-lhe que vais tentar', 'capela')] },
 
-exvotos: { cena: 'capela', lugar: 'capela', fx: { flag: 'exvotos' }, fx2: { flag: 'nota' }, t:
+exvotos: { cena: 'capela', lugar: 'capela', fx: { flag: 'exvotos', flag2: 'nota' }, t:
 `Percorres a parede com uma vela na mão. Entre os ex-votos antigos há um papel dobrado, preso com um alfinete, de tinta ainda fresca. Desdobra-lo.
 
-«Se me acontecer alguma coisa, a chave do farol está onde o corvo dorme. Não confiem em luzes verdes. A.»`,
+«Se me acontecer alguma coisa, a chave do farol está onde o corvo dorme. Não confiem em luzes verdes. Não aceitem nada dele. A.»`,
  ch: [c('Guardar o papel e voltar à nave', 'capela')] },
 
-casa: { cena: 'casa', lugar: 'casa', fx: { mare: 1 }, t:
+cripta: { cena: 'ossario', lugar: 'capela', fx: { flag: 'cripta' }, escuro: 1, t:
+`A escada da cripta é tão estreita que desces de lado. Lá em baixo, os padres antigos da ilha dormem em nichos escavados na rocha, com os nomes quase apagados.
+
+Ao fundo, numa pia talhada em forma de concha, ainda há água benta. E ao lado da pia há um caixão mais recente do que os outros, de madeira clara.
+
+A tampa do caixão está desviada. Só um palmo. Por dentro, está molhado.`,
+ ch: [c('Encher o cantil de água benta, depressa', 'cripta_agua'), c('Subir já, sem tocar em nada', 'capela')] },
+
+cripta_agua: { cena: 'ossario', lugar: 'capela', fx: { item: 'Água Benta' }, som: 'garras', susto: 1, tempo: 6, esgotou: 'cripta_agarrado', t:
+`Enches o cantil. A água está gelada.
+
+Atrás de ti, a madeira range. A tampa do caixão desliza mais um palmo, devagar, empurrada por dentro. Aparecem quatro dedos brancos e inchados na beira.
+
+A escada está a seis passos.`,
+ ch: [c('Correr para a escada', 'cripta_foge'), c('Desembainhar a espada e ficar', 'cripta_luta')] },
+
+cripta_foge: { cena: 'capela', lugar: 'capela', fx: { atencao: 1 }, som: 'porta', t:
+`Sobes os degraus de dois em dois e fechas a porta de ferro atrás de ti com toda a força. O trinco cai.
+
+Do outro lado, alguém bate. Três pancadas, lentas, educadas. Depois nada.
+
+Tens a água benta. Dizem que queima o que vem do mar.`,
+ ch: [c('Voltar à nave da capela', 'capela')] },
+
+cripta_agarrado: { cena: 'ossario', lugar: 'capela', fx: { en: -2 }, som: 'ferida', susto: 1, t:
+`Ficaste parado um segundo a mais. Uma mão fria fecha-se no teu tornozelo e puxa. Cais de costas nas lajes. Do caixão sai um PADRE AFOGADO, de batina podre colada ao corpo, com a boca cheia de areia.`,
+ luta: { foes: [{ nome: 'Padre Afogado', hab: 8, en: 8 }], win: 'cripta_ganha' } },
+
+cripta_luta: { cena: 'ossario', lugar: 'capela', t:
+`Do caixão sai um PADRE AFOGADO, de batina podre colada ao corpo e a boca cheia de areia. Vem para ti de braços abertos, como quem vai dar uma bênção.`,
+ luta: { foes: [{ nome: 'Padre Afogado', hab: 8, en: 8 }], win: 'cripta_ganha' } },
+
+cripta_ganha: { cena: 'ossario', lugar: 'capela', fx: { ouro: 3 }, t:
+`O padre desfaz-se em água salgada que escorre para o ralo da cripta. No caixão ficam três moedas antigas, que guardas.
+
+Sobes devagar. Pensas no que Tomé disse sobre os mortos desta ilha, e percebes que não é só uma história.`,
+ ch: [c('Voltar à nave da capela', 'capela')] },
+
+casa: { cena: 'casa', lugar: 'casa', zona: 'aldeia', t:
 `A porta da casa do faroleiro bate ao vento. Lá dentro, cadeiras viradas e gavetas despejadas no chão. Alguém procurou alguma coisa com pressa, e não encontrou, porque voltou várias vezes: há pegadas molhadas por todo o lado, umas por cima das outras.
 
 Em frente à janela, um corvo empalhado vigia a sala de cima de um poleiro. Ao fundo há uma porta para o quarto e outra, mais pequena, para a despensa. Da despensa vem um barulho de unhas a arranhar madeira.`,
- ch: [c('Examinar o corvo empalhado', 'corvo', { notFlag: 'corvo' }), c('Entrar no quarto', 'quarto', { notFlag: 'quarto' }), c('Abrir a despensa', 'despensa', { notFlag: 'despensa' }), c('Sair para o caminho da falésia', 'falesia1'), c('Voltar à praça', 'praca')] },
+ ch: [c('Examinar o corvo empalhado', 'corvo', { notFlag: 'corvo' }), c('Entrar no quarto', 'quarto', { notFlag: 'quarto' }), c('Abrir a despensa', 'despensa', { notFlag: 'despensa' }), c('Sair para o caminho da falésia', 'falesia1', { mare: 1 }), c('Voltar à praça', 'praca')] },
 
 corvo: { cena: 'casa', lugar: 'casa', fx: { flag: 'corvo' }, t:
 `O corvo cheira a pó e a cânfora. Os olhos de vidro parecem seguir-te. O poleiro é um tronco grosso, pregado à parede por baixo da janela.`,
@@ -817,11 +959,10 @@ corvo_chave: { cena: 'casa', lugar: 'casa', som: 'chave', fx: { item: 'Chave do 
 `Na parte de baixo do poleiro, a madeira tem uma cavidade tapada com cera. Lá dentro está uma chave de ferro, comprida como a tua mão, com um corvo gravado no anel.`,
  ch: [c('Guardar a chave', 'casa')] },
 
-corvo_nada: { cena: 'casa', lugar: 'casa', t:
-`Uma asa parte-se-te na mão e cai uma chuva de penas e serradura. Não encontras nada. O corvo, agora torto, parece olhar-te com desprezo.`,
+corvo_nada: { cena: 'casa', lugar: 'casa', t: `Uma asa parte-se-te na mão e cai uma chuva de penas e serradura. Não encontras nada. O corvo, agora torto, parece olhar-te com desprezo.`,
  ch: [c('Desistir do corvo', 'casa')] },
 
-quarto: { cena: 'afogado', lugar: 'casa', som: 'gemido', fx: { mare: 1 }, t:
+quarto: { cena: 'afogado', lugar: 'casa', som: 'gemido', susto: 1, t:
 `O quarto está às escuras e cheira a maré baixa. Há alguém sentado na cama, de costas para ti, a pingar água para o soalho.
 
 — Anselmo? — chamas.
@@ -829,30 +970,45 @@ quarto: { cena: 'afogado', lugar: 'casa', som: 'gemido', fx: { mare: 1 }, t:
 O vulto vira a cabeça devagar, demasiado devagar, e depois o resto do corpo. Não é o Anselmo. É um homem inchado e branco, com algas no cabelo e os olhos leitosos como peixe cozido. Um AFOGADO.
 
 Abre a boca e sai-lhe água do mar. Levanta-se e vem para ti de braços estendidos.`,
- luta: { foes: [{ nome: 'Afogado', hab: 7, en: 7 }], win: 'quarto_ganho', fuga: 'casa', fugaApos: 2 },
- ch_extra: [c('Atirar-lhe sal à cara', 'quarto_sal', { req: 'Saco de Sal' })] },
+ luta: { foes: [{ nome: 'Afogado', hab: 8, en: 8 }], win: 'quarto_ganho', fuga: 'casa', fugaApos: 2 },
+ ch_extra: [c('Atirar-lhe sal à cara', 'quarto_sal', { tem: 'Saco de Sal' })] },
 
 quarto_sal: { cena: 'afogado', lugar: 'casa', som: 'gemido', fx: { drop: 'Saco de Sal' }, t:
 `Atiras-lhe o sal à cara. O afogado guincha como uma chaleira, tapa os olhos com as mãos e desfaz-se em água ali mesmo, aos teus pés. Usaste o sal todo.`,
  ch: [c('Revistar o quarto', 'quarto_ganho')] },
 
-quarto_ganho: { cena: 'afogado', lugar: 'casa', fx: { flag: 'quarto', ouro: 4 }, fx2: { flag: 'marcas' }, t:
+quarto_ganho: { cena: 'afogado', lugar: 'casa', fx: { flag: 'quarto', flag2: 'marcas', ouro: 4 }, t:
 `Do afogado sobra uma poça que escorre pelas frestas do soalho.
 
 Debaixo da cama encontras o diário do Anselmo. Lês as últimas páginas à luz da janela:
 
 «Gravei a marca do corvo nas rochas da Gruta Afogada para nunca me perder. Quem tiver luz que siga o bico do corvo. Onde o corvo tiver uma cruz por cima, é o ossário dele. Lá não se entra.»
 
-«Ele quer a luz apagada até à maré grande. Teme o bronze. Teme o sino.»
+«O Zé Barqueiro não voltou da faina de terça. Encontraram o barco vazio a boiar nos Dentes. Que Deus o tenha.»
+
+«Ele quer a luz apagada até à maré grande. Teme o bronze. Teme o sino. E dá moedas a quem quer marcar.»
 
 Entre as folhas há quatro moedas, que guardas.`,
+ alt: [{ tem: 'Moeda Salgada', t:
+`Do afogado sobra uma poça que escorre pelas frestas do soalho.
+
+Debaixo da cama encontras o diário do Anselmo. Lês as últimas páginas à luz da janela:
+
+«Gravei a marca do corvo nas rochas da Gruta Afogada para nunca me perder. Quem tiver luz que siga o bico do corvo. Onde o corvo tiver uma cruz por cima, é o ossário dele. Lá não se entra.»
+
+«O Zé Barqueiro não voltou da faina de terça. Encontraram o barco vazio a boiar nos Dentes. Que Deus o tenha.»
+
+«Ele quer a luz apagada até à maré grande. Teme o bronze. Teme o sino. E dá moedas a quem quer marcar. Quem tem uma moeda dele, ele encontra sempre.»
+
+Metes a mão no bolso. A moeda salgada está lá, fria, mais pesada do que antes. O barqueiro que te trouxe era o Zé? E se o Zé morreu na terça, quem é que remou o teu barco?` }],
+ fx2: { flag: 'sabeMoeda' },
  ch: [c('Voltar à sala', 'casa')] },
 
 despensa: { cena: 'casa', lugar: 'casa', som: 'garras', fx: { flag: 'despensa' }, t:
 `Abres a porta da despensa e o barulho pára. Depois recomeça, mais perto. Vêm do escuro dezenas de olhos pequenos e vermelhos, e um cheiro a peixe podre: RATAZANAS DO MAR, do tamanho de gatos, com as caudas peladas e escamosas.
 
 Atrás delas, pendurada num prego, vês uma lanterna de furacão.`,
- luta: { foes: [{ nome: 'Ratazanas do Mar', hab: 5, en: 7 }], win: 'despensa_ganha', fuga: 'casa', fugaApos: 1 } },
+ luta: { foes: [{ nome: 'Ratazanas do Mar', hab: 6, en: 8 }], win: 'despensa_ganha', fuga: 'casa', fugaApos: 1 } },
 
 despensa_ganha: { cena: 'casa', lugar: 'casa', som: 'chave', fx: { item: 'Lanterna de Furacão' }, t:
 `As ratazanas que sobram fogem por um buraco no chão. Tiras a lanterna do prego. Tem vidro grosso, uma grade de ferro e o depósito ainda meio cheio. Acende-se à primeira.
@@ -860,94 +1016,258 @@ despensa_ganha: { cena: 'casa', lugar: 'casa', som: 'chave', fx: { item: 'Lanter
 Com isto, nenhum escuro te apanha desprevenido.`,
  ch: [c('Voltar à sala', 'casa')] },
 
-cemiterio: { cena: 'cemiterio', lugar: 'cemiterio', fx: { flag: 'cemiterio', mare: 1 }, t:
+cemiterio: { cena: 'cemiterio', lugar: 'cemiterio', zona: 'aldeia', fx: { flag: 'cemiterio' }, susto: 1, som: 'gemido', t:
 `O cemitério é um pedaço de encosta onde as cruzes se inclinam todas para o mar, como se o vento as tivesse penteado. A lua está enorme por cima da árvore morta do centro, e a árvore está cheia de corvos. Nenhum grasna.
 
-Reparas nas campas recentes. Estão abertas. A terra não foi cavada de fora para dentro: foi empurrada de dentro para fora.
+As campas recentes estão abertas. A terra não foi cavada de fora para dentro: foi empurrada de dentro para fora.
 
 Algo se mexe atrás das cruzes do fundo. Depois outra coisa. Dois vultos levantam-se devagar, molhados, de algas a escorrer pelos ombros.`,
- ch: [c('Espalhar o sal à tua volta', 'cemiterio_sal', { req: 'Saco de Sal' }), c('Desembainhar a espada', 'cemiterio_luta'), c('Fugir para a praça', 'praca')] },
+ ch: [c('Espalhar o sal à tua volta', 'cemiterio_sal', { tem: 'Saco de Sal' }), c('Desembainhar a espada', 'cemiterio_luta'), c('Fugir para a praça', 'praca')] },
 
 cemiterio_sal: { cena: 'cemiterio', lugar: 'cemiterio', fx: { drop: 'Saco de Sal' }, t:
-`Desenhas um círculo de sal à tua volta. Os afogados param na linha branca, gemem, e não a atravessam. Ficam ali a olhar-te, a pingar, até que um a um se deitam de novo nas covas.
-
-Gastaste o sal, mas podes revistar o cemitério em paz.`,
+`Desenhas um círculo de sal à tua volta. Os afogados param na linha branca, gemem, e não a atravessam. Ficam ali a olhar-te, a pingar, até que um a um se deitam de novo nas covas.`,
  ch: [c('Ler as lápides antigas', 'lapide')] },
 
-cemiterio_luta: { cena: 'cemiterio', lugar: 'cemiterio', som: 'gemido', t:
-`Os afogados vêm para ti sem pressa, como quem anda debaixo de água. Têm as mãos frias e fortes, e as unhas cheias de areia.`,
- luta: { foes: [{ nome: 'Primeiro Afogado', hab: 6, en: 5 }, { nome: 'Segundo Afogado', hab: 7, en: 5 }], win: 'lapide', fuga: 'praca', fugaApos: 2 } },
+cemiterio_luta: { cena: 'cemiterio', lugar: 'cemiterio', fx: { atencao: 1 }, t: `Os afogados vêm para ti sem pressa, como quem anda debaixo de água. Têm as mãos frias e fortes, e as unhas cheias de areia.`,
+ luta: { foes: [{ nome: 'Primeiro Afogado', hab: 7, en: 6 }, { nome: 'Segundo Afogado', hab: 8, en: 6 }], win: 'lapide', fuga: 'praca', fugaApos: 2 } },
 
 lapide: { cena: 'cemiterio', lugar: 'cemiterio', fx: { flag: 'nome' }, t:
 `Ao fundo do cemitério, quase escondida pelas silvas, há uma lápide mais antiga do que todas as outras, coberta de sal em vez de musgo. Raspas o sal com a lâmina.
 
 AQUI JAZ VIDAL ESCAMADO
+BARQUEIRO DESTA ILHA
 AFOGADO EM 1789
-QUE O MAR O GUARDE
 
-Por baixo, alguém riscou com uma faca: «não guardou».
+Por baixo, alguém riscou com uma faca: «não ficou».
 
-Agora sabes o nome verdadeiro do bruxo das marés.`,
- ch: [c('Voltar à praça', 'praca'), c('Seguir pelo caminho da falésia', 'falesia1')] },
+Barqueiro. Agora sabes o nome verdadeiro do bruxo das marés.`,
+ ch: [c('Voltar à praça', 'praca')] },
 
-/* ===================== CAPÍTULO II · A FALÉSIA ===================== */
-falesia1: { cap: 'II · A Falésia', cena: 'falesia', lugar: 'falesia', fxA: { mare: 1 }, t:
+/* ===== eventos ===== */
+errante: { cena: 'cerco', lugar: null, susto: 1, som: 'gemido', t:
+`Ao dobrares a esquina, um vulto sai de um portal escuro e agarra-te pelo braço. É um afogado que ficou para trás quando os outros voltaram para o mar. Tem a cara comida pelos caranguejos e ainda traz a boina de pescador.`,
+ luta: { foes: [{ nome: 'Afogado Errante', hab: 8, en: 6 }], win: 'errante_ganho', fuga: '@volta', fugaApos: 1 } },
+errante_ganho: { cena: 'cerco', t: `O afogado desfaz-se numa poça. Ficas um momento encostado à parede, a recuperar o fôlego, e segues caminho.`,
+ ch: [c('Seguir caminho', '@volta')] },
+
+frota_chega: { cena: 'naufragio', som: 'trovao', susto: 1, fx: { flag: 'tarde' }, t:
+`Um som grave atravessa a noite: as buzinas da frota do bacalhau, ao largo, a chamar pelo farol.
+
+Lá longe, no escuro, vês as luzinhas dos mastros a balouçar. Vêm direitas à baía. Direitas aos Dentes. E o farol continua apagado.
+
+Já é tarde para os primeiros barcos. Mas não para os outros. Corre.`,
+ ch: [c('Continuar', '@volta')] },
+
+caca_fora: { cena: 'recolhedor', som: 'correntes', susto: 1, tempo: 7, esgotou: 'caca_apanhado', caca: 1, t:
+`Ouves correntes.
+
+Arrastam-se nas pedras, devagar, cada vez mais perto. Do nevoeiro sai uma luz verde, a balouçar, e por baixo dela uma figura alta como uma porta, de chapéu largo e casaco a pingar. Na outra mão traz um gancho de ferro.
+
+O RECOLHEDOR. Ainda não te viu. Fareja o ar como um cão.`,
+ ch: [c('Esconder-te e suster a respiração', 'caca_esconde'), c('Fugir a correr para o outro lado', 'caca_corre'), c('Atirar-lhe a água benta', 'caca_agua', { tem: 'Água Benta' })] },
+
+caca_gruta: { cena: 'recolhedor', som: 'correntes', susto: 1, tempo: 7, esgotou: 'caca_apanhado', caca: 1, t:
+`Ouves correntes a arrastar dentro de água.
+
+Ao fundo da galeria acende-se uma luz verde. Uma figura altíssima, de chapéu largo, entra na gruta curvada, com um gancho de ferro a raspar o teto. O RECOLHEDOR veio buscar-te. A água à tua volta treme a cada passo dele.`,
+ ch: [c('Mergulhar e ficar debaixo de água', 'caca_esconde'), c('Fugir pela galeria lateral', 'caca_corre'), c('Atirar-lhe a água benta', 'caca_agua', { tem: 'Água Benta' })] },
+
+caca_esconde: { cena: 'recolhedor', tempo: 0, t: `Ficas imóvel. As correntes param mesmo ao teu lado. Sentes o cheiro a mar podre. O gancho passa a um palmo da tua cara.`,
+ teste: { tipo: 'sorte', ok: 'caca_passa', ko: 'caca_apanhado' } },
+
+caca_corre: { cena: 'recolhedor', t: `Desatas a correr. Atrás de ti, as correntes aceleram.`,
+ teste: { tipo: 'hab', ok: 'caca_escapa', ko: 'caca_apanhado' } },
+
+caca_passa: { cena: 'recolhedor', fx: { atencao: -1 }, t:
+`A luz verde afasta-se. As correntes vão ficando mais fracas até se perderem no barulho do mar.
+
+Só respiras quando já não ouves nada. Tens as mãos a tremer.`,
+ ch: [c('Seguir caminho', '@volta')] },
+
+caca_escapa: { cena: 'recolhedor', fxA: { mare: 1 }, t:
+`Corres até os pulmões arderem e te escondes num buraco entre rochas. As correntes passam lá em cima e afastam-se.
+
+Escapaste, mas perdeste tempo a fugir.`,
+ ch: [c('Seguir caminho', '@volta')] },
+
+caca_agua: { cena: 'recolhedor', som: 'sopro', fx: { drop: 'Água Benta', atencao: -2 }, t:
+`Atiras-lhe a água benta à cara. Ouve-se um chiado como de ferro em brasa mergulhado em água. O Recolhedor solta um grito sem voz, recua, e desaparece no escuro, a fumegar.
+
+Não morreu. Mas vai demorar a voltar.`,
+ ch: [c('Seguir caminho', '@volta')] },
+
+caca_apanhado: { cena: 'recolhedor', som: 'rugido', susto: 1, fx: { en: -3 }, t:
+`O gancho crava-se-te no ombro e levanta-te do chão como um saco. Perdes 3 pontos de Energia. A lanterna verde aproxima-se da tua cara e, lá dentro, vês almas a bater no vidro.
+
+Tens de te soltar. Agora.`,
+ luta: { foes: [{ nome: 'Recolhedor', hab: 11, en: 14 }], win: 'caca_morto', fuga: '@volta', fugaApos: 1 } },
+
+caca_morto: { cena: 'recolhedor', som: 'sinogrande', fx: { flag: 'recolhedorMorto', atencaoZero: 1 }, t:
+`O Recolhedor cai de joelhos. A lanterna verde parte-se nas pedras e dela saem dezenas de luzinhas, que sobem para o céu como faíscas.
+
+O corpo dele desfaz-se em algas e correntes enferrujadas. Ninguém te vai caçar mais esta noite.`,
+ ch: [c('Seguir caminho', '@volta')] },
+
+/* ======================= II · A NOITE DOS AFOGADOS ======================= */
+cerco1: { cap: 'II · A Noite dos Afogados', cena: 'cerco', lugar: 'praca', som: 'sinogrande', susto: 1, tempo: 8, esgotou: 'cerco_apanhado', fx: { flag: 'cerco' }, t:
+`O sino da capela começa a tocar sozinho.
+
+Portas batem por toda a aldeia. Alguém grita. E do mar, devagar, saem vultos. Primeiro dois, depois dez, depois mais do que consegues contar: homens e mulheres afogados, a pingar, a caminhar para as casas como se voltassem do trabalho.
+
+Da porta da taberna, Dona Rosário grita por ti:
+
+— Aqui! Depressa, que eu vou trancar!`,
+ ch: [c('Correr para a taberna', 'cerco_taberna'), c('Fugir pelo caminho da falésia', 'cerco_fuga')] },
+
+cerco_apanhado: { cena: 'cerco', lugar: 'praca', susto: 1, som: 'gemido', t:
+`Hesitaste. Mãos frias agarram-te por trás, pelo cinto, pelo cabelo. São dois, e cheiram a fundo do mar.`,
+ luta: { foes: [{ nome: 'Afogados', hab: 8, en: 8 }], win: 'cerco_taberna_tarde' } },
+
+cerco_taberna_tarde: { cena: 'cerco', lugar: 'taberna', t: `Soltas-te e corres. A porta da taberna está a fechar. Atiras-te pela fresta no último instante e Rosário tranca-a atrás de ti.`,
+ ch: [c('Continuar', 'cerco_taberna')] },
+
+cerco_taberna: { cena: 'taberna', lugar: 'taberna', tempo: 9, esgotou: 'cerco_aberta', t:
+`Lá dentro, os pescadores pregam tábuas nas janelas. Tomé tem um arpão nas mãos. Lá fora, ouvem-se unhas a arranhar as portadas.
+
+Depois, três pancadas na porta. Uma voz de homem, rouca, cheia de água:
+
+— Rosário. Abre. Sou eu, o Bento. Tenho frio.
+
+Rosário fica branca. Larga o copo, que se parte no chão, e corre para a tranca.`,
+ ch: [c('Agarrar Rosário antes que abra', 'cerco_segura'), c('Gritar-lhe que aquele já não é o Bento', 'cerco_grito')] },
+
+cerco_grito: { cena: 'taberna', lugar: 'taberna', t: `— Não é ele! — gritas. Rosário pára com a mão na tranca. Treme. Lá fora, a voz chora o nome dela.`,
+ teste: { tipo: 'sorte', ok: 'cerco_segura', ko: 'cerco_aberta' } },
+
+cerco_segura: { cena: 'taberna', lugar: 'taberna', t:
+`Puxas Rosário para trás. Por uma fresta das tábuas vês a cara que está do outro lado da porta: o Bento, ou o que sobra dele, com os olhos comidos pelos caranguejos. Está a sorrir.
+
+Rosário encosta a testa ao teu ombro e não diz nada.`,
+ ch: [c('Continuar', 'cerco_janela')] },
+
+cerco_aberta: { cena: 'cerco', lugar: 'taberna', susto: 1, som: 'rugido', fx: { flag: 'rosarioFerida' }, t:
+`A tranca cai. A porta abre-se. O Bento entra com o mar atrás dele e abraça Rosário com tanta força que lhe ouves as costelas.`,
+ luta: { foes: [{ nome: 'Bento, o afogado', hab: 9, en: 9 }], win: 'cerco_aberta_ganha' } },
+
+cerco_aberta_ganha: { cena: 'taberna', lugar: 'taberna', t: `O Bento desfaz-se em água aos pés da mulher. Os pescadores voltam a fechar a porta. Rosário está no chão, com uma costela partida, a chorar sem barulho.`,
+ ch: [c('Continuar', 'cerco_janela')] },
+
+cerco_janela: { cena: 'taberna', lugar: 'taberna', som: 'vidro', susto: 1, tempo: 6, esgotou: 'cerco_tome_levado', t:
+`A janela ao lado da lareira rebenta. Um braço branco entra pelo buraco e agarra Tomé pelo pescoço. Outro braço, e outro. Estão a puxá-lo para fora.`,
+ ch: [c('Agarrar Tomé pelas pernas e puxar', 'cerco_tome_salvo'), c('Cortar os braços com a espada', 'cerco_tome_salvo2')] },
+
+cerco_tome_salvo: { cena: 'taberna', lugar: 'taberna', fx: { flag: 'tomeVivo', en: -1 }, t: `Puxas com toda a força. Tomé volta para dentro aos trambolhões, sem chapéu, com marcas roxas de dedos no pescoço. Um pescador prega uma tábua no buraco.`,
+ ch: [c('Continuar', 'cerco_resistir')] },
+
+cerco_tome_salvo2: { cena: 'taberna', lugar: 'taberna', fx: { flag: 'tomeVivo' }, som: 'espada', t: `A tua lâmina corta os braços pelo cotovelo. Caem no chão e ainda se mexem, a abrir e a fechar as mãos. Tomé cai para dentro, a tossir. Um pescador prega uma tábua no buraco.`,
+ ch: [c('Continuar', 'cerco_resistir')] },
+
+cerco_tome_levado: { cena: 'cerco', lugar: 'taberna', fx: { flag: 'tomeMorto', item: 'Dente de Tubarão' }, som: 'gemido', t:
+`Chegas tarde. Tomé desaparece pela janela como se o tivessem puxado para debaixo de água. Ouves-lo gritar lá fora, uma vez. Depois mais nada.
+
+No chão, junto à janela, ficou o colar dele: um dente de tubarão preso num fio de couro. Apanha-lo.`,
+ ch: [c('Continuar', 'cerco_resistir')] },
+
+cerco_resistir: { cena: 'cerco', lugar: 'taberna', t:
+`Agora empurram a porta todos ao mesmo tempo. As dobradiças gemem. A tranca começa a dobrar.`,
+ luta: { foes: [{ nome: 'Afogados à porta', hab: 8, en: 10 }], win: 'cerco_fim' },
+ ch_extra: [c('Despejar o sal na soleira', 'cerco_sal', { tem: 'Saco de Sal' }), c('Abrir a porta e varrê-los com o archote', 'cerco_fogo', { archote: 2 })] },
+
+cerco_sal: { cena: 'taberna', lugar: 'taberna', fx: { drop: 'Saco de Sal' }, t: `Despejas o sal todo ao longo da soleira. Do outro lado, os afogados param de empurrar, como se tivessem batido num muro.`,
+ ch: [c('Continuar', 'cerco_fim')] },
+
+cerco_fogo: { cena: 'cerco', lugar: 'taberna', fx: { archote: -2 }, t: `Abres a porta e varres a soleira com o archote. Os afogados recuam do fogo aos gritos, a fumegar. O archote encolhe e quase se apaga.`,
+ ch: [c('Continuar', 'cerco_fim')] },
+
+cerco_fim: { cena: 'taberna', lugar: 'taberna', fx: { atencao: 2, item: 'Arpão do Bento', flag: 'rosarioViva' }, t:
+`De repente, lá fora, tudo pára.
+
+Espreitas pelas tábuas. Os afogados estão todos de cabeça virada para o mesmo lado, para o alto da falésia, como cães a ouvir um assobio. Depois dão meia volta e descem para o mar, devagar, até a água os cobrir.
+
+— Ele chamou-os — diz Rosário. — Já sabe que estás aqui. Já te viu.
+
+Tira da parede o arpão do Bento e põe-to nas mãos.
+
+— Foi com isto que o meu homem matou um tubarão de seis metros. Crava-o naquele bruxo por mim.`,
+ ch: [c('Sair para a praça', 'praca')] },
+
+cerco_fuga: { cena: 'falesia', lugar: 'falesia', fx: { flag: 'fugiuCerco', atencao: 1 }, t:
+`Viras costas e corres pelo caminho da falésia. Atrás de ti, a porta da taberna fecha-se com estrondo. Depois ouves vidros a partir, gritos, o sino sempre a tocar.
+
+Não olhas para trás. Mas vais ouvir aqueles gritos durante muito tempo.`,
+ ch: [c('Continuar a subir', 'falesia1')] },
+
+/* ======================= III · OS CAMINHOS DO FAROL ======================= */
+falesia1: { cap: 'III · Os Caminhos do Farol', cena: 'falesia', lugar: 'falesia', zona: 'falesia', t:
 `O caminho da falésia é estreito e sobe aos ziguezagues entre urzes e pedras soltas. O vento empurra-te para o precipício como uma mão aberta. Lá em baixo, o mar ferve contra as rochas.
 
 A meio da subida, o caminho divide-se. Um carreiro de cabras desce para uma pequena praia, onde a boca negra de uma gruta engole e cospe as ondas. Outro, mais curto, corta direito pela charneca, onde o nevoeiro já se deitou.`,
- ch: [c('Continuar pelo caminho até ao farol', 'falesia2'), c('Atalhar pela charneca, através do nevoeiro', 'charneca'), c('Descer pelo carreiro até à praia', 'praia'), c('Voltar à aldeia', 'praca')] },
+ ch: [c('Continuar pelo caminho até ao farol', 'falesia2', { mare: 1 }), c('Atalhar pela charneca, através do nevoeiro', 'charneca'), c('Descer pelo carreiro até à praia', 'praia', { mare: 1 }), c('Voltar à aldeia', 'praca', { mare: 1 })] },
 
-charneca: { cena: 'avejao', lugar: 'charneca', t:
-`O nevoeiro fecha-se atrás de ti. Ao fim de poucos passos já não vês o mar nem a aldeia. Só ouves o vento nas urzes e o teu próprio coração.
+charneca: { cena: 'avejao', lugar: 'charneca', zona: 'falesia', tempo: 10, esgotou: 'charneca_perdido', t:
+`O nevoeiro fecha-se atrás de ti. Ao fim de poucos passos já não vês o mar nem a aldeia.
 
 Depois, muito perto, alguém diz o teu nome.
 
-É uma voz que conheces. Não sabes de onde, mas conheces. Uma voz de alguém de quem gostas e que não vês há muito tempo. Volta a chamar, mais baixo, quase a chorar.`,
- ch: [c('Responder à voz', 'avejao_resp'), c('Lembrar o aviso do barqueiro e seguir calado', 'charneca_aviso', { flag: 'aviso' }), c('Tapar os ouvidos e seguir calado', 'charneca_teste', { notFlag: 'aviso' }), c('Voltar para trás a correr', 'falesia1')] },
+É uma voz que conheces. Uma voz de alguém de quem gostas e que não vês há muito tempo. Volta a chamar, mais baixo, quase a chorar. Está mesmo atrás de ti.`,
+ ch: [c('Responder à voz', 'avejao_resp'), c('Lembrar o aviso do barqueiro e seguir calado', 'charneca_aviso'), c('Voltar para trás a correr', 'falesia1')] },
 
-charneca_aviso: { cena: 'avejao', lugar: 'charneca', t:
-`Mordes a língua e continuas a andar, de olhos no chão. A voz chama mais três vezes, cada vez mais zangada, e depois cala-se.
+charneca_aviso: { cena: 'avejao', lugar: 'charneca', t: `Mordes a língua e continuas a andar, de olhos no chão. A voz chama mais três vezes, cada vez mais zangada. Depois começa a rir.`,
+ teste: { tipo: 'sorte', ok: 'charneca_sai', ko: 'charneca_perdido' } },
 
-Quando o nevoeiro se abre, estás no alto da falésia, mesmo ao pé do farol. O atalho poupou-te tempo.`,
+charneca_sai: { cena: 'avejao', lugar: 'charneca', t: `O riso fica para trás. Quando o nevoeiro se abre, estás no alto da falésia, mesmo ao pé do farol. O atalho poupou-te tempo.`,
  ch: [c('Ir até à porta do farol', 'portafarol')] },
 
-charneca_teste: { cena: 'avejao', lugar: 'charneca', t: `Tapas os ouvidos com as mãos e andas. A voz não se cala. Chama-te pelo nome, e pelo nome que te davam em criança.`,
- teste: { tipo: 'sorte', ok: 'charneca_aviso', ko: 'avejao_resp' } },
+charneca_perdido: { cena: 'avejao', lugar: 'charneca', fxA: { mare: 2, en: -1 }, t:
+`Andas em círculos. Passas três vezes pela mesma pedra. O frio entra-te nos ossos e o tempo foge-te entre os dedos.
 
-avejao_resp: { cena: 'avejao', lugar: 'charneca', som: 'rugido', t:
-`— Sim? — respondes, sem querer.
+E então, à tua frente, o nevoeiro endurece.`,
+ ch: [c('Continuar', 'avejao_resp')] },
 
-O nevoeiro à tua frente endurece. Ergue-se até ao dobro da tua altura, ganha ombros e braços compridos que lhe chegam aos joelhos, e duas brasas pálidas no sítio dos olhos. É um AVEJÃO, a coisa que vive no nevoeiro e se alimenta de quem lhe responde.`,
- luta: { foes: [{ nome: 'Avejão', hab: 9, en: 8 }], win: 'avejao_ganho', fuga: 'falesia1', fugaApos: 2 } },
+avejao_resp: { cena: 'avejao', lugar: 'charneca', som: 'rugido', susto: 1, fx: { atencao: 1 }, t:
+`O nevoeiro ergue-se até ao dobro da tua altura, ganha ombros e braços compridos que lhe chegam aos joelhos, e duas brasas pálidas no sítio dos olhos. É um AVEJÃO, a coisa que vive no nevoeiro e se alimenta de quem lhe responde.`,
+ luta: { foes: [{ nome: 'Avejão', hab: 10, en: 10 }], win: 'avejao_ganho', fuga: 'falesia1', fugaApos: 2 } },
 
-avejao_ganho: { cena: 'avejao', lugar: 'charneca', fx: { en: -1 }, t:
-`A tua espada atravessa-o pela última vez e o avejão desfaz-se em fumo frio, que te entra pela boca e pelo nariz e te deixa a tremer.
-
-O nevoeiro levanta. Estás no alto da falésia, ao pé do farol.`,
+avejao_ganho: { cena: 'avejao', lugar: 'charneca', t: `A tua espada atravessa-o pela última vez e o avejão desfaz-se em fumo frio, que te entra pela boca e te deixa a tremer. O nevoeiro levanta. Estás no alto da falésia, ao pé do farol.`,
  ch: [c('Ir até à porta do farol', 'portafarol')] },
 
-falesia2: { cena: 'ninhos', lugar: 'ninhos', som: 'gaivota', t:
+falesia2: { cena: 'ninhos', lugar: 'ninhos', zona: 'falesia', som: 'gaivota', t:
 `Perto do topo, o chão fica branco de excrementos e o ar cheira a peixe podre. Ouves um bater de asas pesado, como lençóis molhados ao vento. Das rochas levantam-se três GAIVOTÕES, aves do tamanho de um homem, com bicos curvos como facas de esfolar.
 
 Há ninhos por toda a parte, e tu estás no meio deles.`,
  ch: [c('Desembainhar a espada e abrir caminho', 'gaivotas_luta'), c('Encostar-te à rocha e passar devagar', 'gaivotas_teste')] },
 
-gaivotas_teste: { cena: 'ninhos', lugar: 'ninhos', t: `Encostas as costas à rocha e avanças de lado, passo a passo, sem tirar os olhos das aves. Uma pedra solta debaixo do pé pode estragar tudo.`,
- teste: { tipo: 'hab', ok: 'gaivotas_ok', ko: 'gaivotas_luta' } },
+gaivotas_teste: { cena: 'ninhos', lugar: 'ninhos', t: `Encostas as costas à rocha e avanças de lado, sem tirar os olhos das aves. Uma pedra solta debaixo do pé pode estragar tudo.`,
+ teste: { tipo: 'hab', ok: 'gaivotas_ok', ko: 'gaivotas_queda' } },
 
 gaivotas_ok: { cena: 'ninhos', lugar: 'ninhos', t: `Os gaivotões seguem-te com os olhos amarelos, mas nenhum se mexe. Passas o último ninho e chegas ao alto da falésia sem uma beliscadura.`,
  ch: [c('Seguir até à porta do farol', 'portafarol')] },
 
-gaivotas_luta: { cena: 'ninhos', lugar: 'ninhos', som: 'gaivota', t: `Os gaivotões caem sobre ti aos gritos, um de cada vez, a picar e a bater as asas.`,
- luta: { foes: [{ nome: 'Primeiro Gaivotão', hab: 5, en: 4 }, { nome: 'Segundo Gaivotão', hab: 6, en: 4 }, { nome: 'Terceiro Gaivotão', hab: 5, en: 5 }], win: 'portafarol' } },
+gaivotas_queda: { cena: 'ninhos', lugar: 'ninhos', susto: 1, som: 'gaivota', tempo: 5, esgotou: 'morte_falesia', t:
+`A pedra solta-se. Escorregas. Ficas pendurado na beira da falésia pelas pontas dos dedos, com o mar a rugir lá em baixo. Um gaivotão aterra ao teu lado e começa a bicar-te as mãos.`,
+ ch: [c('Largar uma mão e agarrar o pé da ave', 'gaivotas_agarra'), c('Puxar-te para cima com toda a força', 'gaivotas_puxa')] },
 
-portafarol: { cena: 'farol', lugar: 'farol', t:
+gaivotas_agarra: { cena: 'ninhos', lugar: 'ninhos', fx: { en: -2 }, t: `Agarras-lhe a pata. A ave grita e bate as asas para fugir, e o impulso puxa-te para cima. Rolas para a rocha, a sangrar das mãos.`,
+ ch: [c('Levantar-te e lutar', 'gaivotas_luta')] },
+
+gaivotas_puxa: { cena: 'ninhos', lugar: 'ninhos', t: `Cravas as unhas na rocha e puxas.`,
+ teste: { tipo: 'hab', ok: 'gaivotas_luta', ko: 'morte_falesia' } },
+
+morte_falesia: { cena: 'falesia', lugar: 'ninhos', morte: 1, titulo: 'O mar levou-te', som: 'splash', t:
+`Os dedos escorregam. Cais de costas, a ver os gaivotões a ficar pequenos lá em cima, contra as nuvens. O mar recebe-te sem barulho nenhum.
+
+Amanhã, a Câmara de Porto Alto vai mandar outra pessoa.` },
+
+gaivotas_luta: { cena: 'ninhos', lugar: 'ninhos', som: 'gaivota', t: `Os gaivotões caem sobre ti aos gritos, um de cada vez, a picar e a bater as asas.`,
+ luta: { foes: [{ nome: 'Primeiro Gaivotão', hab: 7, en: 5 }, { nome: 'Segundo Gaivotão', hab: 7, en: 5 }, { nome: 'Terceiro Gaivotão', hab: 8, en: 6 }], win: 'portafarol' } },
+
+portafarol: { cena: 'farol', lugar: 'farol', zona: 'falesia', t:
 `O Farol do Corvo ergue-se à tua frente, branco e altíssimo, contra as nuvens que correm. Lá em cima, por trás dos vidros, vês uma luz esverdeada, fraca, a mexer-se devagar, como se alguém andasse lá dentro a passear com ela.
 
 A porta é de carvalho reforçado a ferro, e está fechada.`,
- ch: [c('Abrir a porta com a chave do corvo', 'base', { req: 'Chave do Farol' }), c('Atirar-te à porta com o ombro', 'porta_ombro'), c('Subir pela parede de fora com a corda', 'escalar', { req: 'Corda de Cânhamo' }), c('Descer até à praia da gruta', 'praia')] },
+ ch: [c('Abrir a porta com a chave do corvo', 'base', { req: 'Chave do Farol' }), c('Atirar-te à porta com o ombro', 'porta_ombro'), c('Subir pela parede de fora com a corda', 'escalar', { req: 'Corda de Cânhamo' }), c('Descer até à praia da gruta', 'praia', { mare: 1 })] },
 
-porta_ombro: { cena: 'farol', lugar: 'farol', som: 'porta', fxA: { en: -2 }, t: `Atiras-te contra a porta com toda a força. É como dar com o ombro numa falésia. Lá em cima, a luz verde pára de se mexer, como quem escuta. Perdes 2 pontos de Energia.`,
+porta_ombro: { cena: 'farol', lugar: 'farol', som: 'porta', fxA: { en: -2, atencao: 1 }, t: `Atiras-te contra a porta com toda a força. É como dar com o ombro numa falésia. Lá em cima, a luz verde pára de se mexer, como quem escuta. Perdes 2 pontos de Energia.`,
  ch: [c('Pensar noutra solução', 'portafarol')] },
 
 escalar: { cena: 'farol', lugar: 'farol', t: `Lanças o gancho da corda. Ao terceiro lance, prende-se no varandim de ferro lá em cima. Começas a subir pela parede molhada, com o vento a tentar arrancar-te dali.`,
@@ -956,44 +1276,103 @@ escalar: { cena: 'farol', lugar: 'farol', t: `Lanças o gancho da corda. Ao terc
 escalar_cai: { cena: 'farol', lugar: 'farol', som: 'queda', fx: { en: -4, drop: 'Corda de Cânhamo' }, t: `A meio da parede, a corda roça numa aresta e rebenta. Escorregas vários metros e bates no chão de lado. Perdes 4 pontos de Energia, e a corda ficou inútil.`,
  ch: [c('Levantar-te a custo', 'portafarol')] },
 
-/* ===================== CAPÍTULO III · A GRUTA AFOGADA ===================== */
-praia: { cap: 'III · A Gruta Afogada', cena: 'praia', lugar: 'praia', fxA: { mare: 1 }, t:
+/* ===== gruta ===== */
+praia: { cena: 'praia', lugar: 'praia', zona: 'falesia', t:
 `A praia é uma língua de areia escura que a maré já começou a comer. A entrada da Gruta Afogada é alta como uma igreja, e lá dentro a escuridão é total. De muito longe, do fundo, vem um som abafado: o mar a bater em metal, como um sino tocado debaixo de água.
 
 Não se vê um palmo à frente da cara. Sem luz, lá dentro estás cego.`,
- ch: [c('Acender a lanterna de furacão e entrar', 'gruta1', { req: 'Lanterna de Furacão' }), c('Entrar com o archote aceso', 'gruta1', { luzArchote: 1, notItem: 'Lanterna de Furacão' }), c('Entrar às escuras, às apalpadelas', 'perdido1', { semLuz: 1 }), c('Subir de volta pelo carreiro', 'falesia1')] },
+ alt: [{ mareMin: 9, t:
+`A maré já cobriu a praia. Das rochas onde estás, a entrada da Gruta Afogada é só uma boca meio submersa, onde o mar entra a rugir e sai a espumar. Para lá chegar, só a nado.
 
-gruta1: { cena: 'gruta', lugar: 'gruta', escuro: 1, t:
+Se esperasses mais um pouco, nem isso.` }],
+ ch: [c('Acender a lanterna de furacão e entrar', 'gruta1', { tem: 'Lanterna de Furacão', mareMax: 8 }), c('Entrar com o archote aceso', 'gruta1', { luzArchote: 1, semItem: 'Lanterna de Furacão', mareMax: 8 }), c('Entrar às escuras, às apalpadelas', 'perdido1', { semLuz: 1, mareMax: 8 }),
+  c('Nadar até à boca da gruta', 'nadar', { mareMin: 9 }), c('Atirar a moeda salgada ao mar', 'deitar_moeda_praia', { tem: 'Moeda Salgada', flag: 'sabeMoeda' }), c('Subir de volta pelo carreiro', 'falesia1', { mare: 1 })] },
+
+deitar_moeda_praia: { cena: 'praia', lugar: 'praia', fx: { drop: 'Moeda Salgada', atencao: 1 }, som: 'splash', t: `Atiras a moeda às ondas. O mar ferve num círculo branco e acalma. Lá no alto, a luz verde do farol pisca, como um olho que perdeu de vista o que estava a ver.`,
+ ch: [c('Voltar à beira da gruta', 'praia')] },
+
+nadar: { cena: 'praia', lugar: 'praia', susto: 1, t: `Atiras-te à água. O frio tira-te o ar. A corrente puxa-te para as rochas e depois para longe delas, como um brinquedo.`,
+ teste: { tipo: 'hab', ok: 'nadar_ok', ko: 'nadar_ko' } },
+
+nadar_ok: { cena: 'gruta', lugar: 'gruta', fx: { en: -2, archote: -99 }, t: `Entras na gruta empurrado por uma onda e bates contra uma rocha. Perdes 2 pontos de Energia. Se trazias um archote, a água apagou-o.`,
+ ch: [c('Continuar', 'gruta1')] },
+
+nadar_ko: { cena: 'praia', lugar: 'praia', fx: { en: -5 }, som: 'splash', t: `A onda atira-te contra os rochedos e depois devolve-te à praia, a vomitar água salgada. Perdes 5 pontos de Energia.`,
+ ch: [c('Tentar outra vez', 'nadar'), c('Desistir e subir o carreiro', 'falesia1', { mare: 1 })] },
+
+gruta1: { cena: 'gruta', lugar: 'gruta', zona: 'gruta', escuro: 1, t:
 `A tua luz desenha a gruta à tua volta. A água chega-te aos joelhos e está gelada. As paredes brilham de limos e de caranguejos pequenos que fogem da claridade.
 
-À esquerda, de um túnel, vem um canto doce de mulher. À direita, de outro túnel, vem o som do bronze. Em frente, a água fica negra e funda, num poço.
+À esquerda, de um túnel, vem um canto doce de mulher. À direita, de outro túnel, vem o som do bronze. Em frente, a água fica negra e funda, num poço. E ao fundo, presa a uma estaca, há uma coisa a boiar.
 
-E na rocha, mesmo ao lado da tua mão, alguém gravou um corvo pequeno, com o bico a apontar para o fundo da gruta. Sem luz, nunca o terias visto.`,
- ch: [c('Seguir o canto pelo túnel da esquerda', 'moira', { notFlag: 'moira' }), c('Seguir o som do bronze pelo túnel da direita', 'sino_sala', { notItem: 'Badalo de Bronze' }), c('Mergulhar no poço', 'poco', { notFlag: 'poco' }), c('Seguir as marcas do corvo', 'marcas'), c('Sair para a praia', 'praia')] },
+Na rocha, mesmo ao lado da tua mão, alguém gravou um corvo pequeno, com o bico a apontar para o fundo da gruta.`,
+ alt: [{ mareMin: 10, t:
+`A tua luz desenha a gruta à tua volta. A água chega-te ao peito e continua a subir. O túnel da esquerda já está quase cheio, e o poço desapareceu debaixo da água.
+
+À direita ainda se ouve o bronze. Ao fundo, presa a uma estaca, há uma coisa a boiar.
+
+Na rocha, mesmo ao lado da tua mão, alguém gravou um corvo pequeno, com o bico a apontar para o fundo da gruta. Despacha-te.` }],
+ ch: [c('Seguir o canto pelo túnel da esquerda', 'moira', { notFlag: 'moira', mareMax: 9, mare: 1 }), c('Seguir o som do bronze pelo túnel da direita', 'sino_sala', { semItem: 'Badalo de Bronze', mare: 1 }), c('Mergulhar no poço', 'poco', { notFlag: 'poco', mareMax: 9, mare: 1 }),
+  c('Aproximar-te da coisa que boia', 'corpo', { notFlag: 'corpo' }), c('Seguir as marcas do corvo', 'marcas'), c('Sair para a praia', 'praia', { mareMax: 9 })] },
+
+corpo: { cena: 'corpo', lugar: 'gruta', escuro: 1, fx: { flag: 'corpo', flag2: 'sabeMoeda' }, susto: 1, som: 'gemido', t:
+`É um homem, atado à estaca pela cintura, de cara para baixo na água. Viras-o com a ponta da espada.
+
+Conheces aquela cara. Inchada, verde, comida pelos peixes, mas conheces. É o barqueiro que te trouxe à ilha esta tarde.
+
+Só que este homem está morto há dias. Tem caranguejos nos bolsos e algas a crescer-lhe no cabelo.
+
+Então quem é que remou o teu barco?`,
+ alt: [{ tem: 'Moeda Salgada', t:
+`É um homem, atado à estaca pela cintura, de cara para baixo na água. Viras-o com a ponta da espada.
+
+Conheces aquela cara. Inchada, verde, comida pelos peixes, mas conheces. É o barqueiro que te trouxe à ilha esta tarde.
+
+Só que este homem está morto há dias. Tem caranguejos nos bolsos e algas a crescer-lhe no cabelo.
+
+Então quem é que remou o teu barco? E quem é que te deu a moeda que trazes no bolso, e que agora, de repente, está a ficar quente?` }],
+ ch: [c('Atirar a moeda salgada à água, já', 'deitar_moeda_gruta', { tem: 'Moeda Salgada' }), c('Revistar-lhe os bolsos', 'corpo_revista'), c('Afastar-te dali', 'gruta1')] },
+
+deitar_moeda_gruta: { cena: 'corpo', lugar: 'gruta', fx: { drop: 'Moeda Salgada', atencao: 1 }, som: 'splash', t: `Atiras a moeda para longe. Onde cai, a água ferve e borbulha durante muito tempo. Lá em cima, através de metros de rocha, ouves um grito abafado de raiva.`,
+ ch: [c('Voltar ao meio da gruta', 'gruta1')] },
+
+corpo_revista: { cena: 'corpo', lugar: 'gruta', tempo: 6, esgotou: 'corpo_puxado', fx: { ouro: 3 }, t:
+`No bolso do casaco encontras três moedas normais e uma tabela de marés molhada, com a data de hoje marcada a carvão: «maré grande · luz verde · um vivo».
+
+A mão do morto fecha-se no teu pulso.`,
+ ch: [c('Puxar o braço com toda a força', 'corpo_solta'), c('Cortar-lhe a mão', 'corpo_corta')] },
+
+corpo_solta: { cena: 'corpo', lugar: 'gruta', fx: { en: -1, flag: 'tabela' }, t: `Arrancas o braço. Os dedos do morto deixam-te marcas roxas no pulso. Ele não se mexe mais. Talvez nunca se tenha mexido.`,
+ ch: [c('Afastar-te dali', 'gruta1')] },
+
+corpo_corta: { cena: 'corpo', lugar: 'gruta', fx: { flag: 'tabela' }, som: 'espada', t: `Cortas-lhe a mão pelo pulso. Ela continua agarrada a ti, e tens de lhe abrir os dedos um a um. Atiras-a à água.`,
+ ch: [c('Afastar-te dali', 'gruta1')] },
+
+corpo_puxado: { cena: 'corpo', lugar: 'gruta', fx: { en: -4, flag: 'tabela' }, fxA: { mare: 1 }, som: 'splash', susto: 1, t:
+`O morto puxa-te para debaixo de água com uma força que nenhum vivo tem. Engoles mar. Debates-te no escuro até conseguires abrir-lhe os dedos e subir, a tossir, sem fôlego. Perdes 4 pontos de Energia.`,
+ ch: [c('Afastar-te dali', 'gruta1')] },
 
 marcas: { cena: 'gruta', lugar: 'gruta', escuro: 1, t:
-`Segues os corvos gravados de rocha em rocha. São pequenos e fáceis de perder. Ao fim de um corredor estreito, há dois: um aponta para uns degraus cortados na pedra, que sobem. O outro tem uma cruz riscada por cima e aponta para uma passagem baixa, de onde vem um cheiro doce e enjoativo, como flores a apodrecer.`,
- ch: [c('Subir os degraus para onde aponta o corvo', 'degraus', { flag: 'marcas' }), c('Entrar na passagem marcada com a cruz', 'ossario', { flag: 'marcas' }), c('Escolher um dos caminhos ao acaso', 'marcas_teste', { notFlag: 'marcas' })] },
+`Segues os corvos gravados de rocha em rocha. São pequenos e fáceis de perder. Ao fim de um corredor estreito há dois: um aponta para uns degraus cortados na pedra, que sobem. O outro tem uma cruz riscada por cima e aponta para uma passagem baixa, de onde vem um cheiro doce e enjoativo, como flores a apodrecer.`,
+ ch: [c('Subir os degraus para onde aponta o corvo', 'degraus', { flag: 'marcas', mare: 1 }), c('Entrar na passagem marcada com a cruz', 'ossario', { flag: 'marcas', mare: 1 }), c('Escolher um dos caminhos ao acaso', 'marcas_teste', { notFlag: 'marcas' })] },
 
 marcas_teste: { cena: 'gruta', lugar: 'gruta', t: `Não sabes o que as marcas querem dizer. Uma tem uma cruz, a outra não. Escolhes uma e esperas não te arrepender.`,
  teste: { tipo: 'sorte', ok: 'degraus', ko: 'ossario' } },
 
-perdido1: { cena: 'galerias', lugar: 'galerias', fxA: { mare: 1 }, t:
+perdido1: { cena: 'galerias', lugar: 'galerias', zona: 'gruta', fxA: { mare: 1 }, t:
 `Avanças às apalpadelas, com uma mão na rocha e a outra à frente da cara. A entrada da gruta desaparece atrás de ti ao fim de vinte passos. A água sobe-te até à cintura, depois desce.
 
 Já não sabes para que lado fica o mar. Algures à tua esquerda, uma coisa grande desliza na água sem fazer ondas.`,
  ch: [c('Seguir a parede da esquerda', 'perdido2'), c('Seguir o barulho de água a correr', 'perdido3')] },
 
-perdido2: { cena: 'galerias', lugar: 'galerias', som: 'rugido', fxA: { mare: 1 }, t:
+perdido2: { cena: 'galerias', lugar: 'galerias', som: 'rugido', fxA: { mare: 1 }, susto: 1, t:
 `A parede faz uma curva e acaba num lago. Ouves a água abrir-se. Uma coisa lisa e gelada enrola-se-te nas pernas, depois outra. ENGUIAS CEGAS, grossas como braços, de bocas cheias de dentes virados para dentro.
 
 Não as vês. Tens de lutar pelo tacto.`,
- luta: { foes: [{ nome: 'Enguias Cegas', hab: 7, en: 8 }], win: 'perdido4', ceguinho: 1 } },
+ luta: { foes: [{ nome: 'Enguias Cegas', hab: 8, en: 10 }], win: 'perdido4', cego: 1 } },
 
 perdido3: { cena: 'galerias', lugar: 'galerias', fxA: { mare: 1, en: -2 }, t:
-`Segues o barulho da água. O chão desaparece-te debaixo dos pés e cais num canal fundo. A corrente leva-te, bate-te contra as rochas, enfia-te por um túnel onde mal cabes, e deita-te noutro sítio igualmente escuro.
-
-Tossindo, sobes para uma pedra.`,
+`Segues o barulho da água. O chão desaparece-te debaixo dos pés e cais num canal fundo. A corrente leva-te, bate-te contra as rochas, enfia-te por um túnel onde mal cabes, e deita-te noutro sítio igualmente escuro. Perdes 2 pontos de Energia.`,
  ch: [c('Gatinhar para onde o ar parece mais fresco', 'perdido4')] },
 
 perdido4: { cena: 'galerias', lugar: 'galerias', fxA: { mare: 1 }, t:
@@ -1001,29 +1380,35 @@ perdido4: { cena: 'galerias', lugar: 'galerias', fxA: { mare: 1 }, t:
 
 Sais na mesma praia por onde entraste. A maré subiu muito. Perdeste tempo e forças a andar às voltas no escuro, e não encontraste nada.
 
-Lá dentro, sem luz, não há caminho. Precisas de uma lanterna, ou pelo menos de um archote.`,
+Lá dentro, sem luz, não há caminho.`,
  ch: [c('Recuperar o fôlego na praia', 'praia')] },
 
-apagou: { cena: 'galerias', lugar: 'galerias', t:
+apagou: { cena: 'galerias', lugar: 'galerias', susto: 1, t:
 `A chama do archote encolhe, fica azul, estala e apaga-se. O escuro cai-te em cima como água.
 
-Ficas parado, à escuta. Ouves a tua respiração, o mar ao longe, e uma coisa a mexer-se na água, perto.`,
- ch: [c('Tentar encontrar o caminho de volta às apalpadelas', 'perdido1')] },
+Ficas parado, à escuta. Ouves a tua respiração, o mar ao longe, e uma coisa a mexer-se na água, perto. Muito perto.`,
+ ch: [c('Tentar encontrar o caminho às apalpadelas', 'perdido1')] },
 
 moira: { cena: 'moira', lugar: 'moira', fx: { flag: 'moira' }, t:
 `O túnel abre-se numa câmara onde a água é limpa e verde-clara, iluminada de baixo como se houvesse sol no fundo do mar. Sentada numa pedra, uma mulher penteia cabelos que lhe descem até à água. Tem a pele cor de pérola e, em vez de pernas, uma cauda de escamas: é uma MOIRA DAS ÁGUAS.
 
 Canta, e o canto puxa-te para ela como uma corda ao pescoço. Dás um passo para a água sem querer. Depois outro.`,
- ch: [c('Agarrar o búzio que trazes ao peito', 'moira_amuleto', { req: 'Amuleto de Búzio' }), c('Cravar as unhas nas mãos e resistir ao canto', 'moira_teste', { notItem: 'Amuleto de Búzio' })] },
+ ch: [c('Agarrar o búzio que trazes ao peito', 'moira_amuleto', { req: 'Amuleto de Búzio' }), c('Cravar as unhas nas mãos e resistir ao canto', 'moira_teste', { semItem: 'Amuleto de Búzio' })] },
 
 moira_teste: { cena: 'moira', lugar: 'moira', t: `Cravas as unhas nas palmas e tentas pensar em qualquer outra coisa: no frio, no farol, no barqueiro. O canto continua, cada vez mais doce.`,
  teste: { tipo: 'sorte', ok: 'moira_resiste', ko: 'moira_cai' } },
 
-moira_cai: { cena: 'moira', lugar: 'moira', som: 'splash', fx: { en: -4, mare: 2 }, t:
-`Quando dás por ti, estás com água pelo pescoço e a moira estende-te os braços. Arrancas-te dali aos tropeções, a tossir água salgada. Ela ri-se e mergulha.
+moira_cai: { cena: 'moira', lugar: 'moira', som: 'splash', susto: 1, tempo: 5, esgotou: 'morte_moira', t:
+`Quando dás por ti, estás com água pelo pescoço e a moira tem os braços à volta do teu pescoço. Está a puxar-te para o fundo. Ainda está a cantar.`,
+ ch: [c('Morder-lhe o braço', 'moira_solta'), c('Bater-lhe com o punho da espada', 'moira_solta')] },
 
-Perdeste forças e tempo: menos 4 de Energia, e a maré subiu mais 2.`,
+moira_solta: { cena: 'moira', lugar: 'moira', fx: { en: -4 }, fxA: { mare: 1 }, t: `Ela solta-te com um guincho. Arrancas-te dali aos tropeções, a tossir água salgada. Ela ri-se e mergulha. Perdes 4 pontos de Energia.`,
  ch: [c('Voltar à entrada da gruta', 'gruta1')] },
+
+morte_moira: { cena: 'moira', lugar: 'moira', morte: 1, titulo: 'O canto da moira', t:
+`O canto é tão bonito que deixas de ter vontade de lutar. A água fecha-se por cima da tua cabeça e é morna, e a moira canta-te ao ouvido até ao fim.
+
+Dizem que, nas noites de maré grande, ainda se ouvem duas vozes a cantar na Gruta Afogada.` },
 
 moira_resiste: { cena: 'moira', lugar: 'moira', t: `O canto escorrega-te pelos ouvidos sem te prender. A moira cala-se e olha-te com curiosidade, inclinando a cabeça como uma gaivota.`,
  ch: [c('Ouvir o que ela tem para dizer', 'moira_fala')] },
@@ -1034,100 +1419,139 @@ moira_amuleto: { cena: 'moira', lugar: 'moira', som: 'sorte', t:
 — É do Joaquim — diz. — Ele cantava melhor do que eu. Então podemos conversar.`,
  ch: [c('Ouvir o que ela tem para dizer', 'moira_fala')] },
 
-moira_fala: { cena: 'moira', lugar: 'moira', t:
-`— O Vidal envenenou-me as águas — diz ela. — Desde que voltou, os peixes fogem e os mortos não descansam. Guarda as almas deles em frascos, no ossário, atrás da marca do corvo com a cruz. Partir os frascos liberta-as. Mas o ossário tem um guarda.
+moira_fala: { cena: 'moira', lugar: 'moira', fx: { flag: 'dica_moira' }, t:
+`— O Vidal envenenou-me as águas — diz ela. — Era barqueiro desta ilha, há muito tempo. Afogou-se e não quis ficar afogado. Agora rema quem lhe apetece para onde lhe apetece.
 
 Penteia o cabelo devagar.
 
-— O sino desfaz-lhe a pele. O nome desfaz-lhe a vontade. Se o vais enfrentar, ajudo-te. Mas no mar nada se dá de graça. Dá-me alguma coisa que brilhe.`,
- fx: { flag: 'dica_moira' },
+— Esta noite precisa de um vivo. Um vivo que suba ao farol pelo seu pé, na maré grande. Com a alma desse vivo, a luz verde acende-se e ele não volta a morrer. Pensa nisso quando lá chegares.
+
+Estende a mão.
+
+— Ajudo-te. Mas no mar nada se dá de graça. Dá-me alguma coisa que brilhe.`,
  ch: [c('Dar-lhe 5 moedas', 'moira_perola', { ouro: 5 }), c('Dar-lhe o Dente de Tubarão', 'moira_perola2', { req: 'Dente de Tubarão' }), c('Recusar e voltar à entrada da gruta', 'gruta1')] },
 
-moira_perola: { cena: 'moira', lugar: 'moira', som: 'sorte', fx: { ouro: -5, item: 'Pérola Negra' }, t:
-`A moira morde uma moeda, sorri e esconde as outras no cabelo. Depois entrega-te uma pérola negra do tamanho de um ovo de pomba.
-
-— Quando estiveres às portas da morte, parte-a entre os dentes.`,
+moira_perola: { cena: 'moira', lugar: 'moira', som: 'sorte', fx: { ouro: -5, item: 'Pérola Negra' }, t: `A moira morde uma moeda, sorri e esconde as outras no cabelo. Depois entrega-te uma pérola negra do tamanho de um ovo de pomba.\n\n— Quando estiveres às portas da morte, parte-a entre os dentes.`,
  ch: [c('Guardar a pérola e voltar à entrada', 'gruta1')] },
 
-moira_perola2: { cena: 'moira', lugar: 'moira', som: 'sorte', fx: { drop: 'Dente de Tubarão', item: 'Pérola Negra' }, t:
-`A moira examina o dente contra a luz e passa-o pelo cabelo como um pente. Fica satisfeita e entrega-te uma pérola negra do tamanho de um ovo de pomba.
-
-— Quando estiveres às portas da morte, parte-a entre os dentes.`,
+moira_perola2: { cena: 'moira', lugar: 'moira', som: 'sorte', fx: { drop: 'Dente de Tubarão', item: 'Pérola Negra' }, t: `A moira examina o dente contra a luz e passa-o pelo cabelo como um pente. Fica satisfeita e entrega-te uma pérola negra do tamanho de um ovo de pomba.\n\n— Quando estiveres às portas da morte, parte-a entre os dentes.`,
  ch: [c('Guardar a pérola e voltar à entrada', 'gruta1')] },
 
-sino_sala: { cena: 'sino', lugar: 'sino', escuro: 1, som: 'garras', t:
+sino_sala: { cena: 'sino', lugar: 'sino', escuro: 1, som: 'garras', susto: 1, t:
 `O túnel desce até uma câmara redonda. No centro, meio enterrado na areia e coberto de cracas, está um sino de bronze maior do que tu: o Sino de Santa Bárbara. O badalo ainda lá está dentro.
 
-Mas a areia à volta mexe-se. Primeiro surgem duas antenas compridas como chicotes. Depois duas pinças do tamanho de portas. Depois uma carapaça cor de ferrugem, cheia de espinhos. O CARANGUEJO-REI sai da areia e põe-se entre ti e o sino.`,
- luta: { foes: [{ nome: 'Caranguejo-Rei', hab: 9, en: 10 }], win: 'sino_ganho', fuga: 'gruta1', fugaApos: 3 } },
+Mas a areia à volta mexe-se. Primeiro surgem duas antenas compridas como chicotes. Depois duas pinças do tamanho de portas. O CARANGUEJO-REI sai da areia e põe-se entre ti e o sino.`,
+ luta: { foes: [{ nome: 'Caranguejo-Rei', hab: 10, en: 12 }], win: 'sino_ganho', fuga: 'gruta1', fugaApos: 2 } },
 
-sino_ganho: { cena: 'sino', lugar: 'sino', som: 'sinogrande', fx: { item: 'Badalo de Bronze' }, t:
-`O caranguejo tomba de lado e as patas param de se mexer. Rastejas para debaixo do sino e, com muito esforço, soltas o badalo de bronze, pesado como uma maça de guerra.
+sino_ganho: { cena: 'sino', lugar: 'sino', som: 'sinogrande', fx: { item: 'Badalo de Bronze', atencao: 2 }, t:
+`O caranguejo tomba de lado e as patas param. Rastejas para debaixo do sino e soltas o badalo de bronze, pesado como uma maça de guerra.
 
-Quando lhe tocas, sentes-o vibrar, como se se lembrasse de todas as horas que tocou. Lá em cima, muito longe, julgas ouvir alguém gritar.`,
+Ao arrancá-lo, o badalo bate na boca do sino, uma única vez. O som enche a gruta inteira e sobe pela rocha.
+
+Lá em cima, muito longe, alguém grita. E logo a seguir, ouves correntes.`,
  ch: [c('Voltar à entrada da gruta', 'gruta1')] },
 
 poco: { cena: 'gruta', lugar: 'poco', escuro: 1, fx: { flag: 'poco' }, t: `Pousas a luz numa pedra, respiras fundo e mergulhas no poço negro. A água aperta-te as têmporas. Lá em baixo, a claridade mal chega.`,
  teste: { tipo: 'hab', ok: 'poco_ok', ko: 'poco_ko' } },
 
-poco_ok: { cena: 'gruta', lugar: 'poco', som: 'chave', fx: { ouro: 12, item: 'Óleo de Baleia' }, t:
-`No fundo, entre ossos e madeira podre, encontras um baú de marinheiro. Abres a tampa à força. Doze moedas de ouro, e uma bilha de óleo de baleia, ainda selada. Alguém a guardou aqui para um dia de necessidade.
-
-Sobes à superfície a rir.`,
+poco_ok: { cena: 'gruta', lugar: 'poco', som: 'chave', fx: { ouro: 8, item: 'Óleo de Baleia' }, t: `No fundo, entre ossos e madeira podre, encontras um baú de marinheiro. Lá dentro, oito moedas de ouro e uma bilha de óleo de baleia, ainda selada.\n\nSobes à superfície a rir.`,
  ch: [c('Voltar à entrada da gruta', 'gruta1')] },
 
-poco_ko: { cena: 'gruta', lugar: 'poco', som: 'splash', fx: { en: -3 }, t: `Uma corrente fria agarra-te as pernas e puxa-te para baixo. Bates com a cabeça numa rocha e sobes à tona a sangrar. Perdes 3 pontos de Energia.`,
+poco_ko: { cena: 'gruta', lugar: 'poco', som: 'splash', susto: 1, tempo: 5, esgotou: 'morte_poco', t: `Uma corrente fria agarra-te as pernas e puxa-te para baixo. Bates com a cabeça numa rocha. Não sabes onde é cima.`,
+ ch: [c('Nadar na direção das bolhas', 'poco_sobe'), c('Nadar na direção da luz', 'poco_sobe')] },
+
+poco_sobe: { cena: 'gruta', lugar: 'poco', fx: { en: -3 }, t: `Rompes a superfície a arfar, com sangue a escorrer-te pela testa. Perdes 3 pontos de Energia.`,
  ch: [c('Sair do poço', 'gruta1')] },
 
-ossario: { cena: 'ossario', lugar: 'ossario', escuro: 1, som: 'ameaca', fxA: { mare: 1 }, t:
+morte_poco: { cena: 'galerias', lugar: 'poco', morte: 1, titulo: 'O fundo do poço', t: `Esperaste demasiado. O ar acaba. A última coisa que vês é a tua luz, lá em cima, cada vez mais pequena, como uma estrela a apagar-se.` },
+
+ossario: { cena: 'ossario', lugar: 'ossario', escuro: 1, som: 'ameaca', susto: 1, t:
 `A passagem dá para uma sala comprida, escavada na rocha. As paredes estão cheias de nichos, e os nichos estão cheios de frascos de vidro verde, centenas deles. Dentro de cada frasco brilha uma luzinha pálida que bate contra o vidro como uma traça.
 
 São almas. Algumas chamam por nomes.
 
-Ao fundo da sala, o que tomaste por um monte de coral mexe-se. Levanta-se. É uma figura enorme, curvada, de braços que lhe chegam ao chão, com a cabeça e os ombros cobertos de ramos de coral. O GUARDIÃO DE CORAL abre dois olhos que brilham como os frascos.`,
- luta: { foes: [{ nome: 'Guardião de Coral', hab: 9, en: 12 }], win: 'ossario_ganho', fuga: 'gruta1', fugaApos: 3 } },
+Ao fundo da sala, o que tomaste por um monte de coral mexe-se. Levanta-se. É uma figura enorme, curvada, de braços que lhe chegam ao chão, com a cabeça coberta de ramos de coral. O GUARDIÃO DE CORAL abre dois olhos que brilham como os frascos.`,
+ luta: { foes: [{ nome: 'Guardião de Coral', hab: 10, en: 12 }], win: 'ossario_ganho', fuga: 'gruta1', fugaApos: 2 } },
 
-ossario_ganho: { cena: 'ossario', lugar: 'ossario', som: 'sinogrande', fx: { flag: 'almas', sorteMax: 1 }, t:
-`O guardião desfaz-se num monte de coral partido. Começas a partir os frascos, um a um. Cada luzinha que sai sobe ao teto, dá uma volta à tua cabeça e desaparece pela rocha, a caminho do mar.
+ossario_ganho: { cena: 'ossario', lugar: 'ossario', som: 'sinogrande', fx: { flag: 'almas', sorteMax: 1, atencao: 2 }, t:
+`O guardião desfaz-se num monte de coral partido. Começas a partir os frascos, um a um. Cada luzinha que sai sobe ao teto, dá uma volta à tua cabeça e desaparece pela rocha.
 
-Do último frasco sai uma luz que não se vai embora. Fica à tua frente e ganha a forma de um rapaz.
+Do último frasco sai uma luz que não se vai embora. Ganha a forma de um rapaz.
 
-— Sou o Joaquim. Diz à minha mãe que eu estou bem. E ouve: ele não tem medo da espada. Tem medo de ser lembrado. Quando estiveres diante dele, nós vamos estar contigo.
+— Sou o Joaquim. Diz à minha mãe que eu estou bem. E ouve: ele não tem medo da espada. Tem medo de ser lembrado. Quando estiveres diante dele, chama-nos.
 
-A Sorte volta toda ao teu corpo.`,
- ch: [c('Seguir pela passagem do outro lado do ossário', 'degraus')] },
+A Sorte volta toda ao teu corpo. Mas o barulho dos vidros correu pela rocha acima. Alguém, lá em cima, sabe o que fizeste.`,
+ ch: [c('Seguir pela passagem do outro lado', 'degraus', { mare: 1 })] },
 
-degraus: { cena: 'gruta', lugar: 'gruta', escuro: 1, som: 'porta', fxA: { mare: 1 }, t:
+degraus: { cena: 'gruta', lugar: 'gruta', zona: 'gruta', escuro: 1, som: 'porta', t:
 `Os degraus sobem em caracol por dentro da rocha, escorregadios de limo. Contas cento e doze até chegares a um alçapão de madeira por cima da tua cabeça.
 
 Empurras com o ombro. Cede.`,
  ch: [c('Entrar no farol', 'base')] },
 
-/* ===================== CAPÍTULO IV · A TORRE ===================== */
-base: { cap: 'IV · A Torre', cena: 'torre', lugar: 'torre', t:
+/* ======================= IV · A TORRE ======================= */
+base: { cap: 'IV · A Torre', cena: 'torre', lugar: 'torre', zona: 'torre', t:
 `Estás na base do farol. Uma escada de ferro em caracol sobe pelo centro da torre e perde-se no escuro, duzentos degraus acima. Ao lado, uma porta pequena dá para a arrecadação, e no chão está o alçapão para a gruta.
 
 Lá de cima vem um cheiro a algas podres e, de vez em quando, um gemido humano. A escada vibra, como se alguém estivesse a andar nela.`,
- ch: [c('Subir a escada de ferro', 'escada'), c('Entrar na arrecadação', 'arrecad', { notFlag: 'arrecad' }), c('Descer pelo alçapão até à gruta', 'gruta1', { luz: 1 }), c('Sair pela porta principal', 'portafarol')] },
+ ch: [c('Subir a escada de ferro', 'escada', { mare: 1 }), c('Entrar na arrecadação', 'arrecad', { notFlag: 'arrecad' }), c('Descer pelo alçapão até à gruta', 'gruta1', { luz: 1 }), c('Sair pela porta principal', 'portafarol')] },
 
-arrecad: { cena: 'torre', lugar: 'torre', fx: { flag: 'arrecad', prov: 2 }, t:
-`Entre redes, latas de tinta e um barril de óleo rachado e vazio, encontras um saco com pão duro e chouriço. Ganhas 2 Provisões.
+arrecad: { cena: 'torre', lugar: 'torre', fx: { flag: 'arrecad', prov: 1 }, t:
+`Entre redes, latas de tinta e um barril de óleo rachado e vazio, encontras um saco com pão duro. Ganhas 1 Provisão.
 
 Num canto há um pipo com um dedo de óleo no fundo. Não chega para uma noite inteira, mas talvez chegue para umas horas, se for preciso.`,
  ch: [c('Voltar à base da torre', 'base')] },
 
-escada: { cena: 'torre', lugar: 'torre', som: 'sopro', fxA: { mare: 1 }, t:
+escada: { cena: 'torre', lugar: 'torre', som: 'sopro', susto: 1, t:
 `Sobes. Os degraus de ferro tremem a cada passo e o eco repete-os lá em cima, um bocadinho atrasado, como se alguém subisse a imitar-te.
 
 A meio da torre, a escada passa por uma janela estreita. Do vidro desprende-se uma sombra húmida, da forma de um homem, feita de sal e de espuma: uma SOMBRA SALGADA. Onde te toca, a pele arde e racha.`,
- luta: { foes: [{ nome: 'Sombra Salgada', hab: 8, en: 7 }], win: 'patamar' } },
+ luta: { foes: [{ nome: 'Sombra Salgada', hab: 8, en: 8 }], win: 'escada_fim' } },
+
+escada_fim: { cena: 'torre', lugar: 'torre', t: `A sombra desfaz-se em sal, que cai pela escada abaixo a tilintar como areia em vidro. Ficas um momento parado, a ouvir. Silêncio.`,
+ alt: [{ notFlag: 'recolhedorMorto', t: `A sombra desfaz-se em sal, que cai pela escada abaixo a tilintar como areia em vidro. Ficas um momento parado, a ouvir.
+
+Lá em baixo, a porta da torre abre-se com estrondo.` }],
+ ch: [c('Continuar', 'torre_caca1', { notFlag: 'recolhedorMorto' }), c('Continuar a subir', 'patamar', { flag: 'recolhedorMorto' })] },
+
+torre_caca1: { cena: 'torre', lugar: 'torre', som: 'correntes', susto: 1, tempo: 7, esgotou: 'torre_apanhado', caca: 1, t:
+`Correntes. Arrastam-se nos degraus de ferro, lá em baixo, e começam a subir. Uma luz verde sobe pela parede da torre, a girar com a escada.
+
+É o RECOLHEDOR. E desta vez sabe exatamente onde estás.`,
+ ch: [c('Subir a correr', 'torre_caca2'), c('Esconder-te no vão da janela', 'torre_esconde'), c('Despejar a água benta pela escada abaixo', 'torre_agua', { tem: 'Água Benta' })] },
+
+torre_esconde: { cena: 'torre', lugar: 'torre', t: `Encolhes-te no vão da janela, contra o vidro gelado. A luz verde sobe. As correntes passam a um palmo de ti.`,
+ teste: { tipo: 'sorte', ok: 'torre_passou', ko: 'torre_apanhado' } },
+
+torre_passou: { cena: 'torre', lugar: 'torre', t: `O Recolhedor passa por ti e continua a subir. Vai à tua frente. Agora está entre ti e o topo da torre.\n\nSobes atrás dele, devagar, degrau a degrau.`,
+ ch: [c('Continuar', 'torre_caca3')] },
+
+torre_agua: { cena: 'torre', lugar: 'torre', som: 'sopro', fx: { drop: 'Água Benta' }, t: `Despejas o cantil pela espiral abaixo. Ouve-se um chiado enorme e um grito sem voz. A luz verde recua, cai, apaga-se lá no fundo. Tens alguns minutos de avanço.`,
+ ch: [c('Subir', 'patamar')] },
+
+torre_caca2: { cena: 'torre', lugar: 'torre', som: 'queda', susto: 1, t: `Sobes os degraus de dois em dois. A meio da volta, um degrau ferrugento parte-se debaixo do teu pé. Ficas pendurado pelo corrimão, com as pernas a dar a dar no vazio.`,
+ teste: { tipo: 'hab', ok: 'torre_caca3', ko: 'torre_degrau' } },
+
+torre_degrau: { cena: 'torre', lugar: 'torre', fx: { en: -3 }, t: `Consegues içar-te, mas bates com o joelho no ferro com toda a força. Perdes 3 pontos de Energia. As correntes estão mais perto.`,
+ ch: [c('Continuar a subir', 'torre_caca3')] },
+
+torre_caca3: { cena: 'torre', lugar: 'torre', som: 'correntes', tempo: 6, esgotou: 'torre_apanhado', caca: 1, t:
+`Chegas ao último patamar. A porta da sala da lanterna está fechada à chave. Atrás de ti, o gancho raspa nos degraus. A luz verde já te ilumina as costas.`,
+ ch: [c('Abrir a porta com a chave do corvo', 'patamar', { tem: 'Chave do Farol' }), c('Arrombar a porta com o ombro', 'torre_arromba'), c('Virar-te e enfrentá-lo', 'torre_apanhado')] },
+
+torre_arromba: { cena: 'torre', lugar: 'torre', som: 'porta', t: `Atiras-te contra a porta uma vez, duas.`,
+ teste: { tipo: 'hab', ok: 'patamar', ko: 'torre_apanhado' } },
+
+torre_apanhado: { cena: 'recolhedor', lugar: 'torre', som: 'rugido', susto: 1, fx: { en: -2 }, t: `O gancho apanha-te pelo casaco e atira-te contra a parede. O RECOLHEDOR ocupa a escada inteira. Não há para onde fugir.`,
+ luta: { foes: [{ nome: 'Recolhedor', hab: 11, en: 14 }], win: 'torre_recolhedor_morto' } },
+
+torre_recolhedor_morto: { cena: 'torre', lugar: 'torre', som: 'sinogrande', fx: { flag: 'recolhedorMorto', atencaoZero: 1 }, t: `O Recolhedor cai pela escada abaixo, volta após volta, e a lanterna verde parte-se. Dezenas de luzinhas sobem pela torre e saem pelas janelas. Ficas a arfar, encostado à parede.`,
+ ch: [c('Subir o resto da escada', 'patamar')] },
 
 patamar: { cena: 'torre', lugar: 'torre', t:
-`A sombra desfaz-se em sal, que cai pela escada abaixo a tilintar como areia em vidro.
+`Os últimos degraus. A porta da sala da lanterna está entreaberta e deixa sair uma luz verde e doentia. Ouves uma voz de homem, calma e agradável, a cantarolar uma cantiga de pescadores. E ouves correntes a arrastar no chão.
 
-Os últimos degraus. Por cima de ti, uma porta entreaberta deixa sair uma luz verde e doentia. Ouves uma voz de homem, calma e agradável, a cantarolar. E ouves correntes a arrastar no chão.
-
-Encostas-te à parede e respiras fundo. É agora.`,
+Conheces aquela voz. Já a ouviste esta tarde.`,
  ch: [c('Entrar na sala da lanterna', 'topo')] },
 
 galeria: { cena: 'lanterna', lugar: 'lanterna', t:
@@ -1136,30 +1560,45 @@ galeria: { cena: 'lanterna', lugar: 'lanterna', t:
 Com o uivo do vento, não te ouviu chegar.`,
  ch: [c('Bater com o badalo de bronze no varandim', 'vidal_sino', { req: 'Badalo de Bronze' }), c('Partir o vidro e atacá-lo pelas costas', 'vidal_costas')] },
 
-/* ===================== CAPÍTULO V · DOM VIDAL ===================== */
-topo: { cap: 'V · O Bruxo das Marés', cena: 'lanterna', lugar: 'lanterna', som: 'ameaca', t:
-`A sala da lanterna é redonda e toda envidraçada. A grande lente do farol está coberta de uma gosma negra, e a luz verde vem de baixo dela. Acorrentado a um pilar, Mestre Anselmo, magro e de olhos fundos, levanta a cabeça e abana-a devagar, a pedir-te que fujas.
+/* ======================= V · O BRUXO DAS MARÉS ======================= */
+topo: { cap: 'V · O Bruxo das Marés', cena: 'lanterna', lugar: 'lanterna', som: 'ameaca', susto: 1, t:
+`A sala da lanterna é redonda e toda envidraçada. A grande lente do farol está coberta de uma gosma negra, e a luz verde vem de baixo dela. Acorrentado a um pilar, Mestre Anselmo levanta a cabeça e abana-a devagar, a pedir-te que fujas.
 
-Junto à lente, de costas, está um homem alto com uma capa que brilha como pele de enguia. Vira-se. Tem a cara bonita e lisa demais, e olhos sem pálpebras, de peixe. À volta do pescoço, onde devia ter colarinho, abrem-se e fecham-se barbatanas.
+Junto à lente está um homem de costas. Tira o chapéu de oleado e vira-se, e tu reconheces a cara. É o barqueiro que te trouxe à ilha.
 
-— Chegas tarde para salvar alguém — diz DOM VIDAL, com uma voz simpática. — Mas a tempo de fazermos negócio.`,
- ch: [c('Bater com o badalo de bronze na grade de ferro', 'vidal_sino', { req: 'Badalo de Bronze' }), c('Chamá-lo pelo nome verdadeiro: Vidal Escamado', 'vidal_nome', { flag: 'nome', notFlag: 'nomeado' }), c('Atacá-lo de espada em punho', 'vidal_luta'), c('Ouvir a proposta dele', 'vidal_proposta')] },
+Só que agora não tem cara de barqueiro. A pele é lisa demais, os olhos não têm pálpebras, e à volta do pescoço abrem-se e fecham-se guelras.
+
+— Obrigado por teres vindo — diz DOM VIDAL. — Fui eu que remei. Precisava de alguém vivo, que subisse ao farol pelo seu pé, na maré grande. E tu vieste, tão obediente.
+
+Aponta para a lente.
+
+— Falta pouco. Quando a maré encher, a luz verde acende-se com a tua alma, e eu fico vivo outra vez.`,
+ ch: [c('Bater com o badalo de bronze na grade de ferro', 'vidal_sino', { req: 'Badalo de Bronze' }), c('Chamá-lo pelo nome verdadeiro: Vidal Escamado', 'vidal_nome', { flag: 'nome', notFlag: 'nomeado' }),
+  c('Atacá-lo de espada em punho', 'vidal_luta', { semItem: 'Moeda Salgada' }), c('Atacá-lo de espada em punho', 'vidal_moeda', { tem: 'Moeda Salgada' }), c('Ouvir a proposta dele', 'vidal_proposta')] },
+
+vidal_moeda: { cena: 'lanterna', lugar: 'lanterna', som: 'sopro', susto: 1, fx: { en: -4, drop: 'Moeda Salgada' }, t:
+`Dás um passo para ele e o teu corpo pára. A moeda no teu bolso está em brasa. Sentes-a a queimar-te a perna através do pano.
+
+— Aceitaste o meu troco — diz Vidal, a sorrir. — Uma coisa minha que anda contigo. Não me podes ferir enquanto a tiveres.
+
+Arrancas a moeda do bolso com a mão a fumegar e atira-la pela janela. Perdes 4 pontos de Energia. Vidal deixa de sorrir.`,
+ ch: [c('Atacá-lo agora', 'vidal_luta')] },
 
 vidal_nome: { cena: 'lanterna', lugar: 'lanterna', som: 'sopro', fx: { flag: 'nomeado' }, t:
-`— Vidal Escamado — dizes. — Afogado em 1789.
+`— Vidal Escamado — dizes. — Barqueiro desta ilha. Afogado em 1789.
 
 O sorriso dele estala, literalmente: uma racha abre-se-lhe da boca até à orelha, e por baixo vê-se pele de peixe, cinzenta e velha. Recua um passo, depois outro.
 
 — Quem te disse isso? Quem te...
 
 Pela primeira vez, tem medo. Mas um bicho com medo ainda morde.`,
- ch: [c('Bater com o badalo na grade enquanto ele hesita', 'vidal_sino', { req: 'Badalo de Bronze' }), c('Atacar agora que ele está fraco', 'vidal_luta_nome')] },
+ ch: [c('Bater com o badalo na grade enquanto ele hesita', 'vidal_sino', { req: 'Badalo de Bronze' }), c('Atacar agora que ele está fraco', 'vidal_luta_nome', { semItem: 'Moeda Salgada' }), c('Atacar agora que ele está fraco', 'vidal_moeda', { tem: 'Moeda Salgada' })] },
 
 vidal_proposta: { cena: 'lanterna', lugar: 'lanterna', t:
-`— Os barcos que se afundarem esta noite trazem prata do Brasil nos porões — diz Vidal, e a voz dele escorre como mel. — A prata é tua. Eu só quero os homens. Basta desceres a escada e esqueceres que cá vieste.
+`— Não precisa de ser a tua alma — diz Vidal, e a voz dele escorre como mel. — Pode ser a do Anselmo. Ele é velho, já viveu. Tu desces a escada, e eu dou-te a prata que vem nos porões da frota que se vai afundar daqui a pouco. Ninguém vai saber.
 
-Enquanto fala, as palavras dele ficam cada vez mais doces, e tu dás contigo a pensar que talvez não seja má ideia. Afinal, não conheces aqueles homens.`,
- ch: [c('Deixar o búzio limpar-te a cabeça e recusar', 'vidal_luta', { req: 'Amuleto de Búzio' }), c('Lutar contra a voz dele e recusar', 'vidal_encanto', { notItem: 'Amuleto de Búzio' }), c('Aceitar o negócio', 'fim_mau')] },
+Enquanto fala, as palavras dele ficam cada vez mais doces, e tu dás contigo a pensar que talvez não seja má ideia.`,
+ ch: [c('Deixar o búzio limpar-te a cabeça e recusar', 'vidal_luta', { req: 'Amuleto de Búzio' }), c('Lutar contra a voz dele e recusar', 'vidal_encanto', { semItem: 'Amuleto de Búzio' }), c('Aceitar o negócio', 'fim_mau')] },
 
 vidal_encanto: { cena: 'lanterna', lugar: 'lanterna', t: `Abanas a cabeça como quem sacode água dos ouvidos. As palavras de Vidal agarram-se a ti como limos.`,
  teste: { tipo: 'sorte', ok: 'vidal_luta', ko: 'vidal_encantado' } },
@@ -1167,98 +1606,132 @@ vidal_encanto: { cena: 'lanterna', lugar: 'lanterna', t: `Abanas a cabeça como 
 vidal_encantado: { cena: 'lanterna', lugar: 'lanterna', som: 'ferida', fx: { en: -4 }, t: `Demoras demasiado a responder. Vidal aproveita e crava-te nas costelas um punhal de coral. A dor acorda-te de vez. Perdes 4 pontos de Energia.`,
  ch: [c('Desembainhar a espada', 'vidal_luta')] },
 
-vidal_luta: { cena: 'lanterna', lugar: 'lanterna', t:
-`Vidal suspira, como quem lamenta um mau negócio, e puxa de uma espada fina e ondulada como uma onda. Move-se como a água: nunca está onde o golpe cai.`,
- luta: { foes: [{ nome: 'Dom Vidal', hab: 11, en: 14 }], win: 'transformacao' } },
+vidal_luta: { cena: 'lanterna', lugar: 'lanterna', t: `Vidal suspira, como quem lamenta um mau negócio, e puxa de uma espada fina e ondulada como uma onda. Move-se como a água: nunca está onde o golpe cai.`,
+ luta: { foes: [{ nome: 'Dom Vidal', hab: 12, en: 14 }], win: 'transformacao' } },
 
-vidal_luta_nome: { cena: 'lanterna', lugar: 'lanterna', t:
-`Atacas antes que ele se recomponha. Vidal defende-se com uma espada ondulada, mas falha golpes que antes não falharia. Ouvir o próprio nome deixou-o lento.`,
- luta: { foes: [{ nome: 'Vidal Escamado', hab: 9, en: 12 }], win: 'transformacao' } },
+vidal_luta_nome: { cena: 'lanterna', lugar: 'lanterna', t: `Atacas antes que ele se recomponha. Vidal defende-se com uma espada ondulada, mas falha golpes que antes não falharia. Ouvir o próprio nome deixou-o lento.`,
+ luta: { foes: [{ nome: 'Vidal Escamado', hab: 10, en: 12 }], win: 'transformacao' } },
 
-vidal_costas: { cena: 'lanterna', lugar: 'lanterna', som: 'espada', t:
-`Partes o vidro com o cotovelo e cais sobre ele antes que se consiga virar. A tua lâmina entra-lhe fundo no ombro. Vidal ruge e puxa de uma espada ondulada como uma onda.`,
- luta: { foes: [{ nome: 'Dom Vidal, ferido', hab: 11, en: 9 }], win: 'transformacao' } },
+vidal_costas: { cena: 'lanterna', lugar: 'lanterna', som: 'espada', t: `Partes o vidro com o cotovelo e cais sobre ele antes que se consiga virar. A tua lâmina entra-lhe fundo no ombro. Vidal ruge e puxa de uma espada ondulada como uma onda.`,
+ luta: { foes: [{ nome: 'Dom Vidal, ferido', hab: 12, en: 9 }], win: 'transformacao' } },
 
 vidal_sino: { cena: 'lanterna', lugar: 'lanterna', som: 'sinogrande', fx: { flag: 'sinotocado' }, t:
 `Ergues o badalo e bates com ele na grade de ferro. O som enche a sala como um trovão de igreja e faz tremer os vidros todos ao mesmo tempo.
 
-Vidal grita. As escamas da capa caem como folhas mortas, a cara lisa enche-se de rugas, os olhos de peixe ficam baços. Em poucos segundos tens à tua frente um velho curvado, a cheirar a peixe podre. Já não consegue mudar de forma.
+Vidal grita. As escamas da capa caem como folhas mortas, a cara lisa enche-se de rugas, os olhos de peixe ficam baços. Em poucos segundos tens à tua frente um velho curvado, a cheirar a peixe podre.
 
 Mesmo assim, ataca-te com fúria.`,
- luta: { foes: [{ nome: 'Vidal, desfeito pelo sino', hab: 8, en: 10 }], win: 'vitoria_vidal' } },
+ luta: { foes: [{ nome: 'Vidal, desfeito pelo sino', hab: 9, en: 10 }], win: 'transformacao' } },
 
-transformacao: { cena: 'rei', lugar: 'lanterna', som: 'rugido_grande', t:
-`Vidal cai de joelhos, e por um momento julgas que acabou. Depois ele ri-se, com uma voz que já não é de homem, e atira-se pela janela.
+transformacao: { cena: 'rei', lugar: 'lanterna', som: 'rugido_grande', susto: 1, tempo: 9, esgotou: 'rei_anselmo_levado', t:
+`Vidal cai de joelhos, e por um momento julgas que acabou. Depois ri-se, com uma voz que já não é de homem, e atira-se pela janela.
 
 Não ouves o corpo bater nas rochas. Ouves o mar a abrir-se.
 
-O farol inteiro estremece. Da água, à volta da ilha, levantam-se braços enormes, cinzentos, cobertos de ventosas, mais altos do que a torre. Um deles enrola-se no varandim e arranca metade da grade. Lá em baixo, na espuma, abre-se um olho do tamanho de uma porta.
+O farol inteiro estremece. Da água levantam-se braços enormes, cinzentos, cobertos de ventosas, mais altos do que a torre. Um deles parte os vidros, enrola-se em Mestre Anselmo e arranca-o do pilar com corrente e tudo.`,
+ ch: [c('Cortar o tentáculo que leva Anselmo', 'rei_salva_anselmo'), c('Agarrar-te ao pilar para não seres arrastado', 'rei_anselmo_levado')] },
 
-Vidal deixou de fingir que é um homem. É o REI DAS MARÉS.`,
- ch: [c('Bater com o badalo no ferro do varandim', 'rei_sino', { req: 'Badalo de Bronze' }), c('Chamar as almas que libertaste no ossário', 'rei_almas', { flag: 'almas' }), c('Enfrentar o tentáculo de espada', 'rei_luta')] },
+rei_salva_anselmo: { cena: 'rei', lugar: 'lanterna', t: `Atiras-te ao tentáculo com a espada. É como cortar um cabo de navio. Anselmo grita, pendurado sobre o vazio.`,
+ luta: { foes: [{ nome: 'Tentáculo', hab: 9, en: 8 }], win: 'rei_anselmo_salvo' } },
 
-rei_sino: { cena: 'rei', lugar: 'lanterna', som: 'sinogrande', t:
-`O sino toca, e o mar inteiro parece encolher-se. Os tentáculos tremem e perdem força, mas não largam a torre. Um deles vem direito a ti.`,
- luta: { foes: [{ nome: 'Rei das Marés, atordoado', hab: 8, en: 10 }], win: 'vitoria_vidal' } },
+rei_anselmo_salvo: { cena: 'rei', lugar: 'lanterna', fx: { flag: 'anselmoVivo' }, t: `O tentáculo solta-se e recolhe-se, a esguichar tinta negra. Puxas Anselmo para dentro pelas correntes. Está vivo.`,
+ ch: [c('Enfrentar o monstro', 'rei_fase2')] },
 
-rei_almas: { cena: 'rei', lugar: 'lanterna', som: 'sopro', t:
-`Chamas pelo Joaquim, e por todos os outros. Da água sobem centenas de luzinhas pálidas, como faíscas ao contrário. Enrolam-se nos tentáculos e puxam-nos para baixo, para o fundo, para onde eles próprios estiveram presos.
+rei_anselmo_levado: { cena: 'rei', lugar: 'lanterna', fx: { flag: 'anselmoMorto' }, som: 'splash', t: `O tentáculo leva Anselmo pela janela. Ouves-lo gritar até a voz desaparecer no mar. Estás sozinho na torre.`,
+ ch: [c('Enfrentar o monstro', 'rei_fase2')] },
 
-O monstro uiva. Só um braço consegue chegar até ti.`,
- luta: { foes: [{ nome: 'Rei das Marés, arrastado pelas almas', hab: 8, en: 9 }], win: 'vitoria_vidal' } },
+rei_fase2: { cena: 'rei', lugar: 'lanterna', som: 'trovao', t:
+`Lá em baixo, na espuma, abre-se um olho do tamanho de uma porta. Sobe pela parede da torre, a olhar para ti. A torre inclina-se. Os vidros que restam estalam.
 
-rei_luta: { cena: 'rei', lugar: 'lanterna', t:
-`Agarras-te ao que resta do varandim e golpeias o tentáculo que vem para ti. É como bater num tronco molhado. O olho lá em baixo segue cada movimento teu.`,
- luta: { foes: [{ nome: 'Rei das Marés', hab: 11, en: 16 }], win: 'vitoria_vidal' } },
+Vidal deixou de fingir que é um homem. É o REI DAS MARÉS. E vem buscar o vivo que lhe prometeram.`,
+ ch: [c('Bater com o badalo no ferro do varandim', 'rei_sino', { req: 'Badalo de Bronze' }), c('Chamar as almas que libertaste no ossário', 'rei_almas', { flag: 'almas' }), c('Cravar o arpão do Bento no olho do monstro', 'rei_arpao', { req: 'Arpão do Bento' }), c('Enfrentá-lo de espada', 'rei_luta')] },
+
+rei_sino: { cena: 'rei', lugar: 'lanterna', som: 'sinogrande', t: `O sino toca, e o mar inteiro parece encolher-se. Os tentáculos tremem e perdem força, mas não largam a torre. Um deles vem direito a ti.`,
+ luta: { foes: [{ nome: 'Rei das Marés, atordoado', hab: 9, en: 12 }], win: 'vitoria_vidal' } },
+
+rei_almas: { cena: 'rei', lugar: 'lanterna', som: 'sopro', t: `Chamas pelo Joaquim, e por todos os outros. Da água sobem centenas de luzinhas pálidas, como faíscas ao contrário. Enrolam-se nos tentáculos e puxam-nos para baixo, para o fundo, onde eles próprios estiveram presos.\n\nO monstro uiva. Só um braço consegue chegar até ti.`,
+ luta: { foes: [{ nome: 'Rei das Marés, arrastado pelas almas', hab: 9, en: 10 }], win: 'vitoria_vidal' } },
+
+rei_arpao: { cena: 'rei', lugar: 'lanterna', som: 'rugido_grande', susto: 1, fx: { drop: 'Arpão do Bento' }, t: `Esperas que o olho chegue à janela. Esperas mais um segundo. E atiras o arpão com o peso do corpo todo. Entra até à corda.\n\nO grito do Rei das Marés parte o resto dos vidros. Os tentáculos agitam-se às cegas.`,
+ luta: { foes: [{ nome: 'Rei das Marés, cego', hab: 8, en: 9 }], win: 'vitoria_vidal' } },
+
+rei_luta: { cena: 'rei', lugar: 'lanterna', t: `Agarras-te ao que resta do varandim e golpeias o tentáculo que vem para ti. É como bater num tronco molhado. O olho lá em baixo segue cada movimento teu.`,
+ luta: { foes: [{ nome: 'Rei das Marés', hab: 12, en: 16 }], win: 'vitoria_vidal' } },
 
 vitoria_vidal: { cena: 'lanterna', lugar: 'lanterna', som: 'splash', t:
-`Ouves um grito comprido que vem do fundo do mar. Depois, silêncio. A gosma negra da lente escorre pelo vidro como cera derretida, e a luz verde apaga-se.
+`Ouves um grito comprido que vem do fundo do mar. Os tentáculos escorregam pela torre abaixo e desaparecem na espuma. A gosma negra da lente escorre pelo vidro como cera derretida, e a luz verde apaga-se.
 
-Partes as correntes de Anselmo com a espada. O velho mal se aguenta de pé.
+Mas a tempestade não acabou. O vento entra pelos vidros partidos e uiva à volta da lâmpada. E lá longe, no escuro, as luzinhas da frota continuam a vir direitas aos Dentes.`,
+ ch: [c('Encher o depósito com o óleo de baleia', 'acender', { req: 'Óleo de Baleia' }), c('Descer à arrecadação e raspar o óleo que lá houver', 'sem_oleo', { semItem: 'Óleo de Baleia' })] },
 
-— A lente — sussurra ele. — Limpa a lente e acende. Depressa.`,
- ch: [c('Encher o depósito com o óleo de baleia', 'acender', { req: 'Óleo de Baleia' }), c('Descer à arrecadação e raspar o óleo que lá houver', 'sem_oleo', { notItem: 'Óleo de Baleia' })] },
-
-sem_oleo: { cena: 'torre', lugar: 'torre', fxA: { mare: 3 }, t:
-`Desces os duzentos degraus a correr, raspas o fundo do pipo da arrecadação com uma lata e voltas a subir, com as pernas a arder e o óleo a pingar pelos dedos. Não é muito, mas tem de chegar.
-
-Perdeste tempo precioso: a maré subiu mais 3.`,
+sem_oleo: { cena: 'torre', lugar: 'torre', fxA: { mare: 3 }, t: `Desces os duzentos degraus a correr, raspas o fundo do pipo da arrecadação com uma lata e voltas a subir, com as pernas a arder e o óleo a pingar pelos dedos. Não é muito, mas tem de chegar.\n\nPerdeste tempo precioso: a maré subiu mais 3.`,
  ch: [c('Encher o depósito', 'acender')] },
 
-acender: { cena: 'aceso', lugar: 'lanterna', som: 'acender', t:
-`Limpas o que resta da gosma com a tua própria camisa. Anselmo, com as mãos a tremer, acende a mecha.
+acender: { cena: 'lanterna', lugar: 'lanterna', som: 'trovao', tempo: 9, esgotou: 'acender_apaga', t:
+`Limpas o que resta da gosma com a tua própria camisa e acendes a mecha. A chama pega, treme, e o vento que entra pelos vidros partidos deita-a quase ao comprido.
 
-Durante um momento nada acontece. Depois a chama pega, o mecanismo range, a lente começa a girar, e um feixe de luz branca rasga a noite por cima do mar.`,
- ch: [c('Olhar para a baía', 'fim_vitoria', { aTempo: 1 }), c('Olhar para a baía', 'fim_amargo', { tarde: 1 })] },
+Vai apagar-se.`,
+ ch: [c('Proteger a chama com o teu corpo', 'acender_ok'), c('Fechar a portinhola de vidro da lâmpada com Anselmo', 'acender_ok', { flag: 'anselmoVivo' })] },
 
+acender_apaga: { cena: 'lanterna', lugar: 'lanterna', fx: { en: -1 }, t: `A chama apaga-se. Fica só um fio de fumo. Tens as mãos a tremer de frio e a mecha está molhada.`,
+ teste: { tipo: 'sorte', ok: 'acender_ok', ko: 'acender_ultimo' } },
+
+acender_ultimo: { cena: 'lanterna', lugar: 'lanterna', tempo: 8, esgotou: 'fim_tarde', t:
+`A mecha não pega. Lá fora, a primeira buzina da frota soa já muito perto.
+
+Só há uma maneira. Encharcas as mãos no óleo, enrolas nelas o que resta da camisa, e seguras a chama tu mesmo, dentro da lâmpada, onde a lente a possa ver.`,
+ ch: [c('Fazê-lo', 'fim_sacrificio'), c('Não consegues', 'fim_tarde')] },
+
+acender_ok: { cena: 'aceso', lugar: 'lanterna', som: 'acender', fx: { flag: 'aceso' }, t:
+`A chama endireita-se. O mecanismo range, a lente começa a girar, e um feixe de luz branca rasga a noite por cima do mar.`,
+ ch: [c('Olhar para a baía', 'fim_vitoria', { notFlag: 'tarde' }), c('Olhar para a baía', 'fim_amargo', { flag: 'tarde' })] },
+
+/* ======================= FINAIS ======================= */
 fim_vitoria: { cena: 'aceso', lugar: 'lanterna', som: 'vitoria', fim: 'vitoria', titulo: 'A luz voltou', t:
-`Lá em baixo, as velas da frota do bacalhau desviam-se dos Dentes uma a uma, como pássaros que se lembram do caminho. Na aldeia, alguém começa a tocar o sino da capela, e depois outro, e depois a aldeia inteira está acordada.
+`Lá em baixo, as velas da frota do bacalhau desviam-se dos Dentes uma a uma, como pássaros que se lembram do caminho. Na aldeia, alguém começa a tocar o sino da capela, e depois a aldeia inteira está acordada.
 
-Quando o sol nasce, estás sentado nos degraus do farol ao lado de Anselmo, a dividir pão duro e um gole de aguardente.
-
-— Fica para o almoço — diz ele. — A Rosário faz um arroz de polvo que ressuscita mortos. E depois disto, acho que já tivemos mortos que chegue.
-
-Vila Negra tem luz outra vez. Ganhaste.`,
- extra: { flag: 'almas', t: `À tarde, na capela, Benedita vem ter contigo. Não diz nada. Pega-te nas mãos e fica assim muito tempo. Tu dizes-lhe o recado do Joaquim, palavra por palavra, e ela sorri pela primeira vez desde que o mar lho levou.` } },
+Quando o sol nasce, estás sentado nos degraus do farol, a ver o mar ficar azul.`,
+ extras: [
+  { flag: 'anselmoVivo', t: `Anselmo senta-se ao teu lado com um pão duro e uma garrafa de aguardente. Não diz nada durante muito tempo. Depois diz: «Fica para o almoço.»` },
+  { flag: 'anselmoMorto', t: `O lugar ao teu lado está vazio. Alguém vai ter de tomar conta deste farol a partir de hoje. Olhas para a lâmpada e percebes que talvez sejas tu.` },
+  { flag: 'rosarioViva', t: `À tarde, Dona Rosário serve-te um arroz de polvo e não te deixa pagar.` },
+  { flag: 'fugiuCerco', t: `Na aldeia, ninguém te olha nos olhos. Quatro casas têm as portas arrancadas. Tu sabes porquê.` },
+  { flag: 'tomeVivo', t: `Tomé desafia-te para uma partida de ossos. Perdes, e ele ri-se até tossir.` },
+  { flag: 'tomeMorto', t: `Atiras o dente de tubarão de Tomé ao mar, do alto da falésia. É o que ele teria querido.` },
+  { flag: 'almas', t: `Na capela, Benedita pega-te nas mãos. Dizes-lhe o recado do Joaquim, palavra por palavra, e ela sorri pela primeira vez desde que o mar lho levou.` },
+  { t: `Vila Negra tem luz outra vez. Ganhaste.` }] },
 
 fim_amargo: { cena: 'naufragio', lugar: 'lanterna', som: 'sinogrande', fim: 'amargo', titulo: 'Luz tardia', t:
-`O feixe varre a baía, e as velas da frota desviam-se dos Dentes. Quase todas. Contra os rochedos, um lugre pequeno já está tombado, com o mastro partido, e há homens na água.
+`O feixe varre a baía, e as velas da frota desviam-se dos Dentes. Quase todas. Contra os rochedos, dois lugres já estão tombados, de mastros partidos, e há homens na água.
 
 Os pescadores da aldeia passam a manhã nos botes. Salvam alguns. Outros, não.
 
 O farol voltou a acender, e foi graças a ti. Mas a maré foi mais rápida. Da próxima vez, talvez saibas onde não perder tempo.` },
 
 fim_mau: { cena: 'naufragio', lugar: 'lanterna', som: 'morte', fim: 'mau', titulo: 'A prata do Brasil', t:
-`Desces a escada sem olhar para trás. Atrás de ti ouves o riso de Vidal e as correntes do Anselmo a bater no pilar.
+`Desces a escada sem olhar para trás. Atrás de ti ouves Anselmo a gritar o teu nome, e depois a luz verde a acender-se, e depois mais nada.
 
-Nessa madrugada, a frota do bacalhau entra às cegas na baía. Do cais, ouves os cascos a partirem-se nos Dentes, um a um, e os gritos, e depois só o mar.
+Nessa madrugada, a frota do bacalhau entra às cegas na baía. Do cais, ouves os cascos a partir-se nos Dentes, um a um.
 
 Na semana seguinte, um baú cheio de prata aparece à tua porta, coberto de sal. Ficaste rico.
 
-Nunca mais dormiste uma noite inteira. E às vezes, no nevoeiro, ouves alguém dizer o teu nome.` },
+Nunca mais dormiste uma noite inteira. E às vezes, no nevoeiro, um barqueiro de lábios azuis oferece-te boleia.` },
+
+fim_tarde: { cena: 'lanterna', lugar: 'lanterna', som: 'morte', fim: 'tarde', titulo: 'A luz verde', t:
+`A maré enche.
+
+A luz verde acende-se sozinha, por baixo da lente, e sentes alguma coisa a sair de ti, como o calor sai de uma pedra ao fim do dia. Ficas leve. Ficas frio.
+
+Lá em baixo, a frota do bacalhau parte-se nos Dentes. E tu vês tudo do alto da torre, porque agora a torre é tua. Vais ficar aqui muito tempo, a guardar a luz verde de Vidal Escamado, até chegar outro forasteiro num barco que ninguém rema.` },
+
+fim_sacrificio: { cena: 'aceso', lugar: 'lanterna', som: 'vitoria', fim: 'sacrificio', titulo: 'Mãos de fogo', t:
+`A dor é tão grande que deixas de a sentir. Seguras a chama. A lente vê-a, e gira, e um feixe de luz branca rasga a noite.
+
+A frota desvia-se dos Dentes, barco a barco.
+
+Encontram-te de manhã, desmaiado ao pé da lâmpada, com as mãos negras. Vais viver. Nunca mais vais conseguir pegar numa espada. Mas em Vila Negra, ninguém volta a pagar um copo enquanto estiveres vivo, e as crianças da ilha chamam-te o Faroleiro das Mãos de Fogo.` },
 };
 
-/* Ilha: lugares do mapa (x, y, nome, posição da legenda) e caminhos */
 const LUGARES = {
  cais: [70, 372, 'Cais', 's'], praca: [84, 334, 'Praça', 's'], taberna: [48, 304, 'Taberna', 'e'], capela: [138, 314, 'Capela', 's'],
  casa: [104, 270, 'Casa do Faroleiro', 's'], cemiterio: [40, 250, 'Cemitério', 'b'], falesia: [126, 214, 'Falésia', 'e'], charneca: [168, 168, 'Charneca', 's'],
@@ -1284,20 +1757,23 @@ const ITENS = {
  'Corda de Cânhamo': 'Doze braças, com gancho de ferro.',
  'Faca de Arremesso': 'Em combate: 2 de dano certeiro. Uma vez.',
  'Saco de Sal': 'Os afogados não atravessam o sal. Uma vez.',
+ 'Água Benta': 'Queima o que vem do mar. Em combate: 3 de dano. Uma vez.',
  'Pérola Negra': 'Parte-a entre os dentes: repõe toda a Energia. Uma vez.',
  'Chave do Farol': 'Ferro antigo, com um corvo gravado.',
  'Amuleto de Búzio': 'Protege contra cantos e vozes encantadas.',
  'Badalo de Bronze': 'Do Sino de Santa Bárbara. Vibra sozinho.',
+ 'Arpão do Bento': 'Matou um tubarão de seis metros.',
+ 'Moeda Salgada': 'Fria, pesada, coberta de sal que não sai.',
 };
 const POCOES = { habilidade: { nome: 'Poção da Habilidade', d: 'Repõe a Habilidade inicial.' }, forca: { nome: 'Poção da Força', d: 'Repõe a Energia inicial.' }, fortuna: { nome: 'Poção da Fortuna', d: 'Sorte inicial +1 e repõe a Sorte.' } };
 const MODOS = {
- aprendiz: { nome: 'Aprendiz', d: '5 dedos no livro, 6 provisões, 10 moedas. Inimigos mais fracos e a maré mais lenta.', dedos: 5, prov: 6, ouro: 10, inim: -1, limite: 16 },
- normal: { nome: 'Marinheiro', d: 'Como nos livros: 3 dedos, 4 provisões, 8 moedas. Maré de 14.', dedos: 3, prov: 4, ouro: 8, inim: 0, limite: 14 },
- dificil: { nome: 'Lobo do Mar', d: 'Sem dedo no livro, 2 provisões, 5 moedas. Inimigos mais fortes e maré de 12.', dedos: 0, prov: 2, ouro: 5, inim: 1, limite: 12 },
+ aprendiz: { nome: 'Aprendiz', d: '5 dedos no livro, 5 provisões. Inimigos mais fracos, maré mais lenta, mais tempo para decidir.', dedos: 5, prov: 5, ouro: 10, inim: -1, limite: 17, fTempo: 1.6 },
+ normal: { nome: 'Marinheiro', d: 'Como nos livros: 3 dedos no livro, 3 provisões. Maré de 14.', dedos: 3, prov: 3, ouro: 7, inim: 0, limite: 14, fTempo: 1 },
+ dificil: { nome: 'Lobo do Mar', d: 'Sem dedo no livro, 1 provisão. Inimigos mais fortes, maré de 12, pouco tempo para decidir.', dedos: 0, prov: 1, ouro: 4, inim: 1, limite: 12, fTempo: .75 },
 };
-const FINAIS = { vitoria: 'A luz voltou', amargo: 'Luz tardia', mau: 'A prata do Brasil', morte: 'Morte' };
-const AMB = { cais: 'porto', taberna: 'taberna', capela: 'capela', casa: 'casa', afogado: 'casa', cemiterio: 'cemiterio', falesia: 'falesia', avejao: 'charneca', ninhos: 'falesia', farol: 'falesia', praia: 'praia', gruta: 'gruta', galerias: 'galerias', moira: 'moira', sino: 'gruta', ossario: 'ossario', torre: 'torre', lanterna: 'tempestade', rei: 'tempestade', aceso: 'aceso', naufragio: 'tempestade' };
-const NUM = {}; (function () { const ids = Object.keys(S).filter(k => k !== 'start'); let s = 1987; const r = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648 }; const n = ids.map((_, i) => i + 2); for (let i = n.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [n[i], n[j]] = [n[j], n[i]] } NUM.start = 1; ids.forEach((id, i) => NUM[id] = n[i]); })();
+const FINAIS = { vitoria: 'A luz voltou', amargo: 'Luz tardia', sacrificio: 'Mãos de fogo', mau: 'A prata do Brasil', tarde: 'A luz verde', morte: 'Morte' };
+const AMB = { cais: 'porto', taberna: 'taberna', capela: 'capela', casa: 'casa', afogado: 'casa', cemiterio: 'cemiterio', falesia: 'falesia', avejao: 'charneca', ninhos: 'falesia', farol: 'falesia', praia: 'praia', gruta: 'gruta', galerias: 'galerias', moira: 'moira', sino: 'gruta', ossario: 'ossario', torre: 'torre', lanterna: 'tempestade', rei: 'tempestade', aceso: 'aceso', naufragio: 'tempestade', cerco: 'cerco', recolhedor: 'charneca', corpo: 'gruta' };
+const NUM = {}; (function () { const ids = Object.keys(S).filter(k => k !== 'start'); let s = 1987; const r = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648 }; const n = ids.map((_, i) => i + 2); for (let i = n.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [n[i], n[j]] = [n[j], n[i]] } NUM.start = 1; ids.forEach((id, i) => NUM[id] = n[i]); NUM['@volta'] = ''; })();
 
 /* ================== ILUSTRAÇÃO: revelar a tinta ================== */
 Arte.usar((w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; });
@@ -1345,7 +1821,7 @@ const Ilus = (() => {
   anim = { id: requestAnimationFrame(passo) };
  }
  function acabar() { if (!anim || !atual) return; cancelAnimationFrame(anim.id); anim = null; tx.drawImage(imagem(atual), 0, 0); const sp = document.querySelector('#ilus .salta'); if (sp) sp.remove(); }
- function aquecer(keys) { const fila = keys.filter(k => !cache.has(k) && !PRE[k]); const um = () => { const k = fila.shift(); if (!k) return; imagem(k); setTimeout(um, 60); }; setTimeout(um, 2500); }
+ function aquecer(keys) { const fila = keys.filter(k => !cache.has(k) && !PRE[k]); const um = () => { const k = fila.find(q => !PRE[q]); if (!k) return; fila.splice(fila.indexOf(k), 1); imagem(k); setTimeout(um, 120); }; setTimeout(um, 4000); }
  return { mostrar, acabar, aquecer, get atual() { return atual; } };
 })();
 
@@ -1357,7 +1833,7 @@ const Som = (() => {
  const guarda = () => { try { const o = JSON.parse(localStorage.getItem('farol-opcoes3') || '{}'); o.nivel = nivel; o.musica = musicaOn; localStorage.setItem('farol-opcoes3', JSON.stringify(o)); } catch (e) { } };
  function init() { if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return true; } const C = window.AudioContext || window.webkitAudioContext; if (!C) return false; try { ctx = new C(); } catch (e) { return false; }
   master = ctx.createGain(); master.gain.value = NIVEIS[nivel]; master.connect(ctx.destination); mus = ctx.createGain(); mus.gain.value = musicaOn ? .42 : 0; mus.connect(master); amb = ctx.createGain(); amb.gain.value = .85; amb.connect(master); sfx = ctx.createGain(); sfx.connect(master);
-  ['dados', 'espada', 'ferida', 'pagina', 'tinta', 'sorte', 'falha', 'derrota', 'coracao'].forEach(n => carregar('fx_' + n)); return true; }
+  ['dados', 'espada', 'ferida', 'pagina', 'tinta', 'sorte', 'falha', 'derrota', 'coracao', 'susto', 'correntes'].forEach(n => carregar('fx_' + n)); return true; }
  function carregar(n) { if (bufs.has(n)) return Promise.resolve(bufs.get(n)); if (aLoad.has(n)) return aLoad.get(n);
   const p = fetch('som/' + n + '.mp3').then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }).then(a => new Promise((ok, ko) => ctx.decodeAudioData(a, ok, ko))).then(b => { bufs.set(n, b); return b; }).catch(e => { console.warn('som', n, e); return null; });
   aLoad.set(n, p); return p; }
@@ -1375,7 +1851,7 @@ const Som = (() => {
   setMusica(v) { musicaOn = v; guarda(); if (mus) mus.gain.setTargetAtTime(v ? .42 : 0, ctx.currentTime, .3); },
   cena(ambNome, musNome) { if (!ctx || nivel === 0) return; laco(amb, ambNome ? 'amb_' + ambNome : null, curAmb, r => curAmb = r, 1); laco(mus, musNome ? 'mus_' + musNome : null, curMus, r => curMus = r, 1); },
   fx(n, vol = 1, atraso = 0) { if (!ctx || nivel === 0 || !n) return; carregar('fx_' + n).then(b => { if (!b) return; const s = ctx.createBufferSource(); s.buffer = b; const g = ctx.createGain(); g.gain.value = vol; s.connect(g).connect(sfx); s.start(ctx.currentTime + atraso); }); },
-  coracao(on) { if (on && !bat && ctx && nivel > 0) bat = setInterval(() => this.fx('coracao', .9), 1100); if ((!on || nivel === 0) && bat) { clearInterval(bat); bat = null; } },
+  coracao(on, ms = 1100) { if (bat && (!on || nivel === 0 || bat.ms !== ms)) { clearInterval(bat.id); bat = null; } if (on && !bat && ctx && nivel > 0) bat = { ms, id: setInterval(() => this.fx('coracao', ms < 800 ? 1 : .9), ms) }; },
   abafa(v) { if (amb) amb.gain.setTargetAtTime(v ? .3 : .85, ctx.currentTime, .3); if (mus) mus.gain.setTargetAtTime(musicaOn ? (v ? .15 : .42) : 0, ctx.currentTime, .3); },
  };
 })();
@@ -1396,55 +1872,96 @@ const temLanterna = () => tem('Lanterna de Furacão');
 const PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
 const dado = (v, inim) => `<div class="dado${inim ? ' inim' : ''}" aria-label="${v}">${Array.from({ length: 9 }, (_, i) => `<i class="${PIPS[v].includes(i) ? 'on' : ''}"></i>`).join('')}</div>`;
 const dados = (a, inim) => `<span class="dados">${a.map(v => dado(v, inim)).join('')}</span>`;
-function guardar() { try { localStorage.setItem('farol-jogo3', JSON.stringify(st)); } catch (e) { } }
-function carregarJogo() { try { const j = localStorage.getItem('farol-jogo3'); return j ? JSON.parse(j) : null; } catch (e) { return null; } }
-function finais() { try { return JSON.parse(localStorage.getItem('farol-finais3') || '{}'); } catch (e) { return {}; } }
-function marcaFinal(f) { try { const o = finais(); o[f] = 1; localStorage.setItem('farol-finais3', JSON.stringify(o)); } catch (e) { } }
+const CHAVE = 'farol-jogo4', CHAVE_F = 'farol-finais4';
+function guardar() { try { localStorage.setItem(CHAVE, JSON.stringify(st)); } catch (e) { } }
+function carregarJogo() { try { const j = localStorage.getItem(CHAVE); const o = j ? JSON.parse(j) : null; return o && S[o.sec] ? o : null; } catch (e) { return null; } }
+function finais() { try { return JSON.parse(localStorage.getItem(CHAVE_F) || '{}'); } catch (e) { return {}; } }
+function marcaFinal(f) { try { const o = finais(); o[f] = 1; localStorage.setItem(CHAVE_F, JSON.stringify(o)); } catch (e) { } }
+function opTempo() { try { return JSON.parse(localStorage.getItem('farol-opcoes3') || '{}').tempo !== false; } catch (e) { return true; } }
+function setTempo(v) { try { const o = JSON.parse(localStorage.getItem('farol-opcoes3') || '{}'); o.tempo = v; localStorage.setItem('farol-opcoes3', JSON.stringify(o)); } catch (e) { } }
 
+function addAtencao(n) { const a = st.atencao || 0; st.atencao = Math.max(0, a + n); if (st.flags.recolhedorMorto) return; for (const t of [3, 6, 9, 12]) if (a < t && st.atencao >= t) st.cacaPend = (st.cacaPend || 0) + 1; }
+function addMare(n) { st.mare += n; if (n > 0 && tem('Moeda Salgada')) { st.moedaAcc = (st.moedaAcc || 0) + n; while (st.moedaAcc >= 2) { st.moedaAcc -= 2; addAtencao(1); } } }
 function fx(f) { if (!f) return;
  if (f.en) st.en = Math.min(st.enI, st.en + f.en); if (f.hab) st.hab = Math.min(st.habI, st.hab + f.hab); if (f.sorte) st.sorte = Math.min(st.sorteI, st.sorte + f.sorte);
- if (f.sorteMax) st.sorte = st.sorteI; if (f.ouro) st.ouro = Math.max(0, st.ouro + f.ouro); if (f.prov) st.prov += f.prov; if (f.mare) st.mare += f.mare;
- if (f.archote) st.archote = f.archote; if (f.item && !tem(f.item)) st.itens.push(f.item); if (f.drop) st.itens = st.itens.filter(i => i !== f.drop); if (f.flag) st.flags[f.flag] = 1; }
-function ir(id) {
- if (st.undo.length >= 25) st.undo.shift(); st.undo.push(JSON.stringify({ ...st, undo: [] }));
- let s = S[id];
- if (s.escuro && !temLanterna()) { if (st.archote > 0) { st.archote--; } else { id = 'apagou'; s = S[id]; } }
- const cenaAntes = st.sec ? S[st.sec].cena : null;
- st.sec = id; st.res = null; const prim = !st.visto[id]; st.visto[id] = 1;
- if (prim) { fx(s.fx); fx(s.fx2); } fx(s.fxA);
- st.rasto.push(NUM[id]);
- const loc = s.lugar; Novo.loc = null; if (loc) { if (!st.locs[loc]) { st.locs[loc] = 1; Novo.loc = loc; } if (st.caminho[st.caminho.length - 1] !== loc) st.caminho.push(loc); if (st.caminho.length > 40) st.caminho.shift(); }
- st.luta = s.luta ? { i: 0, ronda: 0, cego: !!s.luta.ceguinho, foes: s.luta.foes.map(f => ({ ...f, hab: Math.max(4, f.hab + st.inim), enI: f.en })), ult: null, sorteOk: false, ganhou: false } : null;
- if (s.fim) { st.fim = s.fim; marcaFinal(s.fim); }
- if (st.en <= 0) morrer();
- guardar(); Voz.parar();
- Som.fx('pagina', .8); if (s.som) Som.fx(s.som, 1, .45);
- render(true, false, s.cena !== cenaAntes);
+ if (f.sorteMax) st.sorte = st.sorteI; if (f.ouro) st.ouro = Math.max(0, st.ouro + f.ouro); if (f.prov) st.prov += f.prov; if (f.mare) addMare(f.mare);
+ if (f.archote) st.archote = f.archote > 0 ? f.archote : Math.max(0, (st.archote || 0) + f.archote);
+ if (f.item && !tem(f.item)) st.itens.push(f.item); if (f.drop) st.itens = st.itens.filter(i => i !== f.drop);
+ if (f.flag) st.flags[f.flag] = 1; if (f.flag2) st.flags[f.flag2] = 1; if (f.atencao) addAtencao(f.atencao); if (f.atencaoZero) { st.atencao = 0; st.cacaPend = 0; } }
+
+/* relógio das escolhas com tempo */
+const Rel = { id: null, fim: 0, dur: 0, visita: -1 };
+function pararRelogio() { clearTimeout(Rel.id); Rel.id = null; Som.coracao(false); }
+function armarRelogio(s) {
+ clearTimeout(Rel.id); Rel.id = null;
+ if (!s.tempo || st.morto || !opTempo() || st.res) return;
+ const agora = performance.now();
+ if (Rel.visita !== st.visita) { const palavras = s.t.split(/\s+/).length; const dur = (s.tempo + palavras * .17 + 1.5) * MODOS[st.modo].fTempo * 1000; Rel.visita = st.visita; Rel.fim = agora + dur; Rel.dur = dur; }
+ const resta = Math.max(0, Rel.fim - agora); const barra = document.querySelector('.relogio i');
+ if (barra) { barra.style.width = (resta / Rel.dur * 100) + '%'; barra.getBoundingClientRect(); barra.style.transition = `width ${resta}ms linear`; requestAnimationFrame(() => { barra.style.width = '0%'; }); }
+ Som.coracao(true, 520);
+ const v = st.visita; Rel.id = setTimeout(() => { if (st && st.visita === v && !st.morto) { Som.fx('susto'); ir(s.esgotou, { direto: true }); } }, resta);
 }
-function morrer() { st.en = 0; st.morto = true; marcaFinal('morte'); Som.fx('morte', 1, .2); }
-function dedo() { if (st.dedos <= 0 || !st.undo.length) return; const u = st.undo; const prev = JSON.parse(u.pop()); const d = st.dedos - 1; st = prev; st.undo = u; st.dedos = d; Novo.loc = null; guardar(); Som.fx('pagina'); render(true, false, true); }
+
+function ir(id, o = {}) {
+ pararRelogio();
+ if (st.undo.length >= 25) st.undo.shift(); st.undo.push(JSON.stringify({ ...st, undo: [] }));
+ if (o.mare) addMare(o.mare);
+ if (id === '@volta') id = st.volta && S[st.volta] ? st.volta : 'praca';
+ let d = S[id];
+ if (!o.direto && !d.fim && !d.morte) {
+  const z = d.zona;
+  if (!st.flags.aceso && st.mare >= st.limite + 4 && z) id = 'fim_tarde';
+  else if (!st.flags.aceso && !st.flags.tarde && st.mare >= st.limite && z) { st.volta = id; id = 'frota_chega'; }
+  else if (!st.flags.cerco && st.mare >= 5 && z === 'aldeia') { st.volta = id; id = 'cerco1'; }
+  else if ((st.cacaPend || 0) > 0 && !st.flags.recolhedorMorto && (z === 'aldeia' || z === 'falesia' || z === 'gruta')) { st.cacaPend--; st.volta = id; id = z === 'gruta' ? 'caca_gruta' : 'caca_fora'; }
+  else if (st.flags.cerco && z === 'aldeia' && st.mare >= 6 && (st.encontros || 0) < 2 && !st.ultimoEnc && Math.random() < .3) { st.encontros = (st.encontros || 0) + 1; st.volta = id; id = 'errante'; }
+ }
+ st.ultimoEnc = id === 'errante' || id.startsWith('caca_');
+ d = S[id];
+ if (!st.flags.cerco && st.mare >= 7 && d.zona && d.zona !== 'aldeia') { st.flags.cerco = 1; st.flags.cercoAusente = 1; }
+ if (d.escuro && !temLanterna()) { if (st.archote > 0) st.archote--; else { id = 'apagou'; d = S[id]; } }
+ const cenaAntes = st.sec ? S[st.sec].cena : null;
+ st.sec = id; st.res = null; st.visita = (st.visita || 0) + 1; const prim = !st.visto[id]; st.visto[id] = 1;
+ if (prim) { fx(d.fx); fx(d.fx2); } fx(d.fxA);
+ st.rasto.push(NUM[id]);
+ const loc = d.lugar; Novo.loc = null; if (loc) { if (!st.locs[loc]) { st.locs[loc] = 1; Novo.loc = loc; } if (st.caminho[st.caminho.length - 1] !== loc) st.caminho.push(loc); if (st.caminho.length > 40) st.caminho.shift(); }
+ st.luta = d.luta ? { i: 0, ronda: 0, cego: !!d.luta.cego, foes: d.luta.foes.map(f => ({ ...f, hab: Math.max(4, f.hab + st.inim), enI: f.en })), ult: null, sorteOk: false, ganhou: false } : null;
+ if (d.fim) { st.fim = d.fim; marcaFinal(d.fim); }
+ if (d.morte || st.en <= 0) morrer();
+ guardar(); Voz.parar();
+ Som.fx('pagina', .8); if (d.som) Som.fx(d.som, 1, .45); if (d.susto) Som.fx('susto', .9, .1);
+ render(true, false, d.cena !== cenaAntes);
+}
+function morrer() { if (!(S[st.sec] && S[st.sec].morte)) st.en = 0; st.morto = true; marcaFinal('morte'); Som.fx('morte', 1, .2); }
+function dedo() { if (st.dedos <= 0 || !st.undo.length) return; pararRelogio(); const u = st.undo; const prev = JSON.parse(u.pop()); const d = st.dedos - 1; st = prev; st.undo = u; st.dedos = d; st.visita = (st.visita || 0) + 1; Novo.loc = null; guardar(); Som.fx('pagina'); render(true, false, true); }
 function cond(c) {
- if (c.flag && !st.flags[c.flag]) return 'oculto'; if (c.notFlag && st.flags[c.notFlag]) return 'oculto'; if (c.notItem && tem(c.notItem)) return 'oculto';
- if (c.aTempo && st.mare >= st.limite) return 'oculto'; if (c.tarde && st.mare < st.limite) return 'oculto';
+ if (c.flag && !st.flags[c.flag]) return 'oculto'; if (c.notFlag && st.flags[c.notFlag]) return 'oculto'; if (c.notFlag2 && st.flags[c.notFlag2]) return 'oculto';
+ if (c.tem && !tem(c.tem)) return 'oculto'; if (c.semItem && tem(c.semItem)) return 'oculto';
+ if (c.mareMin != null && st.mare < c.mareMin) return 'oculto'; if (c.mareMax != null && st.mare > c.mareMax) return 'oculto';
  if (c.luzArchote && !(st.archote > 0)) return 'oculto'; if (c.semLuz && (temLanterna() || st.archote > 0)) return 'oculto'; if (c.luz && !(temLanterna() || st.archote > 0)) return 'oculto';
+ if (c.archote && !((st.archote || 0) >= c.archote)) return 'oculto';
  if (c.req && !tem(c.req)) return 'Precisas de: ' + c.req; if (c.ouro && st.ouro < c.ouro) return 'Precisas de ' + c.ouro + ' moedas';
  return null; }
-function testar() { const t = S[st.sec].teste; const r = rol(2); let ok; if (t.tipo === 'sorte') { ok = soma(r) <= st.sorte; st.sorte = Math.max(0, st.sorte - 1); } else ok = soma(r) <= st.hab;
+const condTxt = a => cond(Object.assign({}, a, { t: '', to: '' })) === null;
+function testar() { pararRelogio(); const t = S[st.sec].teste; const r = rol(2); let ok; if (t.tipo === 'sorte') { ok = soma(r) <= st.sorte; st.sorte = Math.max(0, st.sorte - 1); } else ok = soma(r) <= st.hab;
  st.res = { r, ok, to: ok ? t.ok : t.ko }; guardar(); Som.fx('dados'); Som.fx(ok ? 'sorte' : 'falha', .8, .55); render(false, true); }
 function duelar() { const a = rol(2), b = rol(2), sa = soma(a), sb = soma(b); st.res = { a, b, emp: sa === sb, ganha: sa > sb, to: sa > sb ? S[st.sec].duelo.win : S[st.sec].duelo.lose }; guardar(); Som.fx('dados'); if (sa !== sb) Som.fx(sa > sb ? 'sorte' : 'falha', .8, .55); render(false, true); }
 function inimigo() { return st.luta.foes[st.luta.i]; }
 function fimInimigo() { const L = st.luta, f = inimigo(); if (f.en <= 0) { f.en = 0; L.i++; L.sorteOk = false; Som.fx('derrota', 1, .7); if (L.i >= L.foes.length) { L.ganhou = true; Som.cena(AMB[S[st.sec].cena], 'explorar'); } } }
+function golpeSusto() { const p = $('#pagina'); p.classList.remove('treme'); void p.offsetWidth; p.classList.add('treme'); }
 function atacar() { const L = st.luta, f = inimigo(); const pd = rol(2), fd = rol(2); const bon = (tem('Dente de Tubarão') ? 1 : 0) - (L.cego ? 2 : 0);
  const pa = soma(pd) + st.hab + bon, fa = soma(fd) + f.hab; L.ronda++; let res;
- if (pa > fa) { f.en -= 2; res = 'feres'; } else if (fa > pa) { st.en -= 2; res = 'feridos'; } else res = 'empate';
+ if (pa > fa) { f.en -= 2; res = 'feres'; } else if (fa > pa) { st.en -= 2; res = 'feridos'; golpeSusto(); } else res = 'empate';
  L.ult = { pd, fd, pa, fa, res, nome: f.nome, sorte: null, bon }; L.sorteOk = res !== 'empate';
  Som.fx('dados', .7); Som.fx(res === 'feridos' ? 'ferida' : 'espada', 1, .4);
  if (st.en <= 0) morrer(); else fimInimigo(); guardar(); render(false, true); }
 function sorteLuta() { const L = st.luta; if (!L.sorteOk) return; const f = L.foes[L.i]; const r = rol(2); const sorte = soma(r) <= st.sorte; st.sorte = Math.max(0, st.sorte - 1);
  if (L.ult.res === 'feres') f.en += sorte ? -2 : 1; else st.en += sorte ? 1 : -1; L.ult.sorte = { r, sorte }; L.sorteOk = false; Som.fx('dados', .7); Som.fx(sorte ? 'sorte' : 'falha', .8, .5);
  if (st.en <= 0) morrer(); else fimInimigo(); guardar(); render(false, true); }
-function faca() { const L = st.luta, f = inimigo(); st.itens = st.itens.filter(i => i !== 'Faca de Arremesso'); f.en -= 2; L.ult = { faca: true, nome: f.nome }; L.sorteOk = false; Som.fx('espada'); fimInimigo(); guardar(); render(false, true); }
-function fugir() { const s = S[st.sec].luta; st.en -= 2; Som.fx('ferida'); if (st.en <= 0) { morrer(); guardar(); render(); return; } st.luta = null; ir(s.fuga); }
+function faca() { const L = st.luta, f = inimigo(); st.itens = st.itens.filter(i => i !== 'Faca de Arremesso'); f.en -= 2; L.ult = { faca: 'Atiras a faca: acerta em cheio.', nome: f.nome, dano: 2 }; L.sorteOk = false; Som.fx('espada'); fimInimigo(); guardar(); render(false, true); }
+function aguaBenta() { const L = st.luta, f = inimigo(); st.itens = st.itens.filter(i => i !== 'Água Benta'); f.en -= 3; L.ult = { faca: 'Atiras-lhe a água benta. A carne chia e fumega.', nome: f.nome, dano: 3 }; L.sorteOk = false; Som.fx('sopro'); fimInimigo(); guardar(); render(false, true); }
+function fugir() { const s = S[st.sec].luta; st.en -= 2; Som.fx('ferida'); if (st.en <= 0) { morrer(); guardar(); render(); return; } st.luta = null; ir(s.fuga, { direto: true }); }
 function comer() { if (st.prov <= 0 || st.en >= st.enI || st.luta && !st.luta.ganhou) return; st.prov--; st.en = Math.min(st.enI, st.en + 4); Som.fx('comer'); guardar(); render(); }
 function beber() { const p = st.pocao; if (!p || p.doses <= 0) return; p.doses--; if (p.tipo === 'habilidade') st.hab = st.habI; if (p.tipo === 'forca') st.en = st.enI; if (p.tipo === 'fortuna') { st.sorteI++; st.sorte = st.sorteI; } Som.fx('beber'); guardar(); render(); }
 function perola() { if (!tem('Pérola Negra')) return; st.itens = st.itens.filter(i => i !== 'Pérola Negra'); st.en = st.enI; Som.fx('sorte'); guardar(); render(); }
@@ -1453,23 +1970,27 @@ function comprar(k) { const it = S.loja.loja[k]; if (st.ouro < it.preco || (it.i
 /* ================== RENDER ================== */
 const paras = t => t.split('\n\n').map(p => /^[A-ZÁÉÍÓÚÂÊÔÃÕÇ0-9 «»]{6,}$/.test(p.split('\n')[0]) && p.includes('\n') ? `<p class="inscr">${p}</p>` : `<p>${p}</p>`).join('');
 const barra = (v, m) => `<div class="barra"><span style="width:${Math.max(0, Math.min(100, v / m * 100))}%"></span></div>`;
+function textoDe(s) { const a = (s.alt || []).find(x => condTxt(x)); return a ? a.t : s.t; }
 function render(novo, anim, novaCena) {
- if (!st) { $('#folha').hidden = true; barHTML(); if (cr) criar(); else capa(novo); return; }
- $('#folha').hidden = false; const s = S[st.sec];
+ if (!st) { pararRelogio(); $('#folha').hidden = true; barHTML(); if (cr) criar(); else capa(novo); return; }
+ $('#folha').hidden = false; const s = S[st.sec]; const txt = textoDe(s);
  $('#topo').innerHTML = `${s.cap ? `<p class="cap">Capítulo ${s.cap}</p>` : ''}<div class="numero">${NUM[st.sec]}</div>`;
  if (novo) Ilus.mostrar(s.cena, true, !novaCena); else if (Ilus.atual !== s.cena) Ilus.mostrar(s.cena, false);
  const emLuta = st.luta && !st.luta.ganhou && !st.morto;
- Som.cena(AMB[s.cena], emLuta ? 'combate' : (s.fim || st.morto ? null : 'explorar')); Som.coracao(!st.morto && !s.fim && st.en > 0 && st.en <= 4);
- let h = `<div class="${novo ? 'fade' : ''}"><div class="texto">${paras(s.t)}${s.fim && s.extra && st.flags[s.extra.flag] ? `<p>${s.extra.t}</p>` : ''}</div>`;
- if (st.morto) h += `<div class="fim morte"><h2>A tua aventura termina aqui</h2><p class="nota">A Energia chegou a zero na secção ${NUM[st.sec]}.</p><div class="acoes">${st.dedos > 0 && st.undo.length ? `<button class="b prim" data-a="dedo">Pôr o dedo no livro e voltar atrás (${st.dedos})</button>` : ''}<button class="b" data-a="nova">Nova aventura</button></div></div>`;
+ const tenso = (s.tempo || s.caca) && !st.res;
+ Som.cena(AMB[s.cena], emLuta ? 'combate' : tenso ? 'tensao' : (s.fim || st.morto ? null : 'explorar'));
+ const pag = $('#pagina'); pag.classList.toggle('aflito', !!tenso && !st.morto); if (novo && s.susto) golpeSusto();
+ let h = `<div class="${novo ? 'fade' : ''}"><div class="texto">${paras(txt)}${s.fim && s.extras ? s.extras.filter(x => condTxt(x)).map(x => `<p>${x.t}</p>`).join('') : ''}</div>`;
+ if (st.morto) h += `<div class="fim morte"><h2>${s.morte ? s.titulo : 'A tua aventura termina aqui'}</h2><p class="nota">${s.morte ? 'Morreste' : 'A Energia chegou a zero'} na secção ${NUM[st.sec]}.</p><div class="acoes">${st.dedos > 0 && st.undo.length ? `<button class="b prim" data-a="dedo">Pôr o dedo no livro e voltar atrás (${st.dedos})</button>` : ''}<button class="b" data-a="nova">Nova aventura</button></div></div>`;
  else if (s.fim) { const f = finais(); h += `<div class="fim"><h2>${s.titulo}</h2><p class="nota">Modo ${MODOS[st.modo].nome}. Maré final: ${st.mare} de ${st.limite}. Finais descobertos: ${Object.keys(FINAIS).filter(k => f[k]).length} de ${Object.keys(FINAIS).length}.</p><div class="acoes"><button class="b prim" data-a="nova">Jogar outra vez</button></div></div>`; }
  else if (s.teste) h += testeHTML(s.teste, anim); else if (s.duelo) h += dueloHTML(anim); else if (s.luta) h += lutaHTML(s, anim);
- else { if (s.loja) h += lojaHTML(s.loja); h += escolhasHTML(s.ch); }
+ else { if (s.loja) h += lojaHTML(s.loja); h += (s.tempo && opTempo() ? `<div class="relogio" aria-hidden="true"><i></i></div>` : '') + escolhasHTML(s.ch); }
  $('#corpo').innerHTML = h + '</div>'; barHTML(); folhaHTML();
- if (novo) { window.scrollTo(0, 0); Voz.ler(s.t); }
+ if (!st.morto && !s.fim) { if (s.tempo) armarRelogio(s); else Som.coracao(st.en > 0 && st.en <= 4, 1100); } else Som.coracao(false);
+ if (novo) { window.scrollTo(0, 0); Voz.ler(txt); }
 }
-function escolhasHTML(ch) { return `<div class="escolhas">${(ch || []).map(c => { const r = cond(c); if (r === 'oculto') return ''; return `<button class="esc" ${r ? 'disabled' : ''} data-ir="${c.to}"><span class="t">${c.t}${r ? `<span class="req">${r}</span>` : ''}</span><span class="pont"></span><span class="vai"><small>vai para</small>${NUM[c.to]}</span></button>`; }).join('')}</div>`; }
-const contHTML = to => `<div class="escolhas"><button class="esc" data-ir="${to}"><span class="t">Continuar</span><span class="pont"></span><span class="vai"><small>vai para</small>${NUM[to]}</span></button></div>`;
+function escolhasHTML(ch) { return `<div class="escolhas">${(ch || []).map(c => { const r = cond(c); if (r === 'oculto') return ''; return `<button class="esc" ${r ? 'disabled' : ''} data-ir="${c.to}"${c.mare ? ` data-mare="${c.mare}"` : ''}><span class="t">${c.t}${r ? `<span class="req">${r}</span>` : ''}${c.mare ? `<span class="custo">a maré sobe ${c.mare}</span>` : ''}</span><span class="pont"></span><span class="vai"><small>vai para</small>${NUM[c.to] || '…'}</span></button>`; }).join('')}</div>`; }
+const contHTML = to => `<div class="escolhas"><button class="esc" data-ir="${to}"><span class="t">Continuar</span><span class="pont"></span><span class="vai"><small>vai para</small>${NUM[to] || '…'}</span></button></div>`;
 function testeHTML(t, anim) { const nome = t.tipo === 'sorte' ? 'Testa a tua Sorte' : 'Testa a tua Habilidade', alvo = t.tipo === 'sorte' ? st.sorte : st.hab;
  if (!st.res) return `<div class="caixa"><h3>${nome}</h3><p class="nota" style="margin:0">Lança dois dados. Se o total for igual ou menor do que a tua ${t.tipo === 'sorte' ? 'Sorte' : 'Habilidade'} (${alvo}), és bem-sucedido.${t.tipo === 'sorte' ? ' Cada teste gasta 1 ponto de Sorte.' : ''}</p><div class="acoes"><button class="b prim" data-a="testar">Lançar os dados</button></div></div>`;
  const R = st.res; return `<div class="caixa ${anim ? 'rola' : ''}"><h3>${nome}</h3><div class="linha2" style="justify-content:flex-start;gap:14px">${dados(R.r)}<span style="font-family:var(--f-num);font-size:1.4rem">= ${soma(R.r)}</span></div><p class="${R.ok ? 'ok' : 'mau'}" style="margin:8px 0 0">${R.ok ? (t.tipo === 'sorte' ? 'Tiveste sorte!' : 'Conseguiste!') : (t.tipo === 'sorte' ? 'Não tiveste sorte.' : 'Falhaste.')}</p></div>` + contHTML(R.to); }
@@ -1482,36 +2003,39 @@ function lutaHTML(s, anim) { const l = s.luta, L = st.luta; if (!L) return ''; c
  if (L.cego) h += `<p class="nota" style="margin:0 0 8px">Às escuras: −2 à tua Força de Ataque.</p>`;
  h += `<div class="luta"><div class="lutador"><div class="n">Tu</div><div class="s">Hab ${st.hab}${tem('Dente de Tubarão') ? ' +1' : ''} · En ${st.en}/${st.enI}</div>${barra(st.en, st.enI)}${U && U.pd ? `<div class="fa">${dados(U.pd)} = ${U.pa}</div>` : ''}</div>
  <div class="lutador inim"><div class="n">${L.ganhou && U ? U.nome : f.nome}</div><div class="s">Hab ${f.hab} · En ${Math.max(0, f.en)}/${f.enI}</div>${barra(f.en, f.enI)}${U && U.fd && U.nome === f.nome ? `<div class="fa">${dados(U.fd, 1)} = ${U.fa}</div>` : ''}</div></div>`;
- if (U) { let t = U.faca ? `Atiras a faca: acerta em cheio. ${U.nome} perde 2 de Energia.` : U.res === 'feres' ? `<span class="ok">Golpe certeiro contra ${U.nome}!</span> Tira-lhe 2 de Energia.` : U.res === 'feridos' ? `<span class="mau">${U.nome} fere-te.</span> Perdes 2 de Energia.` : 'Os golpes anulam-se. Ninguém se fere.';
+ if (U) { let t = U.faca ? `${U.faca} ${U.nome} perde ${U.dano} de Energia.` : U.res === 'feres' ? `<span class="ok">Golpe certeiro contra ${U.nome}!</span> Tira-lhe 2 de Energia.` : U.res === 'feridos' ? `<span class="mau">${U.nome} fere-te.</span> Perdes 2 de Energia.` : 'Os golpes anulam-se. Ninguém se fere.';
   if (U.sorte) t += ` Testaste a Sorte (${soma(U.sorte.r)}): ${U.sorte.sorte ? '<span class="ok">tiveste sorte</span>' : '<span class="mau">azar</span>'}, ${U.res === 'feres' ? (U.sorte.sorte ? 'golpe profundo, mais 2 de dano.' : 'foi só um arranhão, devolves 1.') : (U.sorte.sorte ? 'escapaste ao pior, recuperas 1.' : 'o golpe foi mais fundo, menos 1.')}`;
   if (!L.ganhou && U.nome !== f.nome) t += ` ${U.nome} cai. Segue-se ${f.nome}.`; h += `<p class="relato">${t}</p>`; }
  if (st.morto) return h + '</div>';
  if (L.ganhou) return h + `<p class="ok" style="margin-top:10px">Venceste o combate.</p></div>` + contHTML(l.win);
  const podeFugir = l.fuga && L.ronda >= (l.fugaApos || 0);
  const extra = L.ronda === 0 && s.ch_extra ? s.ch_extra.filter(c => cond(c) === null).map(c => `<button class="b" data-ir="${c.to}">${c.t}</button>`).join('') : '';
- h += `<div class="acoes"><button class="b prim" data-a="atacar">Atacar</button>${extra}${L.sorteOk ? `<button class="b" data-a="sorteluta">Testar a Sorte neste golpe</button>` : ''}${tem('Faca de Arremesso') ? `<button class="b" data-a="faca">Atirar a faca</button>` : ''}${l.fuga ? `<button class="b" data-a="fugir" ${podeFugir ? '' : 'disabled'}>Fugir (−2 En)${podeFugir ? '' : ` após ${l.fugaApos} ${l.fugaApos === 1 ? 'ronda' : 'rondas'}`}</button>` : ''}</div>`;
+ h += `<div class="acoes"><button class="b prim" data-a="atacar">Atacar</button>${extra}${L.sorteOk ? `<button class="b" data-a="sorteluta">Testar a Sorte neste golpe</button>` : ''}${tem('Faca de Arremesso') ? `<button class="b" data-a="faca">Atirar a faca</button>` : ''}${tem('Água Benta') ? `<button class="b" data-a="agua">Atirar a água benta</button>` : ''}${l.fuga ? `<button class="b" data-a="fugir" ${podeFugir ? '' : 'disabled'}>Fugir (−2 En)${podeFugir ? '' : ` após ${l.fugaApos} ${l.fugaApos === 1 ? 'ronda' : 'rondas'}`}</button>` : ''}</div>`;
  return h + `<p class="nota" style="margin:10px 0 0">Cada ronda lançam-se dois dados para cada lado e soma-se a Habilidade. Quem tiver o total maior acerta e tira 2 de Energia ao outro.</p></div>`; }
 
 const VOL_TXT = ['Sem som', 'Volume baixo', 'Volume médio', 'Volume alto'];
 function volIcone(n) { const ondas = [n >= 1 ? '<path d="M15 9.5a3.5 3.5 0 0 1 0 5"/>' : '', n >= 2 ? '<path d="M17.5 7a7 7 0 0 1 0 10"/>' : '', n >= 3 ? '<path d="M20 4.5a10.5 10.5 0 0 1 0 15"/>' : ''].join('');
  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3l4.5-4v13L7 14.5H4z" fill="currentColor"/>${ondas}${n === 0 ? '<path d="M15.5 9.5l5 5M20.5 9.5l-5 5"/>' : ''}</svg>`; }
 const volBtn = () => `<button class="tb vol" data-a="vol" aria-label="${VOL_TXT[Som.nivel]}. Tocar para mudar" title="${VOL_TXT[Som.nivel]}">${volIcone(Som.nivel)}</button>`;
-function barHTML() { $('#bar').innerHTML = st ? `<span class="nome">O Farol do Corvo</span><div class="strip"><span><b>Hab</b>${st.hab}</span><span><b>En</b>${st.en}</span><span><b>Sor</b>${st.sorte}</span><span class="mr"><b>Maré</b>${st.mare}/${st.limite}</span></div><div class="dir">${volBtn()}<button class="tb so-movel" data-a="folha">Folha</button><button class="tb" data-a="menu">Menu</button></div>` : `<span class="nome">O Farol do Corvo</span><div class="dir">${volBtn()}</div>`; }
+function barHTML() { $('#bar').innerHTML = st ? `<span class="nome">O Farol do Corvo</span><div class="strip"><span><b>Hab</b>${st.hab}</span><span class="${st.en <= 4 ? 'perigo' : ''}"><b>En</b>${st.en}</span><span><b>Sor</b>${st.sorte}</span><span class="mr ${st.mare >= st.limite - 3 ? 'perigo' : ''}"><b>Maré</b>${st.mare}/${st.limite}</span></div><div class="dir">${volBtn()}<button class="tb so-movel" data-a="folha">Folha</button><button class="tb" data-a="menu">Menu</button></div>` : `<span class="nome">O Farol do Corvo</span><div class="dir">${volBtn()}</div>`; }
+function olhos(n) { const v = Math.min(12, n || 0), prox = [3, 6, 9, 12].find(t => t > v) || 12; return `<span class="olhos">${Array.from({ length: prox }, (_, k) => `<i class="${k < v ? 'on' : ''}"></i>`).join('')}</span>`; }
 function folhaHTML() { const emLuta = st.luta && !st.luta.ganhou && !st.morto, P = st.pocao;
  $('#folha').innerHTML = `<div class="ficha"><div class="folha-tit"><span>Folha de Aventuras</span><button class="fechar" data-a="fechar" aria-label="Fechar">×</button></div>
  <div class="trio"><div class="cx"><div class="lab">Habilidade</div><div class="val">${st.hab}</div><div class="ini">inicial ${st.habI}</div></div><div class="cx"><div class="lab">Energia</div><div class="val" style="${st.en <= 4 ? 'color:var(--sangue)' : ''}">${st.en}</div><div class="ini">inicial ${st.enI}</div></div><div class="cx"><div class="lab">Sorte</div><div class="val">${st.sorte}</div><div class="ini">inicial ${st.sorteI}</div></div></div>
- <div class="sec"><h4>Maré · ${st.mare} de ${st.limite}</h4><div class="mare" style="grid-template-columns:repeat(${st.limite},1fr)">${Array.from({ length: st.limite }, (_, i) => `<i class="${i < st.mare ? 'on' : ''} ${i >= st.limite - 3 ? 'alto' : ''}"></i>`).join('')}</div><p class="nota" style="margin:0">A frota entra quando a maré encher. Cada desvio custa tempo.</p></div>
+ <div class="sec"><h4>Maré · ${st.mare} de ${st.limite}</h4><div class="mare ${st.mare >= st.limite - 3 ? 'perigo' : ''}" style="grid-template-columns:repeat(${st.limite},1fr)">${Array.from({ length: st.limite }, (_, i) => `<i class="${i < st.mare ? 'on' : ''} ${i >= st.limite - 3 ? 'alto' : ''}"></i>`).join('')}</div><p class="nota" style="margin:0">${st.flags.tarde ? 'A frota já chegou. Cada minuto custa vidas.' : st.mare >= 5 ? 'Os mortos já saíram do mar. Despacha-te.' : 'Às 5 marés, os mortos saem do mar. Quando encher, a frota chega.'}</p></div>
+ ${st.flags.recolhedorMorto ? '' : `<div class="sec"><h4>O Recolhedor</h4><div class="linha2"><span>${olhos(st.atencao)}</span></div><p class="nota" style="margin:0">${(st.cacaPend || 0) > 0 ? 'Está à tua procura. Ouves correntes.' : 'Cada barulho que fazes chama-o. Quando os olhos se acendem todos, vem buscar-te.'}</p></div>`}
  <div class="sec"><div class="linha2"><span>Ouro: <b style="font-family:var(--f-num);font-size:1.15rem">${st.ouro}</b> moedas</span></div>
  <div class="linha2"><span>Provisões: <b style="font-family:var(--f-num);font-size:1.15rem">${st.prov}</b></span><button class="mini" data-a="comer" ${st.prov <= 0 || st.en >= st.enI || emLuta || st.morto ? 'disabled' : ''}>Comer (+4 En)</button></div>
  ${P ? `<div class="linha2"><span>${POCOES[P.tipo].nome}<small style="display:block;color:var(--tinta2);font-size:.78rem;font-style:italic">${P.doses} ${P.doses === 1 ? 'dose' : 'doses'} · ${POCOES[P.tipo].d}</small></span><button class="mini" data-a="beber" ${P.doses <= 0 || st.morto ? 'disabled' : ''}>Beber</button></div>` : ''}
- ${st.archote > 0 && !temLanterna() ? `<div class="linha2"><span>Archote aceso <span class="chama">${Array.from({ length: 6 }, (_, k) => `<i class="${k < st.archote ? '' : 'gasta'}"></i>`).join('')}</span></span></div>` : ''}</div>
+ ${st.archote > 0 && !temLanterna() ? `<div class="linha2"><span>Archote aceso <span class="chama">${Array.from({ length: 5 }, (_, k) => `<i class="${k < st.archote ? '' : 'gasta'}"></i>`).join('')}</span></span></div>` : ''}</div>
  <div class="sec"><h4>Equipamento</h4><ul class="itens"><li>Espada e armadura de couro</li>${st.itens.map(i => `<li class="linha2"><span>${i}<small>${ITENS[i] || ''}</small></span>${i === 'Pérola Negra' ? `<button class="mini" data-a="perola" ${st.morto ? 'disabled' : ''}>Usar</button>` : ''}</li>`).join('')}</ul></div>
  ${st.dedosI > 0 ? `<div class="sec"><h4>Dedo no livro</h4><div class="linha2"><span class="dedos">${Array.from({ length: st.dedosI }, (_, k) => `<i class="${k < st.dedos ? '' : 'gasto'}"></i>`).join('')}</span><button class="mini" data-a="dedo" ${st.dedos <= 0 || !st.undo.length ? 'disabled' : ''}>Voltar atrás</button></div></div>` : ''}
  <div class="sec"><h4>Rasto</h4><div class="rasto">${st.rasto.slice(-40).map(n => `<span>${n}</span>`).join('')}</div></div></div>
  <div class="ficha mapa"><div class="tit"><h4>Mapa da ilha</h4><button class="mini" data-a="mapa">Ampliar</button></div>${mapaSVG(false)}</div>
- <div class="ficha"><div class="opc"><h4 style="margin:0 0 4px;font-family:var(--f-tit);font-weight:400;font-size:1.1rem">Som e voz</h4>
+ <div class="ficha"><div class="opc"><h4 style="margin:0 0 4px;font-family:var(--f-tit);font-weight:400;font-size:1.1rem">Opções</h4>
  <label for="o-vol-txt">Volume: ${VOL_TXT[Som.nivel]}<button class="mini" id="o-vol-txt" data-a="vol">Mudar</button></label>
  <label for="o-mus">Música de fundo<input type="checkbox" id="o-mus" ${Som.musica ? 'checked' : ''}></label>
+ <label for="o-tempo">Escolhas com tempo<input type="checkbox" id="o-tempo" ${opTempo() ? 'checked' : ''}></label>
  ${Voz.ok ? `<label for="o-voz">Narrador lê as páginas<input type="checkbox" id="o-voz" ${Voz.on ? 'checked' : ''}></label>` : ''}
  <p class="nota" style="margin:2px 0 0">Melhor com auscultadores. A voz do narrador depende do teu dispositivo.</p></div></div>`; }
 
@@ -1534,14 +2058,14 @@ function abrirMapa(v) { const m = $('#mapaGrande'); if (!v) { m.hidden = true; m
 
 function capa(novo) { const sv = carregarJogo(), f = finais(), n = Object.keys(FINAIS).filter(k => f[k]).length;
  $('#topo').innerHTML = ''; Ilus.mostrar('farol', novo !== false);
- $('#corpo').innerHTML = `<div class="capa fade"><h1>O Farol do Corvo</h1><p class="sub">Um livro-jogo em que tu és o herói. Uma noite, uma ilha, uma maré a subir.</p>
+ $('#corpo').innerHTML = `<div class="capa fade"><h1>O Farol do Corvo</h1><p class="sub">Um livro-jogo de terror em que tu és o herói. Uma noite, uma ilha, uma maré a subir, e alguma coisa à tua procura.</p>
  <div class="acoes">${sv && !sv.fim && !sv.morto ? `<button class="b prim" data-a="continuar">Continuar na secção ${NUM[sv.sec]}</button>` : ''}<button class="b ${sv && !sv.fim && !sv.morto ? '' : 'prim'}" data-a="criar">Nova aventura</button></div>
  <p class="nota" style="margin-top:14px">Finais descobertos: ${n} de ${Object.keys(FINAIS).length}</p><p class="nota"><a href="en.html" style="color:inherit">Play in English</a></p>
  <p class="aviso-som">Joga com som. O botão do altifalante, em cima, muda o volume.</p>
  <details class="regras"><summary>Como se joga</summary>
  <p>Lês uma secção e escolhes o que fazer. Cada escolha manda-te para outra secção numerada, como nos livros-jogo de antigamente. O jogo trata dos saltos, dos dados e da Folha de Aventuras.</p>
- <ul><li><b>Habilidade</b>: a tua mestria com a espada.</li><li><b>Energia</b>: a tua vida. Se chegar a zero, morres.</li><li><b>Sorte</b>: lanças dois dados e precisas de tirar igual ou menos. Cada teste gasta 1 ponto.</li><li><b>Maré</b>: tens até a maré encher para acender o farol. Perder tempo tem consequências.</li><li><b>Luz</b>: há lugares onde, sem luz, não vês o caminho. Um archote apaga-se ao fim de pouco tempo.</li><li><b>Dedo no livro</b>: podes voltar atrás algumas vezes, como quem deixa o dedo na página.</li></ul>
- <p>Os objetos e as pistas que encontras abrem caminhos novos. Sem eles, andas perdido. Só há um caminho para o melhor final.</p></details></div>`; }
+ <ul><li><b>Habilidade</b>: a tua mestria com a espada.</li><li><b>Energia</b>: a tua vida. Se chegar a zero, morres.</li><li><b>Sorte</b>: lanças dois dados e precisas de tirar igual ou menos. Cada teste gasta 1 ponto.</li><li><b>Maré</b>: cada sítio onde vais faz subir a maré. Com a maré, a ilha muda: os mortos saem do mar, a praia fica debaixo de água, a frota aproxima-se. Não dá para ver tudo.</li><li><b>O Recolhedor</b>: cada barulho que fazes chama-o. Quando vier, esconde-te ou foge.</li><li><b>Escolhas com tempo</b>: às vezes tens poucos segundos para decidir. Se hesitares, alguém decide por ti. Podes desligá-las nas opções.</li><li><b>Luz</b>: há lugares onde, sem luz, não vês o caminho. Um archote apaga-se ao fim de pouco tempo.</li><li><b>Dedo no livro</b>: podes voltar atrás algumas vezes, como quem deixa o dedo na página.</li></ul>
+ <p>Podes morrer de muitas maneiras. Só há um caminho para o melhor final.</p></details></div>`; }
 function rolarCr() { const h = rol(1), e = rol(2), s = rol(1); Object.assign(cr, { h, e, s, hab: 6 + h[0], en: 12 + soma(e), sorte: 6 + s[0] }); Som.fx('dados'); }
 function criar() { if (!cr.h) rolarCr(); if (!cr.modo) cr.modo = 'normal'; $('#topo').innerHTML = '';
  $('#corpo').innerHTML = `<div class="fade"><h2 class="titulo2" style="font-size:2rem;text-align:center;margin-top:0">A tua personagem</h2><p style="text-align:center">Os dados decidem quem és. Se não gostares, lança outra vez.</p>
@@ -1550,9 +2074,9 @@ function criar() { if (!cr.h) rolarCr(); if (!cr.modo) cr.modo = 'normal'; $('#t
  <h3 class="titulo2">Modo de jogo</h3><div class="grelha3">${Object.entries(MODOS).map(([k, m]) => `<button class="opcao ${cr.modo === k ? 'sel' : ''}" data-modo="${k}" aria-pressed="${cr.modo === k}"><b>${m.nome}</b><small>${m.d}</small></button>`).join('')}</div>
  <h3 class="titulo2">Escolhe uma poção (2 doses)</h3><div class="grelha3">${Object.entries(POCOES).map(([k, p]) => `<button class="opcao ${cr.pocao === k ? 'sel' : ''}" data-pocao="${k}" aria-pressed="${cr.pocao === k}"><b>${p.nome}</b><small>${p.d}</small></button>`).join('')}</div>
  <div class="acoes" style="margin-top:20px"><button class="b prim" data-a="comecar" ${cr.pocao ? '' : 'disabled'}>${cr.pocao ? 'Começar a aventura' : 'Escolhe uma poção para começar'}</button><button class="b" data-a="capa">Voltar</button></div></div>`; }
-function comecar() { const M = MODOS[cr.modo]; st = { modo: cr.modo, limite: M.limite, inim: M.inim, habI: cr.hab, hab: cr.hab, enI: cr.en, en: cr.en, sorteI: cr.sorte, sorte: cr.sorte, ouro: M.ouro, prov: M.prov, pocao: { tipo: cr.pocao, doses: 2 }, itens: [], flags: {}, visto: { start: 1 }, mare: 0, rasto: [1], dedos: M.dedos, dedosI: M.dedos, undo: [], sec: 'start', luta: null, res: null, morto: false, fim: null, locs: { cais: 1 }, caminho: ['cais'], archote: 0 };
+function comecar() { const M = MODOS[cr.modo]; st = { modo: cr.modo, limite: M.limite, inim: M.inim, habI: cr.hab, hab: cr.hab, enI: cr.en, en: cr.en, sorteI: cr.sorte, sorte: cr.sorte, ouro: M.ouro, prov: M.prov, pocao: { tipo: cr.pocao, doses: 2 }, itens: [], flags: {}, visto: { start: 1 }, mare: 0, rasto: [1], dedos: M.dedos, dedosI: M.dedos, undo: [], sec: 'start', luta: null, res: null, morto: false, fim: null, locs: { cais: 1 }, caminho: ['cais'], archote: 0, atencao: 0, cacaPend: 0, visita: 1, encontros: 0 };
  cr = null; Novo.loc = 'cais'; guardar(); Som.desbloquear(); Som.fx('pagina'); render(true, false, true);
- Ilus.aquecer(['taberna', 'capela', 'casa', 'cemiterio', 'falesia', 'afogado', 'praia', 'gruta', 'galerias', 'ninhos', 'farol', 'avejao', 'moira', 'sino', 'ossario', 'torre', 'lanterna', 'rei', 'aceso', 'naufragio']); }
+ Ilus.aquecer(['taberna', 'capela', 'casa', 'cemiterio', 'falesia', 'afogado', 'praia', 'gruta', 'galerias', 'ninhos', 'farol', 'avejao', 'moira', 'sino', 'ossario', 'torre', 'lanterna', 'rei', 'aceso', 'naufragio', 'cerco', 'recolhedor', 'corpo']); }
 
 function abrirFolha(v) { $('#folha').classList.toggle('aberta', v); $('#veu').hidden = !v; }
 document.addEventListener('click', e => {
@@ -1560,22 +2084,22 @@ document.addEventListener('click', e => {
  if (e.target.id === 'mapaGrande') { abrirMapa(false); return; }
  const b = e.target.closest('button'); if (!b || b.disabled) return;
  Som.desbloquear();
- if (b.dataset.ir) { abrirFolha(false); ir(b.dataset.ir); return; }
+ if (b.dataset.ir) { abrirFolha(false); ir(b.dataset.ir, { mare: +(b.dataset.mare || 0) }); return; }
  if (b.dataset.compra != null) { comprar(+b.dataset.compra); return; }
  if (b.dataset.pocao) { cr.pocao = b.dataset.pocao; criar(); return; }
  if (b.dataset.modo) { cr.modo = b.dataset.modo; criar(); return; }
- ({ testar, duelo: duelar, atacar, sorteluta: sorteLuta, faca, fugir, comer, beber, perola, dedo, comecar,
+ ({ testar, duelo: duelar, atacar, agua: aguaBenta, sorteluta: sorteLuta, faca, fugir, comer, beber, perola, dedo, comecar,
   folha: () => abrirFolha(true), fechar: () => abrirFolha(false), mapa: () => abrirMapa(true), fecharmapa: () => abrirMapa(false),
   vol: () => { Som.ciclo(); if (st) { barHTML(); folhaHTML(); render(); } else { barHTML(); Som.cena('falesia', 'explorar'); } Som.fx('pagina'); },
-  menu: () => { guardar(); Voz.parar(); st = null; cr = null; abrirFolha(false); Som.coracao(false); Som.cena('falesia', 'explorar'); render(false); },
+  menu: () => { guardar(); Voz.parar(); pararRelogio(); st = null; cr = null; abrirFolha(false); Som.coracao(false); Som.cena('falesia', 'explorar'); render(false); },
   capa: () => { cr = null; render(false); },
-  continuar: () => { st = carregarJogo(); Novo.loc = null; render(true, false, true); },
+  continuar: () => { st = carregarJogo(); st.visita = (st.visita || 0) + 1; Novo.loc = null; render(true, false, true); },
   criar: () => { cr = {}; Som.cena('porto', 'explorar'); render(false); },
   relancar: () => { rolarCr(); criar(); },
-  nova: () => { st = null; cr = {}; abrirFolha(false); Voz.parar(); Som.coracao(false); render(false); },
+  nova: () => { pararRelogio(); st = null; cr = {}; abrirFolha(false); Voz.parar(); Som.coracao(false); render(false); },
  }[b.dataset.a] || (() => { }))();
 });
-document.addEventListener('change', e => { if (e.target.id === 'o-mus') Som.setMusica(e.target.checked); if (e.target.id === 'o-voz') { Voz.set(e.target.checked); if (e.target.checked && st) Voz.ler(S[st.sec].t); } });
+document.addEventListener('change', e => { if (e.target.id === 'o-tempo') { setTempo(e.target.checked); if (st) render(); } if (e.target.id === 'o-mus') Som.setMusica(e.target.checked); if (e.target.id === 'o-voz') { Voz.set(e.target.checked); if (e.target.checked && st) Voz.ler(S[st.sec].t); } });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { abrirMapa(false); abrirFolha(false); } });
 $('#veu').addEventListener('click', () => abrirFolha(false));
 render(true);

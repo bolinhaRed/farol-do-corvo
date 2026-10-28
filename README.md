@@ -8,14 +8,16 @@
 ---
 
 ## Português
-- Livro-jogo clássico com 92 secções numeradas, ilustrações a tinta, música e sons.
+- Livro-jogo de terror com 170 secções numeradas em cinco capítulos, ilustrações a tinta, música e sons.
 - Cria a tua personagem com dados: Habilidade, Energia e Sorte.
-- Combates, testes de sorte, objetos, pistas e um mapa da ilha que se desenha à medida que exploras.
-- Uma maré que sobe: cada desvio custa tempo. Quatro finais diferentes.
+- A maré muda a ilha: cada sítio onde vais faz subir a água, os mortos saem do mar e não dá para ver tudo.
+- O Recolhedor caça-te quando fazes barulho. Esconde-te ou foge.
+- Escolhas com relógio, mortes súbitas, um cerco à aldeia, uma reviravolta e seis finais.
 - Três modos de dificuldade e um narrador que lê as páginas em voz alta.
 - Joga-se no navegador, no telemóvel ou no computador. Pode ser instalado no ecrã principal.
 
 ## English
+*The English edition is still the first version of the story (92 sections).*
 - A classic gamebook with 92 numbered sections, ink illustrations, music and sound.
 - Roll your character with dice: Skill, Stamina and Luck.
 - Combat, luck tests, items, clues and an island map that draws itself as you explore.

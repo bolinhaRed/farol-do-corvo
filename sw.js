@@ -1,5 +1,5 @@
 // O Farol do Corvo: guarda o jogo para abrir sem rede (imagens e sons ficam em cache à medida que são usados).
-const CACHE = "farol-v1";
+const CACHE = "farol-v2";
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(["./", "index.html", "en.html", "manifest.json"])).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== CACHE).map(x => caches.delete(x)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {
